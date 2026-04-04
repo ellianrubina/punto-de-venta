@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ventas del Día – Super Kapi</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2329;--border:#30363d;--accent:#00d4aa;--accent3:#7c6fff;--text:#e6edf3;--muted:#7d8590;--danger:#f85149;--success:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap}
+.topbar h1{font-size:1.05rem;font-weight:800;color:var(--accent)}
+.topbar h1 span{color:var(--text);font-weight:400}
+.btn-back{padding:7px 14px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.btn-back:hover{border-color:var(--accent);color:var(--accent)}
+.btn-pdf{margin-left:auto;padding:7px 16px;background:var(--accent);color:#0d1117;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.btn-pdf:hover{background:#00f0c4}
+.btn-export{padding:7px 14px;background:transparent;color:var(--accent3);border:1px solid var(--accent3);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.btn-export:hover{background:rgba(124,111,255,.12)}
+/* ── DATE SELECTOR ── */
+.date-bar{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.date-bar label{font-size:.78rem;color:var(--muted)}
+select.date-sel{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 12px;font-family:'Syne',sans-serif;font-size:.83rem;outline:none;cursor:pointer}
+select.date-sel:focus{border-color:var(--accent)}
+/* ── SUMMARY CARDS ── */
+.summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:14px 18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px}
+.card .label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.card .val{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--accent)}
+.card .val.purple{color:var(--accent3)}
+.card .val.green{color:var(--success)}
+/* ── VENTAS LIST ── */
+.ventas-wrap{padding:0 18px 24px}
+.ventas-title{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.venta-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.venta-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}
+.venta-num{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted)}
+.venta-hora{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--accent)}
+.venta-cliente{font-weight:700;font-size:.88rem;margin-top:2px}
+.venta-cedula{font-size:.72rem;color:var(--muted)}
+.pay-tag{font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.pay-tag.efectivo{border-color:#3fb950;color:#3fb950}
+.pay-tag.debito{border-color:#7c6fff;color:#7c6fff}
+.pay-tag.pago-movil{border-color:#00d4aa;color:#00d4aa}
+.venta-items{font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.venta-totals{display:flex;justify-content:flex-end;gap:16px;padding-top:8px;border-top:1px solid var(--border)}
+.vt-item{text-align:right}
+.vt-label{font-size:.65rem;color:var(--muted);display:block}
+.vt-val{font-family:'DM Mono',monospace;font-size:.85rem;font-weight:700;color:var(--text)}
+.vt-val.accent{color:var(--accent)}
+.vt-val.purple{color:var(--accent3)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:.85rem}
+.empty-icon{font-size:3rem;margin-bottom:10px}
+/* ── CLIENTES MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;padding:22px}
+.modal h2{font-size:1rem;font-weight:800;margin-bottom:4px;color:var(--accent)}
+.modal .sub{font-size:.76rem;color:var(--muted);margin-bottom:14px}
+.cliente-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.76rem}
+.cliente-row.header{font-weight:700;color:var(--muted);font-size:.68rem;text-transform:uppercase}
+.modal-btns{display:flex;gap:8px;margin-top:14px}
+.modal-btn{flex:1;padding:9px;border-radius:8px;border:none;font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:.2s}
+.modal-btn.primary{background:var(--accent);color:#0d1117}
+.modal-btn.primary:hover{background:#00f0c4}
+.modal-btn.secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+/* ── PRINT ── */
+@media print{
+  body{background:#fff!important;color:#000!important;font-family:monospace}
+  .topbar,.date-bar,.no-print{display:none!important}
+  .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px}
+  .card{background:#f5f5f5!important;border:1px solid #ccc!important;color:#000!important;break-inside:avoid}
+  .card .label{color:#555!important}
+  .card .val{color:#000!important;font-size:.95rem}
+  .venta-card{background:#fff!important;border:1px solid #ccc!important;break-inside:avoid;margin-bottom:8px}
+  .venta-cliente,.venta-hora,.venta-items,.vt-val{color:#000!important}
+  .venta-num,.venta-cedula,.vt-label{color:#555!important}
+  .ventas-title{color:#555!important}
+  .pay-tag{border-color:#000!important;color:#000!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar no-print">
+  <a class="btn-back" href="index.html">← Volver al POS</a>
+  <h1>📊 <span>Ventas del Día</span></h1>
+  <button class="btn-export" onclick="openClientes()">👥 Base de Clientes</button>
+  <button class="btn-pdf" onclick="exportPDF()">🖨️ Exportar PDF</button>
+</header>
+
+<div class="date-bar no-print">
+  <label>Ver ventas del:</label>
+  <select class="date-sel" id="dateSel" onchange="loadDay(this.value)"></select>
+</div>
+
+<div id="summaryBox" class="summary"></div>
+<div class="ventas-wrap">
+  <div class="ventas-title" id="ventasTitle"></div>
+  <div id="ventasList"></div>
+</div>
+
+<!-- Modal clientes -->
+<div class="modal-overlay" id="clientesModal">
+  <div class="modal">
+    <h2>👥 Base de Clientes</h2>
+    <p class="sub">Clientes registrados en el sistema</p>
+    <div class="cliente-row header"><span>Cédula</span><span>Nombre</span><span>Celular</span></div>
+    <div id="clientesList"></div>
+    <div class="modal-btns">
+      <button class="modal-btn secondary" onclick="closeClientes()">Cerrar</button>
+      <button class="modal-btn primary" onclick="exportClientes()">📥 Exportar CSV</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentDay = '';
+
+function getAllDays(){
+  return JSON.parse(localStorage.getItem('sk_dias')||'[]').sort().reverse();
+}
+function getVentas(day){
+  return JSON.parse(localStorage.getItem('sk_ventas_'+day)||'[]');
+}
+
+function initDateSel(){
+  const sel=document.getElementById('dateSel');
+  const dias=getAllDays();
+  if(!dias.length){ sel.innerHTML='<option>Sin ventas registradas</option>'; return; }
+  sel.innerHTML=dias.map(d=>`<option value="${d}">${formatDate(d)}</option>`).join('');
+  currentDay=dias[0];
+  loadDay(currentDay);
+}
+
+function formatDate(iso){
+  const [y,m,d]=iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function loadDay(day){
+  currentDay=day;
+  const ventas=getVentas(day);
+  renderSummary(ventas,day);
+  renderVentas(ventas);
+}
+
+function renderSummary(ventas,day){
+  const box=document.getElementById('summaryBox');
+  if(!ventas.length){ box.innerHTML=''; return; }
+  const totalUsd=ventas.reduce((s,v)=>s+v.total,0);
+  const totalBs=ventas.reduce((s,v)=>s+(v.totalBs||0),0);
+  const efectivo=ventas.filter(v=>v.metodoPago==='efectivo').reduce((s,v)=>s+v.total,0);
+  const debito=ventas.filter(v=>v.metodoPago==='debito').reduce((s,v)=>s+v.total,0);
+  const pm=ventas.filter(v=>v.metodoPago==='pago-movil').reduce((s,v)=>s+v.total,0);
+  box.innerHTML=`
+    <div class="card"><div class="label">Total ventas</div><div class="val">${ventas.length}</div></div>
+    <div class="card"><div class="label">Total USD</div><div class="val">$${totalUsd.toFixed(2)}</div></div>
+    <div class="card"><div class="label">Total Bs.</div><div class="val purple">${totalBs?totalBs.toLocaleString('es-VE',{minimumFractionDigits:0})+' Bs':'N/D'}</div></div>
+    <div class="card"><div class="label">💵 Efectivo</div><div class="val green">$${efectivo.toFixed(2)}</div></div>
+    <div class="card"><div class="label">💳 Débito</div><div class="val green">$${debito.toFixed(2)}</div></div>
+    <div class="card"><div class="label">📱 PagoMóvil</div><div class="val green">$${pm.toFixed(2)}</div></div>`;
+}
+
+function renderVentas(ventas){
+  const list=document.getElementById('ventasList');
+  const title=document.getElementById('ventasTitle');
+  if(!ventas.length){
+    title.textContent='';
+    list.innerHTML='<div class="empty"><div class="empty-icon">📭</div>No hay ventas para este día</div>';
+    return;
+  }
+  title.textContent=`${ventas.length} venta${ventas.length!==1?'s':''} registrada${ventas.length!==1?'s':''}`;
+  list.innerHTML=ventas.map((v,i)=>{
+    const itemsText=v.items.map(it=>`${it.nombre} x${it.qty} = $${it.subtotal.toFixed(2)}`).join(' · ');
+    let payInfo='';
+    if(v.metodoPago==='pago-movil' && v.pmRef) payInfo=`<div style="font-size:.7rem;color:var(--muted);margin-top:4px">Ref: ${v.pmRef} · ${v.pmBanco} · ${v.pmCel}</div>`;
+    return `<div class="venta-card">
+      <div class="venta-header">
+        <div>
+          <div class="venta-num">#${String(i+1).padStart(3,'0')} · ${v.hora}</div>
+          <div class="venta-cliente">${v.nombre}</div>
+          <div class="venta-cedula">${v.cedula}${v.celular?' · '+v.celular:''}</div>
+        </div>
+        <div style="text-align:right">
+          <span class="pay-tag ${v.metodoPago}">${v.metodoPago==='pago-movil'?'📱 PagoMóvil':v.metodoPago==='debito'?'💳 Débito':'💵 Efectivo'}</span>
+          ${payInfo}
+        </div>
+      </div>
+      <div class="venta-items">${itemsText}</div>
+      <div class="venta-totals">
+        <div class="vt-item"><span class="vt-label">IVA</span><span class="vt-val">$${v.iva.toFixed(2)}</span></div>
+        <div class="vt-item"><span class="vt-label">Total USD</span><span class="vt-val accent">$${v.total.toFixed(2)}</span></div>
+        ${v.totalBs?`<div class="vt-item"><span class="vt-label">Total Bs.</span><span class="vt-val purple">${v.totalBs.toLocaleString('es-VE',{minimumFractionDigits:0})}</span></div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function exportPDF(){
+  window.print();
+}
+
+// ── CLIENTES ──
+function openClientes(){
+  const clientes=Object.values(JSON.parse(localStorage.getItem('sk_clientes')||'{}'));
+  const list=document.getElementById('clientesList');
+  if(!clientes.length){
+    list.innerHTML='<p style="color:var(--muted);font-size:.8rem;padding:12px 0">Sin clientes registrados aún.</p>';
+  } else {
+    list.innerHTML=clientes.map(c=>`<div class="cliente-row"><span>${c.cedula}</span><span>${c.nombre}</span><span>${c.celular||'–'}</span></div>`).join('');
+  }
+  document.getElementById('clientesModal').classList.add('open');
+}
+function closeClientes(){ document.getElementById('clientesModal').classList.remove('open'); }
+
+function exportClientes(){
+  const clientes=Object.values(JSON.parse(localStorage.getItem('sk_clientes')||'{}'));
+  if(!clientes.length){alert('No hay clientes registrados.');return;}
+  const csv='Cedula,Nombre,Celular,Ultima Compra\n'+clientes.map(c=>`${c.cedula},"${c.nombre}",${c.celular||''},${c.ultimaCompra||''}`).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='clientes_super_kapi.csv'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+document.getElementById('clientesModal').addEventListener('click',e=>{ if(e.target===e.currentTarget)closeClientes(); });
+
+initDateSel();
+</script>
+</body>
+</html>
