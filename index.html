@@ -1,789 +1,945 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Punto de Venta</title>
 <style>
   :root {
-    --naranja: #f4730e;
-    --negro: #000000;
-    --naranja-oscuro: #c45a08;
-    --naranja-claro: #f9a05a;
-    --gris-oscuro: #1a1a1a;
-    --gris-medio: #2a2a2a;
-    --gris-borde: #3a3a3a;
-    --texto: #f0f0f0;
-    --error: #ff4444;
-    --exito: #44cc44;
+    --orange: #f4730e;
+    --orange-dark: #c85a08;
+    --orange-light: #ff9040;
+    --black: #000000;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #222222;
+    --gray: #333333;
+    --gray2: #444444;
+    --text: #ffffff;
+    --text-muted: #aaaaaa;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    background: var(--negro);
-    color: var(--texto);
+    background: var(--black);
+    color: var(--text);
     font-family: 'Segoe UI', Arial, sans-serif;
     min-height: 100vh;
-    padding: 0;
   }
+
   header {
-    background: var(--naranja);
-    color: #000;
+    background: var(--dark2);
+    border-bottom: 3px solid var(--orange);
     padding: 14px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px #0008;
+    gap: 10px;
   }
-  header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; }
-  .tasa-widget {
-    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    background: #0003; border-radius: 8px; padding: 6px 12px;
+
+  header h1 {
+    color: var(--orange);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
   }
-  .tasa-widget label { font-size: 0.82rem; font-weight: 700; color: #000; }
-  .tasa-widget input {
-    width: 90px; background: #fff3; border: 1px solid #0004;
-    color: #000; font-weight: 700; font-size: 0.95rem;
-    padding: 3px 7px; border-radius: 5px; text-align: right;
+
+  #bcv-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
   }
-  .tasa-status { font-size: 0.72rem; color: #0008; }
-  .btn-refresh {
-    background: #0002; border: none; color: #000; cursor: pointer;
-    border-radius: 5px; padding: 4px 8px; font-size: 0.8rem; font-weight: 700;
+
+  #bcv-bar label { color: var(--text-muted); font-size: 0.85rem; }
+  #bcv-rate-display {
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 1rem;
   }
-  .btn-refresh:hover { background: #0004; }
-  .main {
-    max-width: 960px; margin: 0 auto; padding: 18px 12px 40px;
+
+  #btn-refresh-bcv, #btn-manual-rate {
+    background: var(--gray);
+    color: var(--text);
+    border: 1px solid var(--orange);
+    border-radius: 6px;
+    padding: 5px 11px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
   }
-  .section {
-    background: var(--gris-oscuro);
-    border: 1px solid var(--gris-borde);
+  #btn-refresh-bcv:hover, #btn-manual-rate:hover { background: var(--orange); color: #000; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 12px;
+  }
+
+  .section-title {
+    color: var(--orange);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 6px;
+  }
+
+  .card {
+    background: var(--dark2);
+    border: 1px solid var(--gray);
     border-radius: 10px;
     padding: 16px;
     margin-bottom: 16px;
   }
-  .section-title {
-    color: var(--naranja);
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--gris-borde);
-    padding-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+
   .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
   }
-  @media(max-width:600px) { .form-grid { grid-template-columns: 1fr; } }
-  .form-group { display: flex; flex-direction: column; gap: 4px; }
-  .form-group label { font-size: 0.82rem; color: var(--naranja-claro); font-weight: 600; }
-  .form-group input, .form-group select {
-    background: var(--gris-medio);
-    border: 1px solid var(--gris-borde);
-    color: var(--texto);
-    padding: 9px 11px;
-    border-radius: 7px;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border 0.2s;
-  }
-  .form-group input:focus, .form-group select:focus { border-color: var(--naranja); }
-  .form-group input::placeholder { color: #666; }
 
-  /* Producto selector */
-  .add-producto {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    gap: 8px;
-    align-items: end;
-  }
-  @media(max-width:600px) { .add-producto { grid-template-columns: 1fr 1fr; } }
-  .producto-search-wrap { position: relative; }
-  .producto-search-wrap input {
-    width: 100%;
-    background: var(--gris-medio);
-    border: 1px solid var(--gris-borde);
-    color: var(--texto);
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label { font-size: 0.82rem; color: var(--text-muted); }
+  .form-group input, .form-group select {
+    background: var(--dark3);
+    border: 1px solid var(--gray2);
+    border-radius: 6px;
+    color: var(--text);
     padding: 9px 11px;
-    border-radius: 7px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--orange); }
+  .form-group select option { background: var(--dark2); }
+
+  /* Product selector */
+  #product-area {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-bottom: 12px;
+  }
+
+  #product-search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+  }
+
+  #product-search {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid var(--gray2);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 9px 11px;
     font-size: 0.95rem;
     outline: none;
   }
-  .producto-search-wrap input:focus { border-color: var(--naranja); }
-  .dropdown-list {
+  #product-search:focus { border-color: var(--orange); }
+
+  #product-dropdown {
     position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: var(--gris-medio);
-    border: 1px solid var(--naranja);
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--dark3);
+    border: 1px solid var(--orange);
     border-radius: 0 0 8px 8px;
-    max-height: 220px;
+    max-height: 230px;
     overflow-y: auto;
-    z-index: 200;
+    z-index: 999;
     display: none;
   }
-  .dropdown-list.show { display: block; }
+  #product-dropdown.show { display: block; }
   .dropdown-item {
-    padding: 9px 12px;
+    padding: 9px 13px;
     cursor: pointer;
     font-size: 0.9rem;
-    border-bottom: 1px solid var(--gris-borde);
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
   }
-  .dropdown-item:hover, .dropdown-item.active { background: var(--naranja); color: #000; }
-  .dropdown-item .precio-tag { font-size: 0.78rem; font-weight: 700; color: #aaa; }
-  .dropdown-item:hover .precio-tag, .dropdown-item.active .precio-tag { color: #000; }
-  .qty-input {
-    width: 80px;
-    background: var(--gris-medio);
-    border: 1px solid var(--gris-borde);
-    color: var(--texto);
-    padding: 9px 8px;
-    border-radius: 7px;
+  .dropdown-item:hover { background: var(--gray); }
+  .dropdown-item .item-price { color: var(--orange); font-weight: 600; white-space: nowrap; }
+  .dropdown-no-result { padding: 10px 13px; color: var(--text-muted); font-size: 0.9rem; }
+
+  #qty-wrap { display: flex; flex-direction: column; gap: 5px; }
+  #qty-wrap label { font-size: 0.82rem; color: var(--text-muted); }
+  #qty-input {
+    background: var(--dark3);
+    border: 1px solid var(--gray2);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 9px 11px;
     font-size: 0.95rem;
-    text-align: center;
     outline: none;
+    width: 100px;
   }
-  .qty-input:focus { border-color: var(--naranja); }
-  .btn {
-    background: var(--naranja);
+  #qty-input:focus { border-color: var(--orange); }
+
+  .btn-orange {
+    background: var(--orange);
     color: #000;
     border: none;
-    padding: 9px 16px;
     border-radius: 7px;
+    padding: 9px 18px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: background 0.2s;
     white-space: nowrap;
   }
-  .btn:hover { background: var(--naranja-oscuro); color: #fff; }
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--naranja);
-    color: var(--naranja);
-  }
-  .btn-outline:hover { background: var(--naranja); color: #000; }
-  .btn-danger {
-    background: #700;
-    color: #fff;
-    border: none;
-    padding: 4px 10px;
-    border-radius: 5px;
+  .btn-orange:hover { background: var(--orange-light); }
+  .btn-gray {
+    background: var(--gray);
+    color: var(--text);
+    border: 1px solid var(--gray2);
+    border-radius: 7px;
+    padding: 9px 14px;
+    font-size: 0.9rem;
     cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 700;
+    transition: background 0.2s;
   }
-  .btn-danger:hover { background: var(--error); }
-
-  /* Tabla de items */
-  .tabla-items { width: 100%; border-collapse: collapse; margin-top: 10px; }
-  .tabla-items th {
-    background: var(--naranja);
-    color: #000;
-    padding: 8px 10px;
+  .btn-gray:hover { background: var(--gray2); }
+  .btn-danger {
+    background: transparent;
+    color: #ff5555;
+    border: 1px solid #ff5555;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
     font-size: 0.82rem;
+    transition: background 0.2s;
+  }
+  .btn-danger:hover { background: #ff555520; }
+
+  /* Cart table */
+  #cart-table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th {
+    background: var(--dark3);
+    color: var(--orange);
+    padding: 9px 10px;
     text-align: left;
+    font-size: 0.82rem;
+    letter-spacing: 0.3px;
   }
-  .tabla-items td {
-    padding: 7px 10px;
-    border-bottom: 1px solid var(--gris-borde);
-    font-size: 0.88rem;
-    vertical-align: middle;
-  }
-  .tabla-items tr:hover td { background: #ffffff08; }
-  .tabla-items .td-qty {
-    display: flex; align-items: center; gap: 5px;
-  }
-  .tabla-items .td-qty input {
-    width: 65px;
-    background: var(--gris-medio);
-    border: 1px solid var(--gris-borde);
-    color: var(--texto);
-    padding: 4px 6px;
+  td { padding: 9px 10px; border-bottom: 1px solid var(--gray); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--dark3); }
+  .td-qty { width: 90px; }
+  .td-qty input {
+    background: var(--dark3);
+    border: 1px solid var(--gray2);
     border-radius: 5px;
-    font-size: 0.88rem;
-    text-align: center;
+    color: var(--text);
+    padding: 5px 7px;
+    width: 70px;
+    font-size: 0.9rem;
     outline: none;
   }
-  .tabla-items .td-qty input:focus { border-color: var(--naranja); }
-  .empty-msg { text-align:center; color:#666; padding:20px; font-style:italic; }
+  .td-qty input:focus { border-color: var(--orange); }
 
-  /* Total */
-  .totales-box {
-    background: var(--gris-medio);
-    border: 1px solid var(--naranja);
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin-top: 10px;
+  #cart-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 24px;
+    font-style: italic;
   }
-  .total-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 5px 0; border-bottom: 1px solid var(--gris-borde);
-  }
-  .total-row:last-child { border-bottom: none; }
-  .total-label { font-size: 0.9rem; color: #aaa; }
-  .total-valor { font-size: 1rem; font-weight: 700; color: var(--naranja); }
-  .total-grande { font-size: 1.25rem !important; }
 
-  /* Pagomovil fields */
-  #pagomovil-fields {
-    display: none;
-    margin-top: 10px;
-    background: var(--gris-medio);
+  /* Totals */
+  #totals-bar {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray);
+  }
+  .total-block { text-align: right; }
+  .total-block .label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2px; }
+  .total-block .value { font-size: 1.3rem; font-weight: 800; color: var(--orange); }
+  .total-block .value.bs { color: #6dd6ff; }
+
+  /* Payment method */
+  #payment-methods { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pay-btn {
+    background: var(--dark3);
+    border: 2px solid var(--gray2);
     border-radius: 8px;
-    padding: 12px;
-    border: 1px solid var(--gris-borde);
+    color: var(--text);
+    padding: 9px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, background 0.2s;
   }
-  #pagomovil-fields.show { display: block; }
+  .pay-btn.active { border-color: var(--orange); background: var(--orange); color: #000; font-weight: 700; }
 
-  /* Producto manual */
-  .manual-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 8px; align-items: end;
+  #movil-extra {
+    display: none;
+    margin-top: 14px;
   }
-  @media(max-width:500px) { .manual-grid { grid-template-columns: 1fr; } }
+
+  /* Manual product */
+  #manual-product-form {
+    display: none;
+    margin-top: 14px;
+  }
+
+  /* Manual rate modal */
+  #rate-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000000cc;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+  }
+  #rate-modal.show { display: flex; }
+  .modal-box {
+    background: var(--dark2);
+    border: 2px solid var(--orange);
+    border-radius: 12px;
+    padding: 28px 24px;
+    width: 340px;
+    max-width: 95vw;
+  }
+  .modal-box h3 { color: var(--orange); margin-bottom: 16px; }
+  .modal-box input {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid var(--gray2);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 10px 12px;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    outline: none;
+  }
+  .modal-box input:focus { border-color: var(--orange); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+  /* Finish button */
+  #btn-finish {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    border-radius: 9px;
+    margin-top: 8px;
+  }
+
+  /* Operation number badge */
+  #op-badge {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--gray2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.1rem; }
+    .total-block .value { font-size: 1.1rem; }
+    th, td { font-size: 0.8rem; padding: 7px 6px; }
+    #btn-finish { font-size: 1rem; }
+  }
 
   /* Toast */
-  .toast {
-    position: fixed; bottom: 24px; right: 20px;
-    background: var(--naranja); color: #000;
-    padding: 12px 20px; border-radius: 8px;
-    font-weight: 700; font-size: 0.92rem;
-    box-shadow: 0 4px 16px #0008;
-    z-index: 9999; display: none;
-    max-width: 320px;
-  }
-  .toast.show { display: block; animation: fadeInOut 3s forwards; }
-  @keyframes fadeInOut {
-    0% { opacity:0; transform:translateY(20px); }
-    15% { opacity:1; transform:translateY(0); }
-    80% { opacity:1; }
-    100% { opacity:0; }
-  }
-  .op-num { color: var(--naranja-claro); font-size:0.8rem; text-align:right; margin-bottom:4px; }
-  .metodo-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
-  .metodo-btn {
-    flex:1; min-width:100px;
-    background: var(--gris-medio);
-    border: 2px solid var(--gris-borde);
-    color: var(--texto);
-    padding: 10px 8px;
-    border-radius: 8px;
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--orange);
+    color: #000;
     font-weight: 700;
-    font-size: 0.88rem;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    white-space: nowrap;
   }
-  .metodo-btn.selected { background: var(--naranja); color:#000; border-color: var(--naranja); }
-  .metodo-btn:hover { border-color: var(--naranja); }
-  .scroll-table { overflow-x: auto; }
-  .accion-col { width: 38px; }
-  .num-col { width: 34px; text-align:center; }
-  @media(max-width:700px) {
-    .tabla-items th, .tabla-items td { font-size: 0.78rem; padding: 6px 6px; }
-  }
+  #toast.show { opacity: 1; }
+
+  .bcv-status { font-size: 0.75rem; color: var(--text-muted); }
+  .bcv-status.ok { color: #6dff9a; }
+  .bcv-status.err { color: #ff7777; }
 </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <header>
-  <h1>🛒 Punto de Venta</h1>
-  <div class="tasa-widget">
-    <label>Tasa BCV (Bs/$)</label>
-    <input type="number" id="tasaBcv" step="0.01" min="1" placeholder="---" oninput="recalcTotales()"/>
-    <button class="btn-refresh" onclick="fetchTasa()" title="Actualizar tasa BCV">&#x21bb; BCV</button>
-    <span class="tasa-status" id="tasaStatus"></span>
+  <div>
+    <h1>🛒 Punto de Venta</h1>
+    <div id="op-badge">Operación #<span id="op-num">—</span></div>
+  </div>
+  <div id="bcv-bar">
+    <label>Tasa BCV (Bs/$):</label>
+    <span id="bcv-rate-display">Cargando...</span>
+    <span id="bcv-status" class="bcv-status"></span>
+    <button id="btn-refresh-bcv" onclick="fetchBCV()">↻ Actualizar</button>
+    <button id="btn-manual-rate" onclick="openRateModal()">✎ Manual</button>
   </div>
 </header>
 
-<div class="main">
-  <div class="op-num" id="opNumDisplay"></div>
+<!-- MANUAL RATE MODAL -->
+<div id="rate-modal">
+  <div class="modal-box">
+    <h3>Tasa Manual (Bs/$)</h3>
+    <input type="number" id="manual-rate-input" placeholder="Ej: 93.50" step="0.01" min="0">
+    <div class="modal-actions">
+      <button class="btn-gray" onclick="closeRateModal()">Cancelar</button>
+      <button class="btn-orange" onclick="applyManualRate()">Aplicar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<div class="container">
 
   <!-- CLIENTE -->
-  <div class="section">
-    <div class="section-title">📋 Datos del Cliente</div>
+  <div class="card">
+    <div class="section-title">👤 Datos del Cliente</div>
     <div class="form-grid">
       <div class="form-group">
         <label>Cédula</label>
-        <input type="text" id="clienteCedula" placeholder="V00000000" maxlength="12"/>
+        <input type="text" id="client-cedula" placeholder="V12345678" maxlength="12">
       </div>
       <div class="form-group">
         <label>Nombre y Apellido</label>
-        <input type="text" id="clienteNombre" placeholder="Nombre completo"/>
+        <input type="text" id="client-name" placeholder="Juan Pérez">
       </div>
       <div class="form-group">
         <label>Celular</label>
-        <input type="tel" id="clienteCelular" placeholder="04XX-XXXXXXX" maxlength="16"/>
+        <input type="tel" id="client-phone" placeholder="0412-1234567">
       </div>
     </div>
   </div>
 
-  <!-- AGREGAR PRODUCTOS -->
-  <div class="section">
-    <div class="section-title">🔍 Agregar Producto</div>
-    <div class="add-producto">
-      <div class="form-group" style="grid-column:1/-1">
-        <label>Buscar producto del inventario</label>
-        <div class="producto-search-wrap">
-          <input type="text" id="productoSearch" placeholder="Escribe para buscar..." autocomplete="off"
-            oninput="filtrarProductos()" onfocus="mostrarDropdown()" onkeydown="navDropdown(event)"/>
-          <div class="dropdown-list" id="dropdownList"></div>
+  <!-- PRODUCTOS -->
+  <div class="card">
+    <div class="section-title">📦 Agregar Producto</div>
+
+    <div id="product-area">
+      <div id="product-search-wrap">
+        <label style="font-size:0.82rem;color:var(--text-muted);display:block;margin-bottom:5px;">Buscar producto</label>
+        <input type="text" id="product-search" placeholder="Escribe para buscar..." autocomplete="off">
+        <div id="product-dropdown"></div>
+      </div>
+      <div id="qty-wrap">
+        <label>Cantidad</label>
+        <input type="number" id="qty-input" value="1" min="0.001" step="0.01">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <label style="font-size:0.82rem;color:transparent;">.</label>
+        <button class="btn-orange" onclick="addToCart()">+ Agregar</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <label style="font-size:0.82rem;color:transparent;">.</label>
+        <button class="btn-gray" onclick="toggleManualProduct()">+ Prod. Manual</button>
+      </div>
+    </div>
+
+    <!-- Selected product display -->
+    <div id="selected-product-info" style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;display:none;">
+      ✔ <span id="sel-prod-name" style="color:var(--text)"></span> — <span id="sel-prod-price" style="color:var(--orange);font-weight:700;"></span>
+    </div>
+
+    <!-- Manual product form -->
+    <div id="manual-product-form">
+      <div style="border-top:1px solid var(--gray);padding-top:14px;">
+        <div class="section-title" style="font-size:0.85rem;">Producto Manual (temporal)</div>
+        <div class="form-grid" style="margin-bottom:10px;">
+          <div class="form-group">
+            <label>Nombre del Producto</label>
+            <input type="text" id="manual-prod-name" placeholder="Nombre del producto">
+          </div>
+          <div class="form-group">
+            <label>Precio (USD)</label>
+            <input type="number" id="manual-prod-price" placeholder="0.00" step="0.01" min="0">
+          </div>
+          <div class="form-group">
+            <label>Cantidad</label>
+            <input type="number" id="manual-prod-qty" value="1" step="0.01" min="0.001">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label>Producto seleccionado</label>
-        <input type="text" id="productoNombreSelected" readonly placeholder="— ninguno —" style="background:#111;cursor:default;"/>
-      </div>
-      <div class="form-group">
-        <label>Precio USD</label>
-        <input type="number" id="productoPrecioSelected" readonly placeholder="0.00" style="background:#111;cursor:default;"/>
-      </div>
-      <div class="form-group">
-        <label>Cantidad</label>
-        <input type="number" id="productoQty" class="qty-input" value="1" min="0.001" step="any" style="width:100%;"/>
-      </div>
-      <div class="form-group" style="justify-content:flex-end;">
-        <button class="btn" onclick="agregarItem()" style="width:100%;">➕ Agregar</button>
+        <button class="btn-orange" onclick="addManualProduct()">+ Agregar Producto Manual</button>
+        <button class="btn-gray" style="margin-left:8px;" onclick="toggleManualProduct()">Cancelar</button>
       </div>
     </div>
   </div>
 
-  <!-- PRODUCTO MANUAL -->
-  <div class="section">
-    <div class="section-title">✏️ Agregar Producto Manual (no está en la lista)</div>
-    <div class="manual-grid">
-      <div class="form-group">
-        <label>Nombre del producto</label>
-        <input type="text" id="manualNombre" placeholder="Descripción del producto"/>
-      </div>
-      <div class="form-group">
-        <label>Precio USD (con IVA)</label>
-        <input type="number" id="manualPrecio" placeholder="0.00" step="any" min="0"/>
-      </div>
-      <div class="form-group">
-        <label>Cantidad</label>
-        <input type="number" id="manualQty" value="1" min="0.001" step="any"/>
-      </div>
-      <div class="form-group" style="justify-content:flex-end;">
-        <button class="btn btn-outline" onclick="agregarManual()" style="width:100%;">➕ Agregar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ITEMS -->
-  <div class="section">
-    <div class="section-title">🧾 Productos en la Venta</div>
-    <div class="scroll-table">
-      <table class="tabla-items">
+  <!-- CARRITO -->
+  <div class="card">
+    <div class="section-title">🧾 Carrito de Compra</div>
+    <div id="cart-table-wrap">
+      <table id="cart-table">
         <thead>
           <tr>
-            <th class="num-col">#</th>
+            <th>#</th>
             <th>Producto</th>
-            <th>P.Unit ($)</th>
-            <th>Cantidad</th>
-            <th>Subtotal ($)</th>
+            <th>Precio Unit. (USD)</th>
+            <th class="td-qty">Cantidad</th>
+            <th>Subtotal (USD)</th>
             <th>Subtotal (Bs)</th>
-            <th class="accion-col"></th>
+            <th></th>
           </tr>
         </thead>
-        <tbody id="itemsTbody">
-          <tr><td colspan="7" class="empty-msg">Sin productos agregados</td></tr>
+        <tbody id="cart-body">
+          <tr><td colspan="7" id="cart-empty">El carrito está vacío.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="totales-box" style="margin-top:14px;">
-      <div class="total-row">
-        <span class="total-label">Total en Dólares (USD)</span>
-        <span class="total-valor total-grande" id="totalUsd">$ 0.00</span>
+    <div id="totals-bar">
+      <div class="total-block">
+        <div class="label">TOTAL (USD)</div>
+        <div class="value" id="total-usd">$0.00</div>
       </div>
-      <div class="total-row">
-        <span class="total-label">Total en Bolívares (Bs)</span>
-        <span class="total-valor total-grande" id="totalBs">Bs 0.00</span>
+      <div class="total-block">
+        <div class="label">TOTAL (Bs.)</div>
+        <div class="value bs" id="total-bs">Bs. 0,00</div>
       </div>
     </div>
   </div>
 
-  <!-- METODO DE PAGO -->
-  <div class="section">
+  <!-- MÉTODO DE PAGO -->
+  <div class="card">
     <div class="section-title">💳 Método de Pago</div>
-    <div class="metodo-btns">
-      <button class="metodo-btn" id="btn-efectivo" onclick="selMetodo('efectivo')">💵 Efectivo</button>
-      <button class="metodo-btn" id="btn-debito" onclick="selMetodo('debito')">💳 Tarjeta Débito</button>
-      <button class="metodo-btn" id="btn-pagomovil" onclick="selMetodo('pagomovil')">📱 Pago Móvil</button>
+    <div id="payment-methods">
+      <button class="pay-btn active" data-method="efectivo" onclick="selectPayment('efectivo', this)">💵 Efectivo</button>
+      <button class="pay-btn" data-method="debito" onclick="selectPayment('debito', this)">🏧 Tarjeta Débito</button>
+      <button class="pay-btn" data-method="movil" onclick="selectPayment('movil', this)">📱 Pago Móvil</button>
     </div>
-    <div id="pagomovil-fields">
-      <div class="form-grid" style="margin-top:8px;">
+
+    <div id="movil-extra">
+      <div class="form-grid" style="margin-top:14px;">
         <div class="form-group">
-          <label>N° de Referencia</label>
-          <input type="text" id="pmRef" placeholder="Número de referencia"/>
+          <label>Número de Referencia</label>
+          <input type="text" id="movil-ref" placeholder="123456789">
         </div>
         <div class="form-group">
-          <label>Banco</label>
-          <select id="pmBanco">
-            <option value="">— Seleccionar banco —</option>
-            <option value="Banco de Venezuela">Banco de Venezuela</option><option value="Banesco">Banesco</option><option value="Mercantil">Mercantil</option><option value="BBVA Provincial">BBVA Provincial</option><option value="BNC">BNC</option><option value="Banplus">Banplus</option><option value="Bancamiga">Bancamiga</option><option value="Bicentenario">Bicentenario</option><option value="Del Tesoro">Del Tesoro</option><option value="Exterior">Exterior</option><option value="Activo">Activo</option><option value="Sofitasa">Sofitasa</option><option value="Plaza">Plaza</option><option value="Caroni">Caroni</option><option value="Agricola de Venezuela">Agricola de Venezuela</option><option value="100% Banco">100% Banco</option><option value="Bancrecer">Bancrecer</option><option value="Mi Banco">Mi Banco</option><option value="Venezolano de Crédito">Venezolano de Crédito</option><option value="BOD">BOD</option><option value="Citibank">Citibank</option><option value="Fondo Común">Fondo Común</option>
-          </select>
+          <label>Banco Emisor</label>
+          <input type="text" id="movil-bank" placeholder="Ej: Banesco, BDV...">
         </div>
         <div class="form-group">
-          <label>Celular asociado a la cuenta</label>
-          <input type="tel" id="pmCelular" placeholder="04XX-XXXXXXX"/>
+          <label>Teléfono de la Cuenta</label>
+          <input type="tel" id="movil-phone" placeholder="0412-1234567">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- GUARDAR -->
-  <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end; margin-top:4px;">
-    <button class="btn btn-outline" onclick="limpiarVenta()" style="min-width:140px;">🗑️ Nueva Venta</button>
-    <button class="btn" onclick="guardarVenta()" style="min-width:200px; font-size:1rem; padding:12px 24px;">
-      💾 Guardar y Descargar
-    </button>
-  </div>
-</div>
+  <!-- FINALIZAR -->
+  <button class="btn-orange" id="btn-finish" onclick="finishSale()">✅ Finalizar Venta y Guardar Registro</button>
 
-<div class="toast" id="toast"></div>
+</div><!-- /container -->
 
 <script>
-// ---- DATOS ----
-const PRODUCTOS = [{"nombre":"7up 1.5ml","precio":1.4036},{"nombre":"7up 1lt","precio":1.1948},{"nombre":"7UP Lata 355ml","precio":1.2528},{"nombre":"ABC Cookies","precio":0.7772},{"nombre":"Accion MultiUso en barra 300GR","precio":1.972},{"nombre":"Accion MultiUso Pastilla 130GR","precio":1.1136},{"nombre":"Ace 400gr","precio":1.9488},{"nombre":"Ace Detergente 800gr","precio":3.8976},{"nombre":"aceite de la consetida 500ml","precio":2.9},{"nombre":"Aceite de Soya Naturoil 850ml","precio":4.33},{"nombre":"Aceite de Soya Vatel 1l","precio":5.0},{"nombre":"Aceite Ideal 1lt","precio":4.0},{"nombre":"Aceite Ideal 430ml","precio":1.57},{"nombre":"Aceite Mazeite 1L","precio":5.2},{"nombre":"Aceite Portumesa 850ml","precio":3.2},{"nombre":"Aceite Vegetal Coposa 850Ml","precio":4.33},{"nombre":"Acqua Bella Natural 500ml","precio":1.3804},{"nombre":"Acqua Gasificada sabor limon 295ml","precio":3.0972},{"nombre":"Add Salsa de Ajo 150ml","precio":1.7168},{"nombre":"Add Salsa de Soya 150ml","precio":1.7168},{"nombre":"Add Salsa Inglesa 150ml","precio":1.7168},{"nombre":"Adobo Completo Iberia Sobre","precio":0.986},{"nombre":"Agua Minalba 1,5lt","precio":2.2504},{"nombre":"Agua Minalba 5l","precio":5.6028},{"nombre":"Agua Minalba 600Ml","precio":0.9976},{"nombre":"AJAX - desinfectante 500ml","precio":4.42},{"nombre":"Alcohol Antiseptico 240ml","precio":3.596},{"nombre":"Alcohol Spray 120ml","precio":3.6308},{"nombre":"Alfajor Cocoa","precio":1.4964},{"nombre":"Alfajores Carolina X3","precio":1.2992},{"nombre":"Alfajores Carolina X6","precio":2.5984},{"nombre":"alfajores cubierta de chocolate","precio":2.67},{"nombre":"ALFONZO RIVAS - Maizina Americana 120gr","precio":1.8},{"nombre":"ALFONZO RIVAS - Maizina Americana 400gr","precio":3.73},{"nombre":"ALFONZO RIVAS - Maizina Americana 90gr","precio":1.17},{"nombre":"Algodon Albe ","precio":4.8256},{"nombre":"ALIMEX - espalda cocida 1k","precio":12.06},{"nombre":"ALIMEX - Mortadela Especial 500g","precio":3.19},{"nombre":"ALIMEX Salchichas tipo Viena 225g","precio":4.08},{"nombre":"ALIMEX- Salchichas tipo Viena 450g","precio":7.52},{"nombre":"ALisoft Premium Papel x4","precio":2.4476},{"nombre":"Alival Bologna ","precio":5.9972},{"nombre":"ALIVE - Morado Polvo 500gr","precio":2.38},{"nombre":"ALIVE - Polvo Azul 500gr","precio":2.38},{"nombre":"ALIVE - Polvo Rosado 500gr","precio":2.51},{"nombre":"ALVE - algodon hidrofilo 25g","precio":5.3},{"nombre":"ALWAYS - ULTRAFINA - suave de 10und","precio":4.71},{"nombre":"Always Ultrasecas Dia","precio":4.5008},{"nombre":"ANIPOP - Chupetas Anillo","precio":0.35},{"nombre":"ARAUCA - gourcafe 200g","precio":3.74},{"nombre":"ARIEL - detergente en polvo 400g","precio":2.82},{"nombre":"Ariel Polvo 800gr","precio":4.5008},{"nombre":"Arroz Blanco MARY esmeralda 900gr","precio":3.0},{"nombre":"Arroz Blanco Mary Superior 900gr","precio":2.2},{"nombre":"Arroz Dorado Mary 800gr","precio":2.65},{"nombre":"Arroz Espiga Dorada Tipo I 900gr","precio":1.71},{"nombre":"Arroz Mary Premium","precio":2.75},{"nombre":"Arroz Mary Tradicional 900gr","precio":2.61},{"nombre":"Arroz Primor Clasico Superior 900gr","precio":2.26},{"nombre":"Arroz Primor Perlado de 900gr","precio":3.2944},{"nombre":"Arun Robin Hood Lomitos de atun en aceite","precio":2.25},{"nombre":"Arveja con Zanahoria Del Monte 300gr","precio":4.3964},{"nombre":"Arvejas Del monte 300gr","precio":3.4336},{"nombre":"ATUN - solido en aceite vegetal 170gr","precio":3.33},{"nombre":"Atun Eveba 119g en aceite vegetal","precio":3.0},{"nombre":"Atun Eveba Oliva 140gr","precio":3.72},{"nombre":"Atun Solido Aleta Amarilla Aceite Vegetal 119gr","precio":4.27},{"nombre":"Atun Sultana en Agua y aceite 170gr ","precio":3.45},{"nombre":"AVELINA - entera 250g","precio":1.37},{"nombre":"AVELINA - Fortificada Avena en Hojuelas 250gr","precio":1.36},{"nombre":"AVELINA - Tradicional Avena en Hojuelas 250gr","precio":1.3},{"nombre":"Avelina Avena en hojuelas tradicional 400gr","precio":1.6008},{"nombre":"Avelina Avena Instantanea 400g","precio":1.9488},{"nombre":"Avelina Fortificada 250gr","precio":1.3},{"nombre":"Avelina Hojuelas Enteras 400gr","precio":1.6936},{"nombre":"Avelina tradicional 250g","precio":1.2},{"nombre":"Avena en Hojuelas Doña Alicia 400gr","precio":1.9952},{"nombre":"Avena Qaker 200gr Original","precio":1.16},{"nombre":"Avena Qaker 400gr Original","precio":2.0184},{"nombre":"Avena Qaker 800gr Original","precio":4.2804},{"nombre":"AXION - lavaplatos en crema 235mg","precio":2.08},{"nombre":"AXION - lavaplatos en crema limon 235g","precio":3.78},{"nombre":"Axion con Bicarbonato de Sodio 7 en 1 450gr","precio":6.7164},{"nombre":"Axion limon 235gr","precio":3.0972},{"nombre":"Axion Multiuso 235gr","precio":2.2968},{"nombre":"Azucar amanecer 1k","precio":2.0},{"nombre":"Azucar Barzuca 900gr","precio":1.9},{"nombre":"Azucar Konfit","precio":1.72},{"nombre":"Azucar Montalban","precio":1.72},{"nombre":"Azucar Morena El Palacio 1000gr","precio":3.52},{"nombre":"BAMBOO - papel higienico","precio":0.23},{"nombre":"BAMBOO - servilletas pequeñas 160und","precio":1.03},{"nombre":"BARZUCA - Azucar 900gr","precio":1.74},{"nombre":"Belmont 10Und","precio":1.6356},{"nombre":"Belmont 20Und","precio":3.3988},{"nombre":"Belmont Detallado","precio":0.19},{"nombre":"Belmont Detallados","precio":0.1972},{"nombre":"BELMONT x10","precio":1.87},{"nombre":"BELMONT x20","precio":3.75},{"nombre":"BELVITA - hony 252g","precio":4.64},{"nombre":"BELVITA - kraker 234g","precio":5.14},{"nombre":"BIMBO - Pan Artesano","precio":3.25},{"nombre":"BIMBO - Pan Blanco","precio":2.15},{"nombre":"BIMBO - Rapiditas Diet","precio":3.43},{"nombre":"BIMBO - Rapiditas Mantequilla","precio":3.43},{"nombre":"BIMBO - Rapiditas Mediterraneas","precio":3.43},{"nombre":"BIMBO - Rapiditas Originales","precio":3.12},{"nombre":"Bimbo Pan Blanco","precio":2.0},{"nombre":"Blancox Blanqueador Cloro Desinfectante 500ml","precio":1.5428},{"nombre":"BOHEM - detallado surtidos","precio":0.13},{"nombre":"BOHEM Blue","precio":1.28},{"nombre":"BOHEM Blue","precio":1.276},{"nombre":"BOHEM Blue Detallado","precio":0.07},{"nombre":"BOHEM BLUE DETALLADO","precio":0.1044},{"nombre":"BOHEM Sandia","precio":2.2968},{"nombre":"BOHEM Sandia Detallado","precio":0.12},{"nombre":"BOHEM SANDIA DETALLADO","precio":0.1508},{"nombre":"BOHEM Sandia y mango","precio":2.32},{"nombre":"BOLI KRUNCH - pequeño 25g","precio":0.77},{"nombre":"BOLSAS BASURA 150L Calibre 8","precio":3.32},{"nombre":"BOLSAS BASURA 200L Calibre 8","precio":4.92},{"nombre":"bombillos bulbo led 6500k","precio":1.4036},{"nombre":"BONAROPA - xtra aroma 1l","precio":4.34},{"nombre":"Bonaropa Xtra Aroma 1l","precio":3.9556},{"nombre":"Borocanfor Original","precio":7.5168},{"nombre":"Brownie Cobertura de chocolate y mani","precio":1.9952},{"nombre":"BUZZY - Chicle Tattoo Hello kitty","precio":0.08},{"nombre":"BUZZY - Chicle Tattoo Minions","precio":0.08},{"nombre":"Cafe Arauca 200g","precio":4.11},{"nombre":"CAFE BRASIL - gourmet 100g","precio":2.02},{"nombre":"Cafe Brasil 100gr","precio":2.0},{"nombre":"Cafe brasil 200gr","precio":3.69},{"nombre":"Cafe Brasil 400gr","precio":5.8},{"nombre":"Cafe el Roble 250","precio":5.3012},{"nombre":"Cafe Flor De arauca 200g","precio":4.14},{"nombre":"Cafe Fruto Santo 200gr","precio":6.4},{"nombre":"CAFE KOLAO - gourmet 200g","precio":4.42},{"nombre":"Cafe Kolao 100gr","precio":2.43},{"nombre":"Cafe Kolao 200gr","precio":4.86},{"nombre":"Cafe Kolao 450gr","precio":9.86},{"nombre":"Cafe Madrid 100gr","precio":2.21},{"nombre":"Cafe Madrid 250gr","precio":4.84},{"nombre":"Cafe Pancho Paredes 100gr","precio":1.42},{"nombre":"Cafe Roble 100gr","precio":2.12},{"nombre":"Cafe Santa Cruz 100gr","precio":2.0},{"nombre":"Cafe Santa Cruz 250gr","precio":4.8},{"nombre":"CALEDONIA - galletas maria 25g c/u","precio":1.66},{"nombre":"Canelitas","precio":0.6032},{"nombre":"CANELITAS - galletas","precio":0.66},{"nombre":"CAPRI - vermicelli fino 1kg","precio":3.17},{"nombre":"Capri Tornillo 500g","precio":1.4},{"nombre":"Capri Vermicelly 1kg","precio":3.0},{"nombre":"CARABOBO - leche entera 1l","precio":3.56},{"nombre":"CARAMELOS CHAO","precio":0.06},{"nombre":"CARAMELOS DE JENJIBRE","precio":1.32},{"nombre":"Caramelos de leche con Chocolate","precio":0.0812},{"nombre":"Caramelos Freegells Eucalipto","precio":0.4988},{"nombre":"Caramelos Freegells Extra Forte","precio":0.4988},{"nombre":"Caramelos Halls 3gr","precio":0.116},{"nombre":"Caramelos Halls Cereza","precio":1.044},{"nombre":"Caramelos Halls Mora Azul","precio":1.044},{"nombre":"Caramelos Loquino","precio":0.0696},{"nombre":"Caramelos Mentas Chao","precio":0.1044},{"nombre":"Caramelos Mini Bum ","precio":0.0928},{"nombre":"Caraota Negra El Estio 500gr","precio":3.5264},{"nombre":"Caraotas Negras Dona Alicia 400g","precio":1.65},{"nombre":"Caraotas Negras MARY 400g","precio":2.5},{"nombre":"CARAVELLE - cepillo de lavar","precio":3.35},{"nombre":"Cari Pluma Extra Especial 500gr","precio":1.9952},{"nombre":"CARICIAS - papel higienico 4und","precio":1.71},{"nombre":"CASABE - en paquete","precio":2.8},{"nombre":"CAsabe 400g","precio":2.64},{"nombre":"Cepillo de Color Carabelle","precio":2.3432},{"nombre":"cepillo de dientes colgate triple accion 2pack","precio":4.9996},{"nombre":"Cepillo de lavar color ","precio":1.3456},{"nombre":"cepillo dental colgate premier medio","precio":1.856},{"nombre":"Cereal Fiocco Hojuelas Azuca 300gr","precio":3.7004},{"nombre":"Champu Palmolive OPTIMS 400ml","precio":11.3448},{"nombre":"CHARMY - chocolate 32g c/u","precio":2.4},{"nombre":"CHARMY - fresa 32g c/u","precio":2.4},{"nombre":"CHARMY - vainilla 32g c/u","precio":2.4},{"nombre":"Charmy 16g","precio":0.232},{"nombre":"Cheese tris 50g","precio":1.102},{"nombre":"Cheesetris 150g","precio":3.0044},{"nombre":"Cheetos Horneados Boliqueso 25gr","precio":0.8932},{"nombre":"CHICCO - motas de algodon 100und","precio":11.07},{"nombre":"Chicharron Pigsy 60gr","precio":1.1948},{"nombre":"Chicle Agogo","precio":0.3944},{"nombre":"Chicle Bomba","precio":0.3016},{"nombre":"Chicle Guds","precio":0.3016},{"nombre":"Chicle Meteoro TNT Acido","precio":0.0928},{"nombre":"Chicle TNT super Acido","precio":0.0464},{"nombre":"Chico 100 motas del algodon","precio":10.0688},{"nombre":"CHINOTTO - 1.5L","precio":1.76},{"nombre":"CHINOTTO - 355ml","precio":0.58},{"nombre":"Chinotto 1.5","precio":1.9024},{"nombre":"CHIS KESITOS - 45G","precio":1.17},{"nombre":"CHIS KESITOS TOCINETA - 45g","precio":1.17},{"nombre":"CHIS TRIS 50g","precio":1.72},{"nombre":"Chiskesito Tocineta 145gr","precio":2.4012},{"nombre":"Chiskesito Tocineta 45g","precio":0.9976},{"nombre":"Chiskesitos 145gr","precio":2.4012},{"nombre":"ChisKesitos 45g","precio":0.9976},{"nombre":"Choco Kids 200ml","precio":0.9396},{"nombre":"choco krispis pops ","precio":3.5032},{"nombre":"CHOCO LISTO - Bolsa 400gr","precio":5.7},{"nombre":"choco ponque tia lulu","precio":1.798},{"nombre":"Choco Rosca Festival 38gr","precio":1.7516},{"nombre":"Choco Tigo Palitos","precio":1.3456},{"nombre":"Chocolate de Leche Jet 11gr","precio":0.5568},{"nombre":"Chocolate de taza st. Moritz","precio":2.552},{"nombre":"Chocolate Savoy","precio":1.9024},{"nombre":"Chocolisto 400g","precio":5.6956},{"nombre":"Chupa pop ","precio":0.3016},{"nombre":"CHUPA POP - Chupeta Detallada","precio":0.27},{"nombre":"CHUPETA EXPLOSIVA","precio":0.58},{"nombre":"CHUPETA LOKIÑO SURTIDA","precio":0.22},{"nombre":"Chupetas Big Bom XXL ","precio":0.2784},{"nombre":"Chupetas Bom Bom Bum","precio":0.1972},{"nombre":"Chupi Wom por unidad","precio":0.1972},{"nombre":"Cigarro Universal Detallado","precio":0.1044},{"nombre":"Cigarro Universal por caja","precio":2.088},{"nombre":"Cigarros Consul x20","precio":2.2968},{"nombre":"Cigarros detallado luckies","precio":0.2668},{"nombre":"Cigarros Lucky eclipse","precio":3.7468},{"nombre":"Cigarros Lucky Nova","precio":3.7468},{"nombre":"CLUB SOCIAL - original 6uni","precio":3.48},{"nombre":"Club Social Original 26gr","precio":0.9744},{"nombre":"COCA COLA - Bombita 355ml","precio":0.87},{"nombre":"COCA COLA - original 1.5l","precio":2.35},{"nombre":"coca cola 2l","precio":2.5056},{"nombre":"Coca Cola Original 1l","precio":1.3688},{"nombre":"Coca Cola Original 355ml","precio":0.696},{"nombre":"CocaCola 1.5L","precio":1.7052},{"nombre":"COCOSETE","precio":1.79},{"nombre":"Cocosete","precio":1.5544},{"nombre":"cocosette260k","precio":1.3108},{"nombre":"Colado de Durazno Cotoperi 110g","precio":0.8004},{"nombre":"Colado de Mango Cotoperi","precio":0.8004},{"nombre":"colado de manzana compota cotoperi 110g","precio":0.928},{"nombre":"colado de pera compota cotoperi 110 g","precio":0.928},{"nombre":"COLGATE - Cepillo Triple Accion 2Pac","precio":4.42},{"nombre":"COLGATE - maxima protexion 90g","precio":2.27},{"nombre":"COLGATE - normal 144g","precio":4.65},{"nombre":"COLGATE - triple accion 60ml","precio":2.62},{"nombre":"Colgate Clasica 90gr","precio":1.9952},{"nombre":"Colgate Luminous White 250ml","precio":9.628},{"nombre":"Colgate Total Enjuague Bucal Morado","precio":9.2452},{"nombre":"Colgate triple Accion 60ml","precio":2.378},{"nombre":"Colgate Triple Accion 60ml","precio":2.5056},{"nombre":"combo de salsas tomorade de 3 unidades","precio":3.5148},{"nombre":"Compota Chiqui Chups","precio":1.6356},{"nombre":"Compota Chiqui Chups","precio":1.6356},{"nombre":"Compota Gerber Frutas Mixtas","precio":1.0788},{"nombre":"Compota Gerber Pera","precio":1.0788},{"nombre":"Consul Detallado","precio":0.1508},{"nombre":"Cooltivo Mainz Dulce en lata 285gr","precio":5.6724},{"nombre":"COPOSA - aceite vegetal 850ml","precio":5.51},{"nombre":"COTOPERI - colado de pera 110g","precio":0.93},{"nombre":"crema colgate menta 100ml","precio":4.5008},{"nombre":"crema colgate menta 180gr","precio":4.3964},{"nombre":"crema colgate triple accion 75mg","precio":3.8512},{"nombre":"Crema de arroz Mary","precio":1.5312},{"nombre":"Crema de leche la pastora 450g","precio":4.5},{"nombre":"Crema de leche la pastora BOLSA 250gr","precio":2.75},{"nombre":"Crema de leche purisima 250g","precio":4.1992},{"nombre":"Crema de leche purisima 500g","precio":5.452},{"nombre":"Crema dental Alident","precio":0.928},{"nombre":"Cronch Flakes 300g","precio":3.7468},{"nombre":"Cronch Flakes Karymba 250gr","precio":3.5032},{"nombre":"CRUNCHIS GREGORY - 150g","precio":1.46},{"nombre":"CRUNCHIS GREGORY - 54G","precio":0.46},{"nombre":"cruz cafe 100g","precio":1.9},{"nombre":"CRUZCAFE - clasico 200g","precio":3.38},{"nombre":"Cuajada","precio":3.8},{"nombre":"Cubito Maggi detallado","precio":0.3944},{"nombre":"Cubitos De Pollo Maggi 12UND","precio":3.8048},{"nombre":"Cubitos de pollo Maggi 8 Unidades","precio":2.6448},{"nombre":"DANBISK - PALITO EXTREME","precio":3.32},{"nombre":"DANBISK - Pepitas","precio":0.51},{"nombre":"Dandy ","precio":1.1948},{"nombre":"Dedos Cookies","precio":0.7772},{"nombre":"DEL MONTE - guisantes 425g","precio":3.43},{"nombre":"DEL MONTE - guisantes y zanahorias 241g","precio":2.9},{"nombre":"DEL MONTE - guisantes y zanahorias 411g","precio":4.16},{"nombre":"DEL MONTE - Maiz Dulce Dorado Entero 220g","precio":2.61},{"nombre":"Del Monte Maiz Dulce Entero 220g","precio":2.8652},{"nombre":"DEXX - recolector de heces","precio":0.82},{"nombre":"Diablitos Under Wood 50gr","precio":2.1924},{"nombre":"Diablitos under wood 54g","precio":2.8536},{"nombre":"Diebalito Underwood 115gr","precio":4.3036},{"nombre":"DIPROMON - Cloro","precio":1.87},{"nombre":"DIPROMON - lavaplatos 1l","precio":3.63},{"nombre":"Dipromon Cloro","precio":1.9952},{"nombre":"DIPROMON Cloro Jabonoso","precio":2.5984},{"nombre":"Dipromon Desinfectante bambu","precio":2.552},{"nombre":"Dipromon Desinfectante Cherry ","precio":2.552},{"nombre":"Dipromon Desinfectante Lavanda","precio":2.552},{"nombre":"Dipromon Jabon liquido","precio":3.77},{"nombre":"Dipromon Lavaplatos","precio":3.538},{"nombre":"disoponible","precio":0.1624},{"nombre":"disponible","precio":0.1624},{"nombre":"Don Toallin 50 Hojas","precio":1.7864},{"nombre":"DOÑA ALICIA - Avena en Hojuelas 400gr","precio":1.53},{"nombre":"Doritos 45gr","precio":1.2412},{"nombre":"Doritos Mega Queso 150gr","precio":3.5032},{"nombre":"DOVE - original 90g","precio":6.93},{"nombre":"Dove Tratamiento Con Proteina","precio":10.9968},{"nombre":"El Chichero Chicha en polvo","precio":2.7956},{"nombre":"El Prado Bologna de Pollo con aceituna y pimenton","precio":7.7836},{"nombre":"El Prado Pechuga Cocida de Pavo","precio":12.9224},{"nombre":"El Tunal -  Nectar de Durazno 1L","precio":2.7028},{"nombre":"EL TUNAL - Huevos","precio":8.55},{"nombre":"EL TUNAL - HUEVOS DETALLADOS","precio":0.28},{"nombre":"EL TUNAL - HUEVOS MEDIO CARTON","precio":4.28},{"nombre":"EL TUNAL - Jugo de Naranja 1L","precio":3.12},{"nombre":"EL TUNAL - Jugo de Naranja 500ml","precio":2.11},{"nombre":"EL TUNAL - JUGOS SURTIDOS 1L","precio":2.58},{"nombre":"EL TUNAL - JUGOS SURTIDOS 500ml","precio":1.71},{"nombre":"El Tunal - Nectar de manzana 1L","precio":2.7028},{"nombre":"El Tunal - Nectar de Pera 1L","precio":2.7028},{"nombre":"El tunal Jugo de manzana 200ml","precio":0.9976},{"nombre":"El tunal Jugo de naranja","precio":3.0044},{"nombre":"El Tunal Naranja 200ml","precio":0.9976},{"nombre":"El Tunal Nectar de Durazno 500ml","precio":1.9952},{"nombre":"El Tunal Nectar de Manzana 500ml","precio":1.9952},{"nombre":"El Tunal Nectar de Naranja 500ml","precio":1.9952},{"nombre":"El Tunal Nectar de Pera 500ml","precio":1.9952},{"nombre":"El Tunal Salchichas Cocida de Pollo 450gr","precio":3.654},{"nombre":"Ellas Toallas Higienicas Combo 8+8","precio":2.5984},{"nombre":"ESPECIE - Adobo Completa Eliza","precio":0.38},{"nombre":"ESPECIE - Anis Estrellado","precio":0.5},{"nombre":"ESPECIE - Bicarbonato de sodio","precio":0.43},{"nombre":"ESPECIE - Canela concha","precio":0.48},{"nombre":"ESPECIE - Canela Molida","precio":0.48},{"nombre":"ESPECIE - Clavito","precio":0.43},{"nombre":"ESPECIE - Guayabita","precio":0.46},{"nombre":"ESPECIE - Polvo de Hornear","precio":0.34},{"nombre":"ESPIGA DORADA - arroz blanco 900g","precio":1.96},{"nombre":"ESPONJA DE BRILLO - jabonosa 3und","precio":1.9},{"nombre":"Esponja de brillo jabonosa","precio":1.9024},{"nombre":"Esponja Izy","precio":1.1832},{"nombre":"Esponja Max Hogar Acero Espiral","precio":1.16},{"nombre":"Esponja MAX HOGAR dDeluxe Doble uso","precio":1.0324},{"nombre":"Esponja MAX Hogar Deluxe Oro Plata","precio":1.7516},{"nombre":"Esponja Max Hogar Deluxe Soft","precio":1.624},{"nombre":"Esponja Sultana Surtida","precio":1.972},{"nombre":"Esponja Washup","precio":1.1832},{"nombre":"Esponsa Sultana ","precio":1.972},{"nombre":"Europapel Servilletas 160 ud","precio":2.4592},{"nombre":"EVEBA - atun solido 140g","precio":2.87},{"nombre":"EVEBA - atun solido en aceite vegetal 170g","precio":2.87},{"nombre":"EVEBA - sardinas 170g","precio":1.53},{"nombre":"EVEBA Atun Solido En Aceite Vegetal 140gr","precio":3.15},{"nombre":"EVERY NIGHT - talco 24h 85g","precio":5.66},{"nombre":"Everynight Talco Antibacterial","precio":5.6608},{"nombre":"EVEVA - atun aleta amarilla en aceite 170gr","precio":4.07},{"nombre":"EVEVA - atun en trozos con vegetales 170gr","precio":3.58},{"nombre":"EVEVA - atun solido en salsa picante 140gr","precio":3.13},{"nombre":"EVEVA - atun solido natural 170gr","precio":3.57},{"nombre":"EVEVA - sardina en salsa picante 170gr","precio":1.6},{"nombre":"FABULOSO - ultra frescura 500ml","precio":3.97},{"nombre":"FAMA DE AMERICA - premium 250g","precio":4.85},{"nombre":"Fama de america 100g","precio":1.9},{"nombre":"Fama de America 250g","precio":4.66},{"nombre":"FAMILIA - cafeteria 100und","precio":1.43},{"nombre":"FAMILIA - papel higienico extra grande 4und","precio":3.53},{"nombre":"FAMILIA - Servilletas Medianas 100und","precio":0.94},{"nombre":"FAMILIA - Toallin JUMBO PACK","precio":3.11},{"nombre":"FANTA - naranja 1.5l","precio":1.67},{"nombre":"FANTA - uva 1.5l","precio":1.66},{"nombre":"Fanta 1.5L","precio":1.6588},{"nombre":"FESTIVAL - Galletas 33.6g","precio":0.53},{"nombre":"Flan SONRISA sin caramelo 46g","precio":1.6472},{"nombre":"FLIPS - Dulce de leche 220gr","precio":5.13},{"nombre":"Flips 220gr","precio":5.6028},{"nombre":"Fluocard dent 36gr","precio":1.2528},{"nombre":"FOSFOROS EL SOL","precio":0.2},{"nombre":"Fosforos el Sol","precio":0.2088},{"nombre":"FREEGELLS - Eucalipto Menta","precio":0.48},{"nombre":"FREEGELLS - Extra Strong Menthol","precio":0.48},{"nombre":"Frescolita","precio":1.9024},{"nombre":"FRESCOLITA - 1.5L","precio":1.76},{"nombre":"FRESCOLITA - 355ml","precio":0.87},{"nombre":"FRICA - Jugos 1L","precio":3.56},{"nombre":"FRICA - Naranjada","precio":4.47},{"nombre":"Frica Nectar de naranja 1L","precio":3.8976},{"nombre":"Frijol Rojo El Estio 500gr","precio":4.4312},{"nombre":"FRITZ - Ahumadita 145gr","precio":2.54},{"nombre":"FRITZ - Salsa Cheddar 145gr","precio":2.54},{"nombre":"FRITZ - salsa de maiz","precio":2.16},{"nombre":"FRITZ - Salsa de tomate","precio":1.09},{"nombre":"FRITZ - Salsa Mayonesa 150gr","precio":1.87},{"nombre":"FRITZ - Tripack soja, inglesa y ajo","precio":5.15},{"nombre":"Fritz Cheddar","precio":2.3084},{"nombre":"Fritz Salsa Ahumatida Tocineta","precio":1.9952},{"nombre":"Fritz Salsa de Maiz ","precio":2.4012},{"nombre":"Fritz Salsa de tomate ","precio":1.1948},{"nombre":"Frutino Gelatina","precio":1.4036},{"nombre":"FRUTIÑO - Bebida Sobre 10g","precio":0.92},{"nombre":"FRUTIÑO - gelatina 14g","precio":1.38},{"nombre":"Galak Tubito","precio":0.6032},{"nombre":"Galleta Chispas de chocolate Cocoa","precio":1.4964},{"nombre":"Galleta De Soda Premium 26gr","precio":0.3828},{"nombre":"Galleta Mary Tentazione 200gr","precio":2.32},{"nombre":"Galleta Nucita wafer","precio":0.464},{"nombre":"Galleta Oreo Fresa","precio":0.638},{"nombre":"Galleta Oreo Original","precio":0.5684},{"nombre":"Galleta Tip Top","precio":0.9048},{"nombre":"Galletas Caledonia Maria Pq","precio":0.6148},{"nombre":"Galletas CALEDONIA Maria Premium","precio":1.6588},{"nombre":"Galletas Charmy","precio":1.4036},{"nombre":"Galletas Charmy Caledonia 216gr","precio":2.1808},{"nombre":"Galletas Colombina Wafer","precio":0.174},{"nombre":"Galletas de soda El Sol","precio":2.5404},{"nombre":"Galletas Festival 33gr","precio":0.6032},{"nombre":"Galletas Festival 54gr","precio":0.986},{"nombre":"Galletas Maria Puig","precio":2.204},{"nombre":"Galletas Marilu 216gr","precio":3.0044},{"nombre":"Galletas Muu","precio":0.8352},{"nombre":"Galletas Oreo","precio":1.4036},{"nombre":"Galletas Rikas Vainilla","precio":0.174},{"nombre":"Galletas Tartaletas Wynco 140gr","precio":1.3804},{"nombre":"Galletas Waffer Isabela 100g","precio":1.2992},{"nombre":"Galletas Waffer Tigo Fresa","precio":0.8236},{"nombre":"Galletas Waffer Tigo Vainilla","precio":0.8236},{"nombre":"Garbanzos MARY 500g","precio":4.5},{"nombre":"GATORADE - Surtido 500ml","precio":2.3},{"nombre":"Gatorade Rojo Frutas tropicales","precio":2.7724},{"nombre":"Gatorade Surtido","precio":2.5172},{"nombre":"Gel Fijador Every Nigth Power 100gr","precio":3.0276},{"nombre":"Gel Fijador Every Nigth Strong 100gr","precio":3.0276},{"nombre":"Gel Fijador Every Nigth Winner 100gr","precio":3.0276},{"nombre":"Gelatina SONRISA sabores 66g","precio":1.9952},{"nombre":"GILLETE - Prestobarba H/M","precio":1.51},{"nombre":"Gillete Anti Transpirante Roll on","precio":4.466},{"nombre":"Gillete Prestobarba","precio":1.3224},{"nombre":"Gillete Spray Cool Wave","precio":7.888},{"nombre":"Glup Cola","precio":0.58},{"nombre":"Glup Cola 1l","precio":1.0672},{"nombre":"Glup Fresh","precio":0.58},{"nombre":"Glup Fresh 1l","precio":1.0092},{"nombre":"Glup Manzana","precio":0.58},{"nombre":"GOLDEN - manzana 1.5l","precio":1.18},{"nombre":"Golden Kolita","precio":1.508},{"nombre":"Golden Manzanita","precio":1.4384},{"nombre":"Golden Manzanita 1.5L","precio":1.4036},{"nombre":"Golden Pina","precio":1.4384},{"nombre":"Golpe 45gr","precio":1.2064},{"nombre":"Gregory 150Gr","precio":1.4964},{"nombre":"Gregory 54g","precio":0.4988},{"nombre":"GUDS - Chicle de menta","precio":0.3},{"nombre":"guisantes con zanahoria de monnte 241g","precio":3.1784},{"nombre":"guisantes del monte 425g","precio":4.3732},{"nombre":"Guisantes del Monte Con zanahoria","precio":4.3964},{"nombre":"HALLS - Caramelos","precio":1.02},{"nombre":"Halls Negro","precio":0.8004},{"nombre":"Harina 7 Granos Gde","precio":2.0},{"nombre":"Harina 7 granos pequeno","precio":1.0},{"nombre":"Harina de Mainz Blanco Santoni","precio":1.35},{"nombre":"Harina de Maiz Mary 900gr","precio":1.41},{"nombre":"Harina de Maiz Masia 900gr","precio":2.146},{"nombre":"Harina de Maiz Pan 1k","precio":1.7},{"nombre":"Harina de Maiz Santoni 900gr","precio":2.0416},{"nombre":"Harina de trigo Robinson Leudante","precio":1.53},{"nombre":"Harina de trigo Robinson tradicional","precio":1.42},{"nombre":"Harina Mary Leudante 900Gr","precio":2.3},{"nombre":"Harina Pan Semillas nutritivas","precio":3.3988},{"nombre":"Harina Todo Uso Mary 900gr","precio":1.9},{"nombre":"HEAD & SHOULDERS - 2 en 1 shampoo 375ml","precio":8.58},{"nombre":"Head And Shoulers Acondicionador","precio":10.498},{"nombre":"HEINZ - Salsa de tomate 397g","precio":2.91},{"nombre":"Heinz Compota 186gr","precio":1.102},{"nombre":"Heinz Mostaza Preparada Original 113gr","precio":2.2852},{"nombre":"HILO - pabilo 1und","precio":0.51},{"nombre":"HOLSUM - Pan blanco","precio":1.4},{"nombre":"HOLSUM - Pan de mantequilla","precio":2.93},{"nombre":"HOLSUM - Pan Integral","precio":3.25},{"nombre":"Holsum Pan Blanco","precio":1.55},{"nombre":"Hony Bran","precio":3.9904},{"nombre":"Household Napkins","precio":5.4984},{"nombre":"Huevos detallados","precio":0.3016},{"nombre":"Huevos Docena ","precio":3.0},{"nombre":"Huevos El tunal","precio":7.5},{"nombre":"Huevos medio carton","precio":3.75},{"nombre":"IBERIA - pasta de tomate","precio":8.29},{"nombre":"IBERIA - pasta de tomate 500g","precio":4.42},{"nombre":"Indosa Bebida Lactea 180GR","precio":1.8},{"nombre":"ISABELA - Tortinhas","precio":1.38},{"nombre":"ISABELA - Waffers","precio":1.19},{"nombre":"ITALIA - Bizcochos Premium 125g","precio":2.48},{"nombre":"ITALICO - visking 1k","precio":12.7},{"nombre":"Italico Jamon Cocido Estandar","precio":9.9528},{"nombre":"Jabon Ariel En Polvo Poder y Cuidado 450gr","precio":3.0276},{"nombre":"Jabon Axion Limon MultiSuperficies","precio":1.0672},{"nombre":"Jabon de Bano Dove original","precio":6.3104},{"nombre":"Jabon de Bano Johnsons 110gr","precio":2.7144},{"nombre":"Jabon de Bano Lux 110gr","precio":2.784},{"nombre":"Jabon de Bano Moncler 90gr","precio":2.378},{"nombre":"Jabon Dove Cuidado Indulgente","precio":6.3104},{"nombre":"Jabon Dove Cuidado Karite","precio":6.3104},{"nombre":"Jabon Johnsons Almendras Y Avena","precio":2.7144},{"nombre":"Jabon Johnsons Daily Care","precio":2.7144},{"nombre":"Jabon Johnsons Sosas y sandalo","precio":2.7144},{"nombre":"Jabon LAK Azul","precio":0.9048},{"nombre":"Jabon LAK Morado","precio":0.9048},{"nombre":"Jabon LAK Rosa","precio":0.9048},{"nombre":"Jabon LAK Verde","precio":0.9048},{"nombre":"Jabon Palmolive Neutro Balance 100mg","precio":3.5032},{"nombre":"jabon Palmolive Oliva y aloe Vera","precio":1.74},{"nombre":"Jabon Protex Avena","precio":1.566},{"nombre":"Jabon Protex Carbon Detox","precio":1.566},{"nombre":"jabon Protex fresh","precio":1.6008},{"nombre":"Jabon Protex Herbal","precio":1.566},{"nombre":"Jabon Ultrex 1kg","precio":2.3432},{"nombre":"Jabon Ultrex 250","precio":0.9048},{"nombre":"Jabon Ultrex 500","precio":1.4964},{"nombre":"jamon endiablado plumrose","precio":2.5868},{"nombre":"Jamon endiablado Plumrose 110gr","precio":3.6424},{"nombre":"Jamon Espalda tipo Visking Italico","precio":9.9992},{"nombre":"JC masa Facil mediana 500gr","precio":3.2828},{"nombre":"jengibre","precio":1.3224},{"nombre":"JGB - almohadillas faciales de algodon 80und","precio":6.35},{"nombre":"JGB Pads de algodon","precio":5.7768},{"nombre":"JOHNSONS - jabon de baño rosas y sandalo 110g","precio":3.87},{"nombre":"Jugo Yuky Pak Durazno 250ml","precio":1.102},{"nombre":"Jugos Frica 1L","precio":3.5612},{"nombre":"Kefir La Gran Pastora 400ml","precio":3.6424},{"nombre":"Kelloggs Choco Zucaritas 250gr","precio":3.5032},{"nombre":"kelloggs Corn Flakes 230gr","precio":3.0972},{"nombre":"Kelloggs Zucaritas 250gr","precio":3.0972},{"nombre":"KELLOGS - Choco Krispis","precio":3.57},{"nombre":"KELLOGS - Choco Zucaritas","precio":3.56},{"nombre":"KELLOGS - Corn Flakes","precio":3.05},{"nombre":"KELLOGS - Corp Pops","precio":3.21},{"nombre":"KELLOGS - Zucaritas","precio":3.21},{"nombre":"Kellogs Corn Pops","precio":3.0972},{"nombre":"KEPA - vinagre 1000cm","precio":1.61},{"nombre":"KEPA - vinagre 500cm","precio":0.83},{"nombre":"KESITOS - pequeño 25g","precio":0.87},{"nombre":"Ketchup Pampero","precio":2.9},{"nombre":"Ketchup Underwood Jamon Endiablado 380gr","precio":4.1644},{"nombre":"Ketchup Underwood Salsa de tomate 387","precio":4.1644},{"nombre":"Konga durazno","precio":0.7192},{"nombre":"Konga Limon","precio":0.7192},{"nombre":"Konga Tizana","precio":0.7192},{"nombre":"KOTEX - esencial toallas femeninas con alas 8und","precio":2.1},{"nombre":"Kotex Discreta","precio":2.0996},{"nombre":"Kotex UltraProtect","precio":1.8908},{"nombre":"Kraker Bran","precio":5.1388},{"nombre":"kraker bran detallado","precio":0.8004},{"nombre":"Kraker Detalladas","precio":0.51},{"nombre":"LA CAMPIÑA - Leche en polvo Completa 200g","precio":4.84},{"nombre":"LA GRAN PASTORA - yogurt de botella durazno 400ml","precio":2.49},{"nombre":"LA GRAN PASTORA - yogurt de botella kefir 400ml","precio":3.32},{"nombre":"La pastora Yogurt De Durazno 400ml","precio":1.4732},{"nombre":"La pastora Yogurt de fresa 400ml","precio":1.9952},{"nombre":"Lady Speed Stick 30gr","precio":2.5868},{"nombre":"Lady Speed Stick Barra","precio":9.0016},{"nombre":"Lady Speed Stick Roll on","precio":4.9996},{"nombre":"LAS LLAVES - detergente en polvo bebe 400g","precio":1.98},{"nombre":"LAS LLAVES - Detergente Floral 400gr","precio":1.98},{"nombre":"LAS LLAVES - Fragancia Floral Doble accion 400g","precio":1.54},{"nombre":"LAS LLAVES - jabon en panela para lavar la ropa 200g","precio":1.43},{"nombre":"LAS LLAVES - multiuso en crema 250g","precio":2.82},{"nombre":"LAS LLAVES - multiuso en crema 500g","precio":5.14},{"nombre":"Las llaves detergente 900gr","precio":3.7468},{"nombre":"Las llaves detergente bebe 400g","precio":1.7516},{"nombre":"Las LLaves Detergente Bebe 900g","precio":3.7468},{"nombre":"LAs llaves detergente Floral 400gr","precio":2.1576},{"nombre":"Las LLaves detergente Limon 400g}","precio":1.7516},{"nombre":"Las llaves Jabon Tradicional 200gr","precio":0.9976},{"nombre":"Las llaves limpieza Marea Cristal 500cc","precio":2.5056},{"nombre":"las llaves multiuso crema 500 g","precio":5.1388},{"nombre":"Las Llaves Multiuso en Crema 250gr","precio":2.8188},{"nombre":"Leche Carabobo 1L","precio":3.3},{"nombre":"Leche Completa en polvo Torondoy 400gr","precio":6.25},{"nombre":"Leche Completa en polvo Torondoy 900gr","precio":14.75},{"nombre":"Leche completa Purisima","precio":3.51},{"nombre":"Leche condensada de lata parmalat 395g","precio":5.0},{"nombre":"Leche Condensada Natulac 50gr","precio":1.3456},{"nombre":"Leche Condensada Tigo 395gr","precio":2.146},{"nombre":"Leche en polvo Vitale 360g","precio":5.18},{"nombre":"Leche La Campina 200gr","precio":4.31},{"nombre":"Leche La campina 400gr","precio":8.75},{"nombre":"Leche La campina 900gr","precio":13.35},{"nombre":"Leche la Pastora 900ml","precio":1.57},{"nombre":"Leche Purisima Descremada","precio":3.9},{"nombre":"Leche purisima deslactosada","precio":3.6},{"nombre":"Leche San Simon 125gr","precio":3.4},{"nombre":"Leche San simon 400gr","precio":6.3},{"nombre":"Leche San simon 900gr","precio":11.44},{"nombre":"LENGUA DE SUEGRA","precio":1.16},{"nombre":"Lengua de suegra","precio":1.1484},{"nombre":"Lentejas La Sureña 500gr","precio":3.3988},{"nombre":"Lentejas MARY 400mg","precio":3.6},{"nombre":"Limpia Pisos Brilla King Lavanda Jazmin 1000ml","precio":2.842},{"nombre":"Limpia Pisos Brilla King Manzana Canela 1000ml","precio":2.842},{"nombre":"LIPTON - limon 1.5l","precio":5.72},{"nombre":"LIPTON - Surtido 500ml","precio":1.98},{"nombre":"LIPTON - Te de bolsa CITRUS","precio":4.78},{"nombre":"LIPTON - Te de bolsa EARL GREY","precio":4.78},{"nombre":"LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY","precio":4.78},{"nombre":"LIPTON - Te de bolsa YELLOW LABEL","precio":4.78},{"nombre":"Lipton 1.5L","precio":5.4984},{"nombre":"Lipton de 500ml","precio":1.9952},{"nombre":"Listerine Cool Mint Zero Alcohol 360ml","precio":15.718},{"nombre":"Lomo de Atun premium Tigo 160g","precio":2.8},{"nombre":"lucky Eclipse Detallado","precio":0.2},{"nombre":"LUCKY STRIKE Eclipse","precio":3.99},{"nombre":"MAGGI - Cubitos de pollo","precio":0.51},{"nombre":"MAGGI - Sopa Fideo","precio":2.3},{"nombre":"Maiz de Cotufa La Sureña 500gr","precio":1.856},{"nombre":"Maiz para Cotufas Mary","precio":2.6},{"nombre":"Maizina Americana 400g","precio":3.99},{"nombre":"MALTIN - Malta de botella 250ml","precio":0.85},{"nombre":"maltin de Botella 250ML","precio":0.9164},{"nombre":"MALTIN POLAR - malta 1.5l","precio":2.33},{"nombre":"MALTIN POLAR - malta desechable 250ml","precio":1.04},{"nombre":"MALTIN POLAR - malta desechable 350ml","precio":1.26},{"nombre":"Maltin polar 1.5lt","precio":2.3316},{"nombre":"Maltin polar lata 250ml","precio":1.044},{"nombre":"Maltin Polar lata 355ml","precio":1.2992},{"nombre":"Mantecada 150g","precio":2.7028},{"nombre":"Mantequilla Mavesa 250gr","precio":2.14},{"nombre":"Mantequilla Mavesa 500gr","precio":3.49},{"nombre":"Mantequilla Purisima con Sal ","precio":5.69},{"nombre":"Mantequilla Purisima sin Sal ","precio":4.89},{"nombre":"Mantequilla Torondoy con Sal 200gr","precio":7.0},{"nombre":"Margarina MIRASOL 454Gr","precio":3.2},{"nombre":"MARGARINA NELLY 250","precio":1.83},{"nombre":"Margarina Nelly 500g","precio":3.56},{"nombre":"MARGARITA - sardinas en aceite vegetal","precio":1.45},{"nombre":"MARGARITA - sardinas en salsa de tomate","precio":1.67},{"nombre":"Margarita Sardinas Tomate","precio":1.59},{"nombre":"Marilu tubular de chocolate 216gr","precio":2.5636},{"nombre":"Marshmallows Angelitos 5g","precio":0.1624},{"nombre":"MARY - aceite de oliva extra virgen 500ml","precio":14.99},{"nombre":"MARY - caraotas 400g","precio":2.29},{"nombre":"MARY - Crema de arroz 450gr","precio":1.31},{"nombre":"MARY - esmeralda 900g","precio":3.16},{"nombre":"MARY - garbanzos 500g","precio":4.16},{"nombre":"MARY - harina de maiz blanco 900g","precio":1.77},{"nombre":"MARY - Harina de trigo leudante","precio":2.45},{"nombre":"MARY - Harina de trigo Todo uso","precio":1.7},{"nombre":"MARY - lentejas 400g","precio":3.26},{"nombre":"MARY - maiz para cotufas 400g","precio":2.33},{"nombre":"MARY - superior 900g","precio":2.02},{"nombre":"MARY - tornillo 500g","precio":1.73},{"nombre":"MARY - vermicelli 1kg","precio":2.73},{"nombre":"MARY - vermicelli 500g","precio":1.48},{"nombre":"MARY Vermicelly Superior 1kg","precio":3.0},{"nombre":"MAVESA - Margarina Todo uso 250gr","precio":1.95},{"nombre":"MAVESA - Margarina Todo uso 500gr","precio":3.17},{"nombre":"MAVESA - Mayonesa 175g","precio":2.92},{"nombre":"MAVESA - vinagre 1l","precio":2.33},{"nombre":"MAVESA - vinagre 500ml","precio":1.4},{"nombre":"MAVESA- Mayonesa 445g","precio":5.83},{"nombre":"MAX HOGAR - esponja de acero inoxidable","precio":1.16},{"nombre":"MAX HOGAR - esponja doble uso","precio":1.03},{"nombre":"MAX HOGAR - esponja soft","precio":1.62},{"nombre":"Mayonesa Del monte","precio":1.4964},{"nombre":"Mayonesa Kraft 175gr","precio":2.03},{"nombre":"Mayonesa La Giralda 445gr","precio":3.8048},{"nombre":"Mayonesa Mavesa 175gr","precio":2.79},{"nombre":"Mayonesa Mavesa 445gr","precio":4.4},{"nombre":"Media Cuajada","precio":1.7},{"nombre":"MEGA AROS - Cereal lonchera","precio":0.61},{"nombre":"Mezcla para Cachapas Pan","precio":3.3988},{"nombre":"MI GURT - durazno 125g","precio":1.59},{"nombre":"MI GURT - fresa 125g","precio":1.59},{"nombre":"Miel de Aveja La Encantada 500gr","precio":13.5836},{"nombre":"Miel de Aveja La Encantada Oso 350gr","precio":8.6304},{"nombre":"Migurt Fresa Vaso 125 ml","precio":1.81},{"nombre":"Milenium Bologna de pollo ","precio":6.5772},{"nombre":"Milenium Fiambre de cerdo","precio":10.3356},{"nombre":"Milenium mini Jamon cocido","precio":9.9992},{"nombre":"Milenium mini pavo","precio":12.5048},{"nombre":"Milenium Mini Pierna","precio":12.5048},{"nombre":"Milenium Mortadela de pollo ","precio":2.9928},{"nombre":"Milenium Salchichas a granel","precio":6.09},{"nombre":"MILLENIUM - mortadela de pollo 600g","precio":3.03},{"nombre":"MILLENNIUM - bologna con pimenton 1k","precio":6.71},{"nombre":"MILLENNIUM - economico de pierna 1k","precio":10.56},{"nombre":"MILLENNIUM - mini pechuga de pavo 1k","precio":14.33},{"nombre":"MILLENNIUM - mini pierna superior 1k","precio":13.03},{"nombre":"MILLENNIUM - mortadela extra 1k","precio":6.23},{"nombre":"MILLENNIUM - salchichas a granel 1k","precio":8.98},{"nombre":"MINALBA - agua mineral 1.5l","precio":2.02},{"nombre":"Mini Samba Fresa","precio":0.6496},{"nombre":"MIRASOL - Margarina 500gr","precio":3.43},{"nombre":"MONEDAS DE CHOCOLATE","precio":0.06},{"nombre":"Monedas de chocolate","precio":0.0464},{"nombre":"MORITZ - Latte Leche","precio":1.21},{"nombre":"mortadela del arepero 500g","precio":2.9464},{"nombre":"Mortadela Extra Milenium","precio":6.85},{"nombre":"Mortadela Tipo Espalda Caracas","precio":4.56},{"nombre":"Mostaza Del Monte","precio":1.9024},{"nombre":"MR BROWN - Arequipe","precio":1.64},{"nombre":"Mr Brown Brownie","precio":1.4964},{"nombre":"MUCCA - Galletas","precio":0.96},{"nombre":"MultiClean detergente Fragancia floral 400","precio":1.4036},{"nombre":"MultiClean Detergente Fragancia Floral 900g","precio":2.9},{"nombre":"MUNCHY - triple play 70g","precio":2.95},{"nombre":"Muss Honey Coco Oil Acondicionador","precio":13.3632},{"nombre":"Muss Honey Coco Oil Tratamiento","precio":13.3632},{"nombre":"Naranja Cotoperi 500ml","precio":1.6936},{"nombre":"Naranjada Cotoperi 1.5l","precio":3.3988},{"nombre":"Natulac Colado de manzana Compota 186gr","precio":2.1344},{"nombre":"Natulac Frutas Tropicales","precio":2.1344},{"nombre":"Natulac Leche Condensada 340gr","precio":3.8976},{"nombre":"Natulac Pera","precio":2.1344},{"nombre":"NATUROIL - aceite de soya 850ml","precio":5.73},{"nombre":"nectaR COTOPRERI 1.5ML","precio":4.8024},{"nombre":"Nectar de durazno 500ml","precio":1.5428},{"nombre":"nectar de manzana cotoperi 500ml","precio":1.5892},{"nombre":"nectar de pera cotoperi 500ml","precio":1.5892},{"nombre":"NELLY - Margarina 250gr","precio":1.66},{"nombre":"NELLY - Margarina 500gr","precio":3.24},{"nombre":"NESTEA - limon 520gr","precio":7.05},{"nombre":"Nestea Durazno 520gr","precio":6.7976},{"nombre":"Nestea Limon 520G","precio":6.7976},{"nombre":"Nestea sobre 90gr","precio":1.4964},{"nombre":"netar de durazno cotoperi 500ml","precio":1.5892},{"nombre":"NEVADA - Agua mineral 600ml","precio":1.01},{"nombre":"NO USAR","precio":3.2944},{"nombre":"NO USAR","precio":2.204},{"nombre":"NOSOTRAS - toallas naturales invisibles 10und","precio":1.14},{"nombre":"NOSTRAS - proteccion v normal 15 und","precio":1.3},{"nombre":"Nucita Tubo 35gr","precio":1.972},{"nombre":"Nutellini en crema ","precio":0.4988},{"nombre":"Nutiva U-Fresh Mango 200ml","precio":0.6148},{"nombre":"Nutiva U-Fresh Pera 200ml","precio":0.6264},{"nombre":"Nutiva U-Fresh Piña Naranja 200ml","precio":0.6264},{"nombre":"Nutri bella Celulas madre 27ml","precio":2.9},{"nombre":"Nutri Keratine Max sin Sal","precio":10.498},{"nombre":"Nutri Restaura Max Acondicionador","precio":10.498},{"nombre":"Nutri Restaura Max Shampoo","precio":10.498},{"nombre":"Nutrit Anticaspa Acondicionador","precio":10.498},{"nombre":"Nutrit Anticaspa Shampoo","precio":10.498},{"nombre":"Nutrit Cuidado Natural Acondicionador","precio":10.498},{"nombre":"Nutrit Cuidado Natural Shampoo","precio":10.498},{"nombre":"Oral-b 70gr","precio":4.988},{"nombre":"OREO - Fresa 96gr","precio":2.78},{"nombre":"OREO - Vainilla 96gr","precio":2.78},{"nombre":"oreo 32g","precio":0.6612},{"nombre":"OSOLE - napolitana","precio":1.75},{"nombre":"OSOLE - pizza 200g","precio":1.75},{"nombre":"Osole Bolonesa 200g","precio":1.9488},{"nombre":"Osole Mermelada Durazno 200gr","precio":5.0576},{"nombre":"Osole Mermelada Fresa 200gr","precio":3.1784},{"nombre":"Osole Mermelada Guayaba 200gr ","precio":3.1784},{"nombre":"Osole Mermelada Mora 200gr","precio":3.1784},{"nombre":"Osole pizza 200g","precio":1.7516},{"nombre":"Pabilo","precio":0.5104},{"nombre":"Palitos Danibisk 30gr","precio":0.58},{"nombre":"PALMERITAS","precio":0.46},{"nombre":"Palmeritas","precio":0.464},{"nombre":"Palmitos Enteros Mary 400gr","precio":5.8232},{"nombre":"PALMOLIVE - natural 85g","precio":1.54},{"nombre":"PALMOLIVE - neutro balance 100g","precio":3.27},{"nombre":"PAMPERO - Ketchup 198g","precio":1.9},{"nombre":"PAMPERO - Ketchup 397g","precio":2.87},{"nombre":"PAN - Harina de maiz 1k","precio":1.7},{"nombre":"PAN - Sandwich","precio":2.87},{"nombre":"PAN - Sandwich Integral","precio":2.87},{"nombre":"pan canilla de anjon joli","precio":2.7028},{"nombre":"Pan Canilla de Oregano","precio":1.9},{"nombre":"Pan Canilla Normal","precio":2.25},{"nombre":"pan de banquete ","precio":1.45},{"nombre":"Pan de leche","precio":1.7},{"nombre":"Pan Frances","precio":1.7},{"nombre":"PAN MORITA","precio":0.79},{"nombre":"Pan pasta de guayaba pequeña","precio":0.5916},{"nombre":"Pan Perro","precio":1.8},{"nombre":"pan sadwich avena ","precio":2.7608},{"nombre":"Pan sandwich","precio":2.2},{"nombre":"pan sandwich integral","precio":2.7608},{"nombre":"Pan Sandwichy Multicereal La Estacion","precio":2.69},{"nombre":"Pan Siciliano La Estacion","precio":1.58},{"nombre":"PAN TOVAREÑO","precio":1.96},{"nombre":"Pan Tovareño","precio":1.85},{"nombre":"Panela","precio":2.0},{"nombre":"panelon tigo 25 g","precio":0.8004},{"nombre":"Panque Cocoa","precio":1.044},{"nombre":"panque Vainilla trigo de Oro","precio":1.2876},{"nombre":"Pantene Pro'v Crema de peinar Colageno 300cc","precio":9.9992},{"nombre":"Pantene Pro-v Crema de peinar Liso 300ml","precio":9.9992},{"nombre":"Pantene Pro-v restauracion 400ml","precio":10.9968},{"nombre":"papas RIzadas ","precio":0.6264},{"nombre":"Papel Aluminio Selva","precio":2.5404},{"nombre":"Papel Bamboo Detallado","precio":0.232},{"nombre":"Papel Caricias x4","precio":1.8676},{"nombre":"Papel Elite Duo Triple Hoja 4 Rollos","precio":5.8464},{"nombre":"Papel Higienico Familia ","precio":3.8976},{"nombre":"Papel Rosal Plus Rojo 4 Rollos 180 Hojas P","precio":1.9372},{"nombre":"Papel Rosal Plus Verde 4 Rollos 180 Hojas P","precio":2.436},{"nombre":"Papel Scott Ride Max Doble Hoja 4 Rollo","precio":4.1992},{"nombre":"Papelon de  Durazno Montalban 115gr","precio":2.4592},{"nombre":"Paque vainilla-chcolate trigo de oro","precio":1.1948},{"nombre":"Paquete Club social","precio":3.5032},{"nombre":"PARMALAT - El Chichero Bolsa 200gr","precio":2.52},{"nombre":"PARMALAT - leche condensada 395g","precio":5.65},{"nombre":"PARMALAT - Leche en polvo 400gr","precio":7.39},{"nombre":"Parmalat Alimento Lacteo 400gr","precio":7.0},{"nombre":"Pasta Capri Premium Codito 1K","precio":3.29},{"nombre":"Pasta Capri Premium Tornillo 500gr","precio":1.85},{"nombre":"Pasta Capri Vegetales Tornillo 500gr","precio":3.14},{"nombre":"Pasta Corta MARY Tornillo 500Gr","precio":1.9},{"nombre":"pasta corta premium pluma 500g","precio":2.2},{"nombre":"Pasta de Tomate Fergos 500gr","precio":5.162},{"nombre":"Pasta de tomate Iberia 200g","precio":3.9904},{"nombre":"Pasta de tomate Iberia 500g","precio":7.7024},{"nombre":"pasta larga mary vermicelli 1kg","precio":3.5032},{"nombre":"Pasta MARY tradicional Vermicelly","precio":1.6},{"nombre":"Pasta Plumitas Primor 1K","precio":3.13},{"nombre":"pasta PRIMOR dedales 1Kg","precio":2.9},{"nombre":"pasta Primor Tornillos 1KG","precio":2.8},{"nombre":"Pasta Primor Vermicelli 500g","precio":1.624},{"nombre":"Pasteladas","precio":0.464},{"nombre":"Pastelitos de Guayaba ","precio":0.5916},{"nombre":"Pepitas danibisk","precio":0.5104},{"nombre":"Pepito Original 25gr","precio":1.0788},{"nombre":"Pepito Original 80gr","precio":1.9024},{"nombre":"Pepsi - 350ml Botella retornable","precio":0.59},{"nombre":"Pepsi 1,5l","precio":1.4036},{"nombre":"Pepsi 350ml","precio":0.7192},{"nombre":"PEQUEÑIN - suavidad 80 und","precio":2.78},{"nombre":"PIGSY - familiar 60g","precio":1.38},{"nombre":"PINGUINITO - mini","precio":0.5},{"nombre":"PINGUINITOS - 80g","precio":2.51},{"nombre":"PINGÜINITOS COOKIES & CREAM - 80g","precio":2.51},{"nombre":"Pinguinitos mini","precio":0.4988},{"nombre":"PLATANITOS DE BOLSA TRANSPARENTE","precio":1.28},{"nombre":"Platanitos de bolsa transparente","precio":0.9976},{"nombre":"Platanitos Natu Chips 150gr","precio":3.364},{"nombre":"Platanitos Natu Chips Ondulados 145gr","precio":4.7444},{"nombre":"Platanitos Tom 80g","precio":1.3108},{"nombre":"Polvoron","precio":0.7076},{"nombre":"POLVORONES - Galletas","precio":0.75},{"nombre":"ponque de chocolate ponquesitos","precio":0.9976},{"nombre":"ponque de vainilla ponquesitos","precio":0.9976},{"nombre":"Ponque Tia Lulu Vainilla","precio":1.682},{"nombre":"POPCRONCH - chocolate 30grs","precio":0.45},{"nombre":"Popetas Caramelo 44.4g","precio":1.508},{"nombre":"Pote de ajo","precio":2.5},{"nombre":"POWERADE - 500ml","precio":2.23},{"nombre":"powerade bebida energisante 500ml","precio":1.9952},{"nombre":"PRIMOR - dedales extra especial 1kg","precio":2.65},{"nombre":"PRIMOR - perlado 900g","precio":2.81},{"nombre":"PRIMOR - superior 900g","precio":2.26},{"nombre":"Primor Dedales 500gr","precio":1.624},{"nombre":"Primor Extra Especial Vermicelly 1Kg","precio":2.3},{"nombre":"Primor Pasta Plumitas","precio":1.4},{"nombre":"Proembuti Mortadela de Pollo 100gr","precio":1.93},{"nombre":"Protectores Diarios nosotras 15und","precio":1.2296},{"nombre":"PROTEX - avena 330g","precio":3.2},{"nombre":"pudin de chocolate SONRISA 72g","precio":1.8096},{"nombre":"PURISIMA - Leche Completa","precio":3.5},{"nombre":"PURISIMA - Leche el polvo","precio":4.33},{"nombre":"QUAKER - Avena en Hojuelas 200gr","precio":0.91},{"nombre":"QUAKER - Avena En hojuelas 400gr","precio":1.79},{"nombre":"QUAKER - Avena En hojuelas Original 800gr","precio":0.91},{"nombre":"QUESO - blanco 1k","precio":8.45},{"nombre":"QUESO - Mozarella","precio":16.59},{"nombre":"queso ahumado","precio":9.0016},{"nombre":"Queso Amarillo","precio":17.14},{"nombre":"Queso Blanco ","precio":8.2},{"nombre":"Queso Cheddar","precio":3.1552},{"nombre":"Queso crema la gran pastora Tina 250","precio":4.1528},{"nombre":"Queso Criollo","precio":8.2},{"nombre":"Queso Fundido Rikesa Tocineta 300gr","precio":7.4936},{"nombre":"Queso Mozzarella","precio":11.4},{"nombre":"Queso Mozzarella Amarillo","precio":12.5},{"nombre":"Queso Palmi Bufala","precio":13.36},{"nombre":"Raquety queso","precio":0.6264},{"nombre":"Refresco Golden Kolita 1.5L","precio":1.5776},{"nombre":"Refresco Golden narajanja 1.5L","precio":1.5892},{"nombre":"Refresco Golden piña 1.5L","precio":1.5776},{"nombre":"Refresco Golden uva 1.5L","precio":1.508},{"nombre":"requeson de bolsa","precio":1.4964},{"nombre":"Rexona Spray Desodorante ","precio":11.2868},{"nombre":"RICOTA - PARAMO","precio":2.26},{"nombre":"Ricota Grande ","precio":2.5984},{"nombre":"Ricota Pequeña","precio":1.4964},{"nombre":"Rifa","precio":0.0},{"nombre":"RIKESA - Cheddar","precio":6.15},{"nombre":"RIKESA - Cheddar Original 200gr","precio":4.95},{"nombre":"Rikesa Original 300gr","precio":6.496},{"nombre":"Rosal Plus 4 rollos XG","precio":2.9928},{"nombre":"Rufles Snack 125gr","precio":4.408},{"nombre":"Rufles Snack Queso 125gr","precio":4.872},{"nombre":"SAL MAR - refinada 1kg","precio":0.91},{"nombre":"Sal Meru","precio":0.9048},{"nombre":"SAL MERU - fina 1kg","precio":0.91},{"nombre":"Sal Ven","precio":0.5},{"nombre":"Salchi Prado Salchicha Cocida de Pollo 440gr","precio":5.6376},{"nombre":"Salchi Prado Salchicha Viena 440gr","precio":6.6236},{"nombre":"Salchicha a granel Millenium","precio":6.902},{"nombre":"salsa de ajo tomodore 150ml","precio":1.16},{"nombre":"salsa de soya tomodore 150ml","precio":1.16},{"nombre":"Salsa de Tocineta","precio":3.1552},{"nombre":"salsa de tomate HEINZ 198g","precio":1.7052},{"nombre":"salsa de tomate HEINZ 397g","precio":2.7956},{"nombre":"Salsa de tomate Pampero 198g","precio":1.9024},{"nombre":"salsa inglesa tomodore 150ml","precio":1.16},{"nombre":"Salsa Osole Napolitana 200gr","precio":1.7516},{"nombre":"Salsa Osole Napolitana 340 gr","precio":2.146},{"nombre":"Samba Fresa gde","precio":1.2992},{"nombre":"Santoni Arroz Premium","precio":1.6588},{"nombre":"Sardinas Eveba en aceite","precio":1.7},{"nombre":"Sardinas Marbonita tomate","precio":0.98},{"nombre":"Sardinas Margarita Aceite Vegetal","precio":1.59},{"nombre":"SaVital Shampoo Complejo Hialuronico y Sabila","precio":10.498},{"nombre":"SAVOY - (cricri, rikiti)","precio":2.19},{"nombre":"SAVOY - Mini 32gr","precio":1.16},{"nombre":"SAVOY - SAMBA 32gr","precio":1.68},{"nombre":"SAVOY - Toronto Unidad","precio":1.0},{"nombre":"SCHWEPPES - Soda 355ml Bombita","precio":1.26},{"nombre":"SCOTT - mega absorb 45und","precio":2.45},{"nombre":"Scott Rinde max Individual","precio":0.638},{"nombre":"Secret Anti Transpirante Roll on","precio":4.234},{"nombre":"SELVA - papel de aluminio 7mt","precio":2.54},{"nombre":"Servilletas Familia 100 Servilletas","precio":1.6588},{"nombre":"Servilletas Familia Cafeteria 100 servilletas","precio":1.6008},{"nombre":"servilletas pequeña bamboo","precio":1.0324},{"nombre":"SHAMPOO - Sobre 18g","precio":0.74},{"nombre":"Shampoo Dove","precio":10.9968},{"nombre":"Shampoo Head & Shoulders 18ml","precio":0.7424},{"nombre":"Shampoo Head And Shoulders 2 en 1","precio":7.5864},{"nombre":"Shampoo MUSS honey Coco","precio":13.3632},{"nombre":"Soda Minalba","precio":1.4616},{"nombre":"soda schweppes 355ml","precio":1.102},{"nombre":"SONRISSA - flan sin caramelo 46g","precio":1.62},{"nombre":"SONRISSA - gelatina con sabor a cereza 66g","precio":1.97},{"nombre":"SONRISSA - gelatina con sabor a frambuesa 66g","precio":1.97},{"nombre":"SONRISSA - gelatina de limon 66g","precio":1.97},{"nombre":"SONRISSA - gelatina sabor a uva 66g","precio":1.97},{"nombre":"SONRISSA - pudin de chocolate 72g","precio":1.81},{"nombre":"Sopa De Pollo Con Fideos Maggi 62gr","precio":3.0972},{"nombre":"Speed Stick 30gr","precio":2.5868},{"nombre":"Speed stick Barra","precio":9.0016},{"nombre":"Speed stick Roll on","precio":5.0808},{"nombre":"SPEEDSTICK - 30gr","precio":2.35},{"nombre":"SUAVITEL - Surtidos 180ml","precio":1.68},{"nombre":"Suavitel 180ml","precio":1.9952},{"nombre":"Suavizante Buonaropa XTRA 3lt","precio":5.5912},{"nombre":"SULTANA - toallitas humedas 72 und","precio":5.8},{"nombre":"Sultana Toallitas Humedas","precio":5.278},{"nombre":"Super pega","precio":0.696},{"nombre":"Super popy","precio":0.3016},{"nombre":"Super Rombo - Jabon pasta 200gr","precio":1.38},{"nombre":"Suspiros","precio":0.2552},{"nombre":"Susy ","precio":1.5544},{"nombre":"SUSY - Mini","precio":1.09},{"nombre":"TASTY - vainilla 212ml","precio":1.29},{"nombre":"Te Lipton de bolsa","precio":4.8024},{"nombre":"Tequenos","precio":4.4428},{"nombre":"tequenos P","precio":3.9556},{"nombre":"Testing producto temporal 2","precio":1.16},{"nombre":"TIA LULU - Mantecada 150gr","precio":3.12},{"nombre":"TIA LULU - Ponque Vainilla","precio":1.97},{"nombre":"TIGO - crema a base de leche 200g","precio":2.24},{"nombre":"TIGO - Panelon","precio":1.14},{"nombre":"Tigo Crema De Leche","precio":2.2968},{"nombre":"TIP TOP - Galletas","precio":1.37},{"nombre":"Tip top Chocolate","precio":1.16},{"nombre":"TNT - Chicle Super Acido Meteoro","precio":0.07},{"nombre":"TNT - Super Acido Chicle","precio":0.05},{"nombre":"toalla sanitaria lotex esencial","precio":1.74},{"nombre":"Toallas Humedas Pequenin 80UND","precio":2.7956},{"nombre":"Toallas Nosotras natural invisible 10 und","precio":1.2528},{"nombre":"Toallin Familia Jumbo doble hoja","precio":3.4452},{"nombre":"Toallin Scott","precio":2.4476},{"nombre":"Toallitas Humedas natural Feeling","precio":4.4312},{"nombre":"Toallitas Humesdas Winny 24 UND","precio":2.9348},{"nombre":"Tocinetikas","precio":0.6032},{"nombre":"TOCINETIKAS - original 16g","precio":0.74},{"nombre":"TODDY - Pote 400gr","precio":6.79},{"nombre":"Toddy 100gr","precio":2.2968},{"nombre":"Toddy 200gr","precio":4.2224},{"nombre":"Toddy 400gr","precio":7.25},{"nombre":"TOMA2 - Galletas","precio":0.6},{"nombre":"Toma2 chips","precio":0.5104},{"nombre":"TOMODORE - Salsa de Ajo","precio":1.06},{"nombre":"TOMODORE - salsa Queso Cheddar","precio":3.47},{"nombre":"TOMODORE - vainilla 150ml","precio":1.24},{"nombre":"Tortilla Bimbo diet","precio":3.2944},{"nombre":"Tortilla Bimbo Rapiditas Clasicas","precio":3.0044},{"nombre":"Tortillas Bimbo Mantequilla","precio":3.2944},{"nombre":"Tortillas bimbo Mediterraneo","precio":3.2944},{"nombre":"TRIDENT - MORA AZUL 153gr","precio":0.82},{"nombre":"trident Menta","precio":0.1044},{"nombre":"Trident Mora","precio":0.9976},{"nombre":"Trident Mora Azul","precio":0.1044},{"nombre":"TRIGO DE ORO - Panque de vainilla","precio":1.29},{"nombre":"Tripleplay Familiar","precio":2.9928},{"nombre":"Trululu Aros","precio":0.1972},{"nombre":"trululu sabores","precio":0.6032},{"nombre":"TWINKIE - Mora","precio":0.57},{"nombre":"ULTREX - detergente en polvo 250g","precio":0.85},{"nombre":"ULTREX - detergente en polvo 2Kg","precio":6.33},{"nombre":"ULTREX - detergente en polvo 500g","precio":1.59},{"nombre":"ULTREX - detergente en polvo Manzana 1Kg","precio":3.16},{"nombre":"UNDER WOOD - diablitos 54g","precio":2.19},{"nombre":"UNIVERSAL Cigarrillos","precio":2.35},{"nombre":"UNIVERSAL Detallado","precio":0.12},{"nombre":"Vainilla","precio":1.0556},{"nombre":"Vainilla Tasty","precio":1.2876},{"nombre":"vela liviana luminarias de colores y blancas","precio":0.3364},{"nombre":"VELAS - Liviana luminaria de clores y blancas","precio":0.3},{"nombre":"VELON","precio":5.61},{"nombre":"velon luminarias grande","precio":6.1596},{"nombre":"velon luminarias mediano","precio":4.2224},{"nombre":"velon luminarias pequeño","precio":1.9256},{"nombre":"Vinagre de manzana 500ml","precio":1.5544},{"nombre":"Vinagre Ideal 1lt","precio":0.9744},{"nombre":"vinagre kepa 1l","precio":1.6008},{"nombre":"Vinagre Kepa 500ml","precio":1.4036},{"nombre":"Vinagre Mavesa 1lt","precio":2.7028},{"nombre":"Vinagre Mavesa 500ml","precio":1.624},{"nombre":"Wanita Regulsr con Alas 10pcs","precio":1.5428},{"nombre":"Wiener Salchicha Cocida 220gr","precio":3.3524},{"nombre":"WYNCO - Marshmallows Rellenos de mermelada","precio":0.15},{"nombre":"Xen Talco Antibacterial","precio":5.2896},{"nombre":"yesquero bic maxi","precio":1.798},{"nombre":"YESQUERO GLOBAL","precio":0.38},{"nombre":"Yesquero Magnifico","precio":0.3944},{"nombre":"yesqueros bic mini","precio":1.3804},{"nombre":"Yogurt Banana Tigo Tigurt 125gr","precio":1.0672},{"nombre":"Yogurt con Cereal Lagran Pastora 150ml","precio":2.9348},{"nombre":"Yogurt Ensalada del Fruta Tigo Tigurt 125gr","precio":0.9976},{"nombre":"yogurt griego cocoa","precio":2.8},{"nombre":"Yogurt Liquido Durazno La Gran Pastora 400ml","precio":2.7028},{"nombre":"Yogurt Liquido Fresa La Gran Pastora 400ml","precio":2.7028},{"nombre":"Yogurt Liquido Piña La Gran Pastora 400ml","precio":2.7028},{"nombre":"Yogurt Migurt liquido 250gr","precio":2.7028},{"nombre":"Yogurt Migurt Liquido de 125gr","precio":1.5892},{"nombre":"YUKERY - nectar de pera 250ml","precio":1.26},{"nombre":"Yukery Durazno 250ml","precio":1.0788},{"nombre":"Yukery Manzana 250ml","precio":1.4616},{"nombre":"Yukery Pera 250ml","precio":1.4616},{"nombre":"YUKY-PAK - nectar de manzana 250ml","precio":1.17}];
-const BANCOS = ["Banco de Venezuela", "Banesco", "Mercantil", "BBVA Provincial", "BNC", "Banplus", "Bancamiga", "Bicentenario", "Del Tesoro", "Exterior", "Activo", "Sofitasa", "Plaza", "Caroni", "Agricola de Venezuela", "100% Banco", "Bancrecer", "Mi Banco", "Venezolano de Crédito", "BOD", "Citibank", "Fondo Común"];
+// ===================== DATA =====================
+let products = [];
+let cart = [];
+let selectedProduct = null;
+let bcvRate = 0;
+let manualRate = false;
+let paymentMethod = 'efectivo';
+let operationNumber = 1;
 
-// ---- ESTADO ----
-let items = [];
-let metodoPago = '';
-let opCounter = parseInt(localStorage.getItem('posOpCounter') || '1');
-let dropdownIndex = -1;
-let dropdownItems = [];
-let selectedProducto = null;
+// Load op number from localStorage
+(function(){
+  const saved = localStorage.getItem('pos_op_number');
+  if (saved) operationNumber = parseInt(saved);
+  document.getElementById('op-num').textContent = String(operationNumber).padStart(6,'0');
+})();
 
-// ---- INIT ----
-window.addEventListener('DOMContentLoaded', () => {
-  actualizarOpNum();
-  fetchTasa();
-});
-
-function actualizarOpNum() {
-  document.getElementById('opNumDisplay').textContent = `Operación N° ${String(opCounter).padStart(6,'0')}`;
-}
-
-// ---- TASA BCV ----
-async function fetchTasa() {
-  const st = document.getElementById('tasaStatus');
-  st.textContent = 'Actualizando...';
+// ===================== LOAD PRODUCTS =====================
+async function loadProducts() {
   try {
-    // Intentar via CORS proxy
-    const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.bcv.org.ve/');
-    const res = await fetch(url, {signal: AbortSignal.timeout(8000)});
-    const data = await res.json();
-    const html = data.contents;
-    // Buscar el valor del dolar en el HTML del BCV
-    const match = html.match(/USD[^\d]*(\d{1,3}(?:[.,]\d{3})*[.,]\d{1,4})/i)
-      || html.match(/>([\d]{1,3}(?:[,.]\d{3})*[,.]\d{1,4})<\/strong>\s*<\/div>\s*<\/div>\s*<div[^>]*>\s*USD/i)
-      || html.match(/id="dolar"[\s\S]{0,300}?<strong>([\d,\.]+)<\/strong>/i);
-    if(match) {
-      let raw = match[1].replace(/\s/g,'');
-      // Normalizar separadores venezolanos: punto = mil, coma = decimal
-      // o al reves dependiendo del formato
-      raw = raw.replace(/\./g,'X').replace(/,/g,'.').replace(/X/g,'');
-      const val = parseFloat(raw);
-      if(val > 1) {
-        document.getElementById('tasaBcv').value = val.toFixed(2);
-        st.textContent = '✓ ' + new Date().toLocaleTimeString('es-VE');
-        recalcTotales();
-        return;
-      }
-    }
-    st.textContent = '⚠ Manual';
+    // Load from productos.json (same folder as index.html)
+    const res = await fetch('productos.json');
+    if (!res.ok) throw new Error('No se pudo cargar productos.json');
+    products = await res.json();
+    showToast(`✔ ${products.length} productos cargados`);
   } catch(e) {
-    st.textContent = '⚠ Sin conexión';
+    console.error(e);
+    // Fallback embedded minimal list note
+    document.getElementById('product-search').placeholder = 'Error: coloca productos.json junto a index.html';
+    showToast('⚠ No se pudo cargar productos.json', 3500);
   }
 }
 
-// ---- BUSQUEDA DROPDOWN ----
-function filtrarProductos() {
-  const q = document.getElementById('productoSearch').value.trim().toLowerCase();
-  const dl = document.getElementById('dropdownList');
-  dropdownIndex = -1;
-  if(!q) { dl.classList.remove('show'); dropdownItems=[]; return; }
-  dropdownItems = PRODUCTOS.filter(p => p.nombre.toLowerCase().includes(q)).slice(0,40);
-  if(!dropdownItems.length) { dl.innerHTML='<div class="dropdown-item" style="color:#888;">Sin resultados</div>'; dl.classList.add('show'); return; }
-  dl.innerHTML = dropdownItems.map((p,i) =>
-    `<div class="dropdown-item" data-i="${i}" onmousedown="seleccionarProducto(${i})">
-      <span>${escHtml(p.nombre)}</span>
-      <span class="precio-tag">$${p.precio.toFixed(4)}</span>
-    </div>`
-  ).join('');
-  dl.classList.add('show');
+// ===================== BCV RATE =====================
+async function fetchBCV() {
+  const statusEl = document.getElementById('bcv-status');
+  const rateEl = document.getElementById('bcv-rate-display');
+  statusEl.textContent = 'Actualizando...';
+  statusEl.className = 'bcv-status';
+
+  // Try multiple CORS proxies to fetch BCV
+  const proxies = [
+    `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.bcv.org.ve/')}`,
+    `https://corsproxy.io/?${encodeURIComponent('https://www.bcv.org.ve/')}`
+  ];
+
+  for (const url of proxies) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+      const data = await res.json();
+      const html = data.contents || data;
+      // Parse the USD rate from BCV HTML
+      const match = html.match(/id="dolar"[\s\S]*?<strong>([\d,\.]+)<\/strong>/i)
+                 || html.match(/USD[\s\S]{0,200}?([\d]+[.,][\d]+)/i)
+                 || html.match(/<strong>([\d]+,[\d]+)<\/strong>/);
+      if (match) {
+        let raw = match[1].replace(/\./g,'').replace(',','.');
+        const rate = parseFloat(raw);
+        if (rate > 1) {
+          bcvRate = rate;
+          manualRate = false;
+          rateEl.textContent = `Bs. ${rate.toLocaleString('es-VE', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+          statusEl.textContent = '✔ BCV';
+          statusEl.className = 'bcv-status ok';
+          updateCartTotals();
+          return;
+        }
+      }
+    } catch(e) { /* try next */ }
+  }
+
+  // All proxies failed
+  statusEl.textContent = '✖ Sin conexión — ingresa tasa manual';
+  statusEl.className = 'bcv-status err';
+  if (!bcvRate) openRateModal();
 }
 
-function mostrarDropdown() {
-  if(dropdownItems.length) document.getElementById('dropdownList').classList.add('show');
+function openRateModal() {
+  document.getElementById('rate-modal').classList.add('show');
+  document.getElementById('manual-rate-input').focus();
+}
+function closeRateModal() {
+  document.getElementById('rate-modal').classList.remove('show');
+}
+function applyManualRate() {
+  const val = parseFloat(document.getElementById('manual-rate-input').value);
+  if (!val || val <= 0) { showToast('⚠ Ingresa una tasa válida'); return; }
+  bcvRate = val;
+  manualRate = true;
+  document.getElementById('bcv-rate-display').textContent = `Bs. ${val.toLocaleString('es-VE', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+  document.getElementById('bcv-status').textContent = '(manual)';
+  document.getElementById('bcv-status').className = 'bcv-status';
+  updateCartTotals();
+  closeRateModal();
 }
 
-document.addEventListener('click', e => {
-  if(!e.target.closest('.producto-search-wrap')) {
-    document.getElementById('dropdownList').classList.remove('show');
+// ===================== PRODUCT SEARCH =====================
+const searchInput = document.getElementById('product-search');
+const dropdown = document.getElementById('product-dropdown');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  selectedProduct = null;
+  document.getElementById('selected-product-info').style.display = 'none';
+
+  if (!q) { dropdown.classList.remove('show'); return; }
+
+  const matches = products.filter(p => p.name.toLowerCase().includes(q)).slice(0, 60);
+  if (!matches.length) {
+    dropdown.innerHTML = '<div class="dropdown-no-result">Sin resultados</div>';
+  } else {
+    dropdown.innerHTML = matches.map(p =>
+      `<div class="dropdown-item" data-name="${escHtml(p.name)}" data-price="${p.price}">
+        <span>${escHtml(p.name)}</span>
+        <span class="item-price">$${p.price.toFixed(4)}</span>
+      </div>`
+    ).join('');
+    dropdown.querySelectorAll('.dropdown-item').forEach(el => {
+      el.addEventListener('click', function() {
+        selectProduct({ name: this.dataset.name, price: parseFloat(this.dataset.price) });
+      });
+    });
+  }
+  dropdown.classList.add('show');
+});
+
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('product-search-wrap').contains(e.target)) {
+    dropdown.classList.remove('show');
   }
 });
 
-function navDropdown(e) {
-  const items = document.querySelectorAll('#dropdownList .dropdown-item[data-i]');
-  if(e.key==='ArrowDown') { dropdownIndex=Math.min(dropdownIndex+1,items.length-1); resaltarDropdown(items); e.preventDefault(); }
-  else if(e.key==='ArrowUp') { dropdownIndex=Math.max(dropdownIndex-1,0); resaltarDropdown(items); e.preventDefault(); }
-  else if(e.key==='Enter' && dropdownIndex>=0) { seleccionarProducto(dropdownIndex); e.preventDefault(); }
-  else if(e.key==='Escape') { document.getElementById('dropdownList').classList.remove('show'); }
+function selectProduct(p) {
+  selectedProduct = p;
+  searchInput.value = p.name;
+  dropdown.classList.remove('show');
+  document.getElementById('sel-prod-name').textContent = p.name;
+  document.getElementById('sel-prod-price').textContent = `$${p.price.toFixed(4)}`;
+  document.getElementById('selected-product-info').style.display = 'block';
+  document.getElementById('qty-input').focus();
 }
 
-function resaltarDropdown(items) {
-  items.forEach((el,i) => el.classList.toggle('active', i===dropdownIndex));
-  if(items[dropdownIndex]) items[dropdownIndex].scrollIntoView({block:'nearest'});
+// ===================== CART =====================
+function addToCart() {
+  if (!selectedProduct) { showToast('⚠ Selecciona un producto'); return; }
+  const qty = parseFloat(document.getElementById('qty-input').value);
+  if (!qty || qty <= 0) { showToast('⚠ Cantidad inválida'); return; }
+
+  const existing = cart.find(i => i.name === selectedProduct.name);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({ name: selectedProduct.name, price: selectedProduct.price, qty: qty });
+  }
+
+  selectedProduct = null;
+  searchInput.value = '';
+  document.getElementById('selected-product-info').style.display = 'none';
+  document.getElementById('qty-input').value = 1;
+  renderCart();
+  showToast('✔ Producto agregado');
 }
 
-function seleccionarProducto(i) {
-  selectedProducto = dropdownItems[i];
-  document.getElementById('productoSearch').value = selectedProducto.nombre;
-  document.getElementById('productoNombreSelected').value = selectedProducto.nombre;
-  document.getElementById('productoPrecioSelected').value = selectedProducto.precio.toFixed(4);
-  document.getElementById('dropdownList').classList.remove('show');
-  document.getElementById('productoQty').focus();
+function toggleManualProduct() {
+  const form = document.getElementById('manual-product-form');
+  form.style.display = form.style.display === 'block' ? 'none' : 'block';
 }
 
-// ---- AGREGAR ITEM ----
-function agregarItem() {
-  if(!selectedProducto) { showToast('Selecciona un producto de la lista'); return; }
-  const qty = parseFloat(document.getElementById('productoQty').value);
-  if(!qty || qty<=0) { showToast('Cantidad inválida'); return; }
-  addItemToList(selectedProducto.nombre, selectedProducto.precio, qty, false);
-  // reset
-  selectedProducto = null;
-  document.getElementById('productoSearch').value='';
-  document.getElementById('productoNombreSelected').value='';
-  document.getElementById('productoPrecioSelected').value='';
-  document.getElementById('productoQty').value='1';
+function addManualProduct() {
+  const name = document.getElementById('manual-prod-name').value.trim();
+  const price = parseFloat(document.getElementById('manual-prod-price').value);
+  const qty = parseFloat(document.getElementById('manual-prod-qty').value);
+  if (!name) { showToast('⚠ Ingresa el nombre'); return; }
+  if (!price || price <= 0) { showToast('⚠ Ingresa un precio válido'); return; }
+  if (!qty || qty <= 0) { showToast('⚠ Ingresa una cantidad válida'); return; }
+
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty += qty; }
+  else { cart.push({ name: name + ' ⚙', price: price, qty: qty, manual: true }); }
+
+  document.getElementById('manual-prod-name').value = '';
+  document.getElementById('manual-prod-price').value = '';
+  document.getElementById('manual-prod-qty').value = 1;
+  document.getElementById('manual-product-form').style.display = 'none';
+  renderCart();
+  showToast('✔ Producto manual agregado');
 }
 
-function agregarManual() {
-  const nombre = document.getElementById('manualNombre').value.trim();
-  const precio = parseFloat(document.getElementById('manualPrecio').value);
-  const qty = parseFloat(document.getElementById('manualQty').value);
-  if(!nombre) { showToast('Ingresa el nombre del producto'); return; }
-  if(!precio||precio<0) { showToast('Precio inválido'); return; }
-  if(!qty||qty<=0) { showToast('Cantidad inválida'); return; }
-  addItemToList(nombre, precio, qty, true);
-  document.getElementById('manualNombre').value='';
-  document.getElementById('manualPrecio').value='';
-  document.getElementById('manualQty').value='1';
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  renderCart();
 }
 
-function addItemToList(nombre, precio, qty, esManual) {
-  // Si ya existe, sumar cantidad
-  const existing = items.find(it => it.nombre===nombre && it.precio===precio);
-  if(existing) { existing.qty += qty; }
-  else { items.push({id: Date.now(), nombre, precio, qty, esManual}); }
-  renderItems();
-  recalcTotales();
-  showToast('Producto agregado ✓');
+function updateQty(idx, val) {
+  const q = parseFloat(val);
+  if (q > 0) { cart[idx].qty = q; }
+  else { cart.splice(idx, 1); }
+  renderCart();
 }
 
-// ---- RENDER ----
-function renderItems() {
-  const tbody = document.getElementById('itemsTbody');
-  const tasa = parseFloat(document.getElementById('tasaBcv').value)||0;
-  if(!items.length) {
-    tbody.innerHTML='<tr><td colspan="7" class="empty-msg">Sin productos agregados</td></tr>';
+function renderCart() {
+  const tbody = document.getElementById('cart-body');
+  if (!cart.length) {
+    tbody.innerHTML = '<tr><td colspan="7" id="cart-empty" style="text-align:center;color:var(--text-muted);padding:24px;font-style:italic;">El carrito está vacío.</td></tr>';
+    updateTotalsDisplay(0);
     return;
   }
-  tbody.innerHTML = items.map((it,i) => {
-    const sub = it.precio * it.qty;
-    const subBs = tasa ? sub*tasa : 0;
+
+  tbody.innerHTML = cart.map((item, i) => {
+    const sub = item.price * item.qty;
+    const subBs = bcvRate ? sub * bcvRate : 0;
     return `<tr>
-      <td class="num-col">${i+1}</td>
-      <td>${escHtml(it.nombre)}${it.esManual?' <span style="color:var(--naranja-claro);font-size:0.72rem;">[manual]</span>':''}</td>
-      <td>$${it.precio.toFixed(4)}</td>
-      <td>
-        <div class="td-qty">
-          <input type="number" value="${it.qty}" min="0.001" step="any"
-            oninput="cambiarQty(${it.id}, this.value)" style="width:70px;"/>
-        </div>
-      </td>
-      <td>$${sub.toFixed(2)}</td>
-      <td>${tasa ? 'Bs '+fmtBs(subBs) : '—'}</td>
-      <td><button class="btn-danger" onclick="eliminarItem(${it.id})">✕</button></td>
+      <td>${i+1}</td>
+      <td>${escHtml(item.name)}</td>
+      <td>$${item.price.toFixed(4)}</td>
+      <td class="td-qty"><input type="number" value="${item.qty}" min="0.001" step="0.01"
+        onchange="updateQty(${i}, this.value)" style="background:var(--dark3);border:1px solid var(--gray2);border-radius:5px;color:var(--text);padding:5px 7px;width:70px;font-size:0.9rem;outline:none;"></td>
+      <td>$${sub.toFixed(4)}</td>
+      <td style="color:#6dd6ff;">${bcvRate ? 'Bs. ' + (subBs).toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—'}</td>
+      <td><button class="btn-danger" onclick="removeFromCart(${i})">✕</button></td>
     </tr>`;
   }).join('');
+
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  updateTotalsDisplay(total);
 }
 
-function cambiarQty(id, val) {
-  const it = items.find(i=>i.id===id);
-  if(it) { it.qty = parseFloat(val)||0; recalcTotales(); renderItems_noFocus(); }
+function updateTotalsDisplay(total) {
+  document.getElementById('total-usd').textContent = `$${total.toFixed(4)}`;
+  document.getElementById('total-bs').textContent = bcvRate
+    ? `Bs. ${(total * bcvRate).toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})}`
+    : 'Bs. —';
 }
 
-function renderItems_noFocus() { renderItems(); }
-
-function eliminarItem(id) {
-  items = items.filter(i=>i.id!==id);
-  renderItems(); recalcTotales();
+function updateCartTotals() {
+  if (!cart.length) return;
+  renderCart();
 }
 
-function recalcTotales() {
-  renderItems();
-  const tasa = parseFloat(document.getElementById('tasaBcv').value)||0;
-  const total = items.reduce((s,it)=>s+it.precio*it.qty,0);
-  document.getElementById('totalUsd').textContent = '$ ' + total.toFixed(2);
-  document.getElementById('totalBs').textContent = tasa ? 'Bs ' + fmtBs(total*tasa) : '— (sin tasa)';
+// ===================== PAYMENT =====================
+function selectPayment(method, btn) {
+  paymentMethod = method;
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('movil-extra').style.display = method === 'movil' ? 'block' : 'none';
 }
 
-// ---- METODO PAGO ----
-function selMetodo(m) {
-  metodoPago = m;
-  ['efectivo','debito','pagomovil'].forEach(x=>{
-    document.getElementById('btn-'+x).classList.toggle('selected', x===m);
-  });
-  const pm = document.getElementById('pagomovil-fields');
-  pm.classList.toggle('show', m==='pagomovil');
-}
+// ===================== FINISH SALE =====================
+function finishSale() {
+  // Validations
+  const cedula = document.getElementById('client-cedula').value.trim();
+  const name = document.getElementById('client-name').value.trim();
+  const phone = document.getElementById('client-phone').value.trim();
 
-// ---- GUARDAR ----
-function guardarVenta() {
-  // Validaciones
-  const cedula = document.getElementById('clienteCedula').value.trim();
-  const nombre = document.getElementById('clienteNombre').value.trim();
-  const celular = document.getElementById('clienteCelular').value.trim();
-  if(!cedula) { showToast('Ingresa la cédula del cliente'); return; }
-  if(!nombre) { showToast('Ingresa el nombre del cliente'); return; }
-  if(!items.length) { showToast('Agrega al menos un producto'); return; }
-  if(!metodoPago) { showToast('Selecciona el método de pago'); return; }
-  const tasa = parseFloat(document.getElementById('tasaBcv').value)||0;
-  const total = items.reduce((s,it)=>s+it.precio*it.qty,0);
+  if (!cedula) { showToast('⚠ Ingresa la cédula del cliente'); return; }
+  if (!name) { showToast('⚠ Ingresa el nombre del cliente'); return; }
+  if (!cart.length) { showToast('⚠ El carrito está vacío'); return; }
+  if (!bcvRate) { showToast('⚠ Ingresa la tasa BCV primero'); openRateModal(); return; }
 
-  let pagoInfo = '';
-  if(metodoPago==='pagomovil') {
-    const ref = document.getElementById('pmRef').value.trim();
-    const banco = document.getElementById('pmBanco').value;
-    const pmCel = document.getElementById('pmCelular').value.trim();
-    if(!ref||!banco||!pmCel) { showToast('Completa los datos del Pago Móvil'); return; }
-    pagoInfo = `  Referencia   : ${ref}\n  Banco        : ${banco}\n  Celular      : ${pmCel}`;
+  let movilRef='', movilBank='', movilPhone='';
+  if (paymentMethod === 'movil') {
+    movilRef = document.getElementById('movil-ref').value.trim();
+    movilBank = document.getElementById('movil-bank').value.trim();
+    movilPhone = document.getElementById('movil-phone').value.trim();
+    if (!movilRef || !movilBank || !movilPhone) {
+      showToast('⚠ Completa los datos del Pago Móvil'); return;
+    }
   }
 
-  const ahora = new Date();
-  const dd = String(ahora.getDate()).padStart(2,'0');
-  const mm = String(ahora.getMonth()+1).padStart(2,'0');
-  const aa = String(ahora.getFullYear()).slice(2);
-  const hh = String(ahora.getHours()).padStart(2,'0');
-  const mi = String(ahora.getMinutes()).padStart(2,'0');
-  const ss = String(ahora.getSeconds()).padStart(2,'0');
-  const numOp = String(opCounter).padStart(6,'0');
-  const cedulaFile = cedula.replace(/[^a-zA-Z0-9]/g,'');
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const dd = pad(now.getDate());
+  const mm = pad(now.getMonth()+1);
+  const yy = String(now.getFullYear()).slice(-2);
+  const hh = pad(now.getHours());
+  const mi = pad(now.getMinutes());
+  const ss = pad(now.getSeconds());
 
-  const nombreArchivo = `${dd}.${mm}.${aa}--${hh}.${mi}.${ss}--${cedulaFile}.txt`;
+  const opNum = String(operationNumber).padStart(6,'0');
+  const filename = `${dd}.${mm}.${yy}--${hh}.${mi}.${ss}--${cedula}.txt`;
 
-  const linea = '='.repeat(56);
-  const lineaM = '-'.repeat(56);
+  const totalUSD = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const totalBs = totalUSD * bcvRate;
 
-  let contenido = `${linea}
-         REGISTRO DE VENTA - PUNTO DE VENTA
-${linea}
-  N° Operación  : ${numOp}
-  Fecha         : ${dd}/${mm}/20${aa}
-  Hora          : ${hh}:${mi}:${ss}
-${lineaM}
-  DATOS DEL CLIENTE
-${lineaM}
-  Cédula        : ${cedula}
-  Nombre        : ${nombre}
-  Celular       : ${celular||'No indicado'}
-${lineaM}
-  PRODUCTOS ADQUIRIDOS
-${lineaM}
-`;
-  items.forEach((it,i) => {
-    const sub = it.precio * it.qty;
-    const subBs = tasa ? sub*tasa : 0;
-    const qtyStr = Number.isInteger(it.qty) ? it.qty : it.qty.toFixed(3);
-    contenido += `  ${String(i+1).padStart(2)}. ${it.nombre}${it.esManual?' [MANUAL]':''}\n`;
-    contenido += `      Precio unitario : $${it.precio.toFixed(4)}\n`;
-    contenido += `      Cantidad        : ${qtyStr}\n`;
-    contenido += `      Subtotal USD    : $${sub.toFixed(2)}\n`;
-    if(tasa) contenido += `      Subtotal Bs     : Bs ${fmtBs(subBs)}\n`;
-    contenido += '\n';
-  });
+  const DIVIDER = '═'.repeat(60);
+  const DIV2 = '─'.repeat(60);
 
-  contenido += `${lineaM}
-  RESUMEN DE TOTALES
-${lineaM}
-  Total USD     : $${total.toFixed(2)}
-  Tasa BCV      : ${tasa ? 'Bs '+tasa.toFixed(2)+' / $1' : 'No registrada'}
-  Total Bs      : ${tasa ? 'Bs '+fmtBs(total*tasa) : 'No disponible'}
-${lineaM}
-  MÉTODO DE PAGO
-${lineaM}
-  Método        : ${metodoPago==='efectivo'?'Efectivo':metodoPago==='debito'?'Tarjeta Débito':'Pago Móvil'}
-${pagoInfo ? pagoInfo+'\n' : ''}${linea}
-  Gracias por su compra
-${linea}
-`;
+  let payInfo = '';
+  if (paymentMethod === 'efectivo') payInfo = 'Efectivo (USD / Bs.)';
+  if (paymentMethod === 'debito') payInfo = 'Tarjeta de Débito';
+  if (paymentMethod === 'movil') {
+    payInfo = `Pago Móvil\n   Referencia : ${movilRef}\n   Banco      : ${movilBank}\n   Teléfono   : ${movilPhone}`;
+  }
 
-  // Descargar
-  const blob = new Blob([contenido], {type:'text/plain;charset=utf-8'});
+  const lines = [
+    DIVIDER,
+    '         SISTEMA PUNTO DE VENTA — REGISTRO DE OPERACIÓN',
+    DIVIDER,
+    `  N° Operación : ${opNum}`,
+    `  Fecha        : ${dd}/${mm}/${yy}   Hora: ${hh}:${mi}:${ss}`,
+    DIV2,
+    '  DATOS DEL CLIENTE',
+    DIV2,
+    `  Cédula       : ${cedula}`,
+    `  Nombre       : ${name}`,
+    `  Celular      : ${phone || 'No especificado'}`,
+    DIV2,
+    '  PRODUCTOS ADQUIRIDOS',
+    DIV2,
+    ...cart.map((item, i) => {
+      const sub = item.price * item.qty;
+      const subBs = sub * bcvRate;
+      return `  ${String(i+1).padStart(2,'0')}. ${item.name}\n      Cantidad: ${item.qty}   Precio: $${item.price.toFixed(4)}   Subtotal: $${sub.toFixed(4)} / Bs. ${subBs.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+    }),
+    DIV2,
+    `  TASA BCV     : Bs. ${bcvRate.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})} / USD ${manualRate ? '(tasa manual)' : '(BCV oficial)'}`,
+    `  TOTAL USD    : $${totalUSD.toFixed(4)}`,
+    `  TOTAL Bs.    : Bs. ${totalBs.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})}`,
+    DIV2,
+    `  MÉTODO PAGO  : ${payInfo}`,
+    DIVIDER,
+    '  Gracias por su compra.',
+    DIVIDER,
+  ];
+
+  const content = lines.join('\n');
+
+  // Download as TXT
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href=url; a.download=nombreArchivo; a.click();
+  a.href = url;
+  a.download = filename;
+  a.click();
   URL.revokeObjectURL(url);
 
-  // Incrementar contador
-  opCounter++;
-  localStorage.setItem('posOpCounter', opCounter);
-  showToast('✅ Venta guardada y descargada');
-  setTimeout(()=>{ if(confirm('¿Iniciar nueva venta?')) limpiarVenta(); }, 1200);
+  // Increment operation number
+  operationNumber++;
+  localStorage.setItem('pos_op_number', operationNumber);
+  document.getElementById('op-num').textContent = String(operationNumber).padStart(6,'0');
+
+  // Reset
+  cart = [];
+  renderCart();
+  document.getElementById('client-cedula').value = '';
+  document.getElementById('client-name').value = '';
+  document.getElementById('client-phone').value = '';
+  document.getElementById('movil-ref').value = '';
+  document.getElementById('movil-bank').value = '';
+  document.getElementById('movil-phone').value = '';
+  selectPayment('efectivo', document.querySelector('[data-method="efectivo"]'));
+
+  showToast('✔ Venta registrada y guardada', 3000);
 }
 
-function limpiarVenta() {
-  items=[];
-  metodoPago='';
-  selectedProducto=null;
-  document.getElementById('clienteCedula').value='';
-  document.getElementById('clienteNombre').value='';
-  document.getElementById('clienteCelular').value='';
-  document.getElementById('productoSearch').value='';
-  document.getElementById('productoNombreSelected').value='';
-  document.getElementById('productoPrecioSelected').value='';
-  document.getElementById('productoQty').value='1';
-  document.getElementById('manualNombre').value='';
-  document.getElementById('manualPrecio').value='';
-  document.getElementById('manualQty').value='1';
-  document.getElementById('pmRef').value='';
-  document.getElementById('pmBanco').value='';
-  document.getElementById('pmCelular').value='';
-  ['efectivo','debito','pagomovil'].forEach(x=>document.getElementById('btn-'+x).classList.remove('selected'));
-  document.getElementById('pagomovil-fields').classList.remove('show');
-  renderItems(); recalcTotales();
-  actualizarOpNum();
-}
-
-// ---- UTILS ----
+// ===================== UTILS =====================
 function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function fmtBs(n) {
-  return n.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});
-}
-function showToast(msg) {
+
+let toastTimer;
+function showToast(msg, duration=2000) {
   const t = document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.remove('show');
-  void t.offsetWidth;
+  t.textContent = msg;
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3100);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), duration);
 }
+
+// Modal keyboard
+document.getElementById('manual-rate-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') applyManualRate();
+  if (e.key === 'Escape') closeRateModal();
+});
+document.getElementById('rate-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeRateModal();
+});
+
+// ===================== INIT =====================
+loadProducts();
+fetchBCV();
 </script>
 </body>
 </html>
