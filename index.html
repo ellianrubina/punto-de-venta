@@ -1,113 +1,789 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Punto de Venta</title>
 <style>
-body {
-    background:#000;
-    color:#fff;
-    font-family:Arial;
-}
-.container {padding:10px;}
-input, select, button {
-    width:100%;
-    margin:5px 0;
-    padding:10px;
-}
-button {
-    background:#f4730e;
-    color:#000;
-    border:none;
-}
-.item-row {display:flex; gap:5px;}
+  :root {
+    --naranja: #f4730e;
+    --negro: #000000;
+    --naranja-oscuro: #c45a08;
+    --naranja-claro: #f9a05a;
+    --gris-oscuro: #1a1a1a;
+    --gris-medio: #2a2a2a;
+    --gris-borde: #3a3a3a;
+    --texto: #f0f0f0;
+    --error: #ff4444;
+    --exito: #44cc44;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--negro);
+    color: var(--texto);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+  header {
+    background: var(--naranja);
+    color: #000;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px #0008;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; }
+  .tasa-widget {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: #0003; border-radius: 8px; padding: 6px 12px;
+  }
+  .tasa-widget label { font-size: 0.82rem; font-weight: 700; color: #000; }
+  .tasa-widget input {
+    width: 90px; background: #fff3; border: 1px solid #0004;
+    color: #000; font-weight: 700; font-size: 0.95rem;
+    padding: 3px 7px; border-radius: 5px; text-align: right;
+  }
+  .tasa-status { font-size: 0.72rem; color: #0008; }
+  .btn-refresh {
+    background: #0002; border: none; color: #000; cursor: pointer;
+    border-radius: 5px; padding: 4px 8px; font-size: 0.8rem; font-weight: 700;
+  }
+  .btn-refresh:hover { background: #0004; }
+  .main {
+    max-width: 960px; margin: 0 auto; padding: 18px 12px 40px;
+  }
+  .section {
+    background: var(--gris-oscuro);
+    border: 1px solid var(--gris-borde);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    color: var(--naranja);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--gris-borde);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media(max-width:600px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
+  .form-group label { font-size: 0.82rem; color: var(--naranja-claro); font-weight: 600; }
+  .form-group input, .form-group select {
+    background: var(--gris-medio);
+    border: 1px solid var(--gris-borde);
+    color: var(--texto);
+    padding: 9px 11px;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--naranja); }
+  .form-group input::placeholder { color: #666; }
+
+  /* Producto selector */
+  .add-producto {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 8px;
+    align-items: end;
+  }
+  @media(max-width:600px) { .add-producto { grid-template-columns: 1fr 1fr; } }
+  .producto-search-wrap { position: relative; }
+  .producto-search-wrap input {
+    width: 100%;
+    background: var(--gris-medio);
+    border: 1px solid var(--gris-borde);
+    color: var(--texto);
+    padding: 9px 11px;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    outline: none;
+  }
+  .producto-search-wrap input:focus { border-color: var(--naranja); }
+  .dropdown-list {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--gris-medio);
+    border: 1px solid var(--naranja);
+    border-radius: 0 0 8px 8px;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 200;
+    display: none;
+  }
+  .dropdown-list.show { display: block; }
+  .dropdown-item {
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--gris-borde);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .dropdown-item:hover, .dropdown-item.active { background: var(--naranja); color: #000; }
+  .dropdown-item .precio-tag { font-size: 0.78rem; font-weight: 700; color: #aaa; }
+  .dropdown-item:hover .precio-tag, .dropdown-item.active .precio-tag { color: #000; }
+  .qty-input {
+    width: 80px;
+    background: var(--gris-medio);
+    border: 1px solid var(--gris-borde);
+    color: var(--texto);
+    padding: 9px 8px;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    text-align: center;
+    outline: none;
+  }
+  .qty-input:focus { border-color: var(--naranja); }
+  .btn {
+    background: var(--naranja);
+    color: #000;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--naranja-oscuro); color: #fff; }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--naranja);
+    color: var(--naranja);
+  }
+  .btn-outline:hover { background: var(--naranja); color: #000; }
+  .btn-danger {
+    background: #700;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .btn-danger:hover { background: var(--error); }
+
+  /* Tabla de items */
+  .tabla-items { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .tabla-items th {
+    background: var(--naranja);
+    color: #000;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    text-align: left;
+  }
+  .tabla-items td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--gris-borde);
+    font-size: 0.88rem;
+    vertical-align: middle;
+  }
+  .tabla-items tr:hover td { background: #ffffff08; }
+  .tabla-items .td-qty {
+    display: flex; align-items: center; gap: 5px;
+  }
+  .tabla-items .td-qty input {
+    width: 65px;
+    background: var(--gris-medio);
+    border: 1px solid var(--gris-borde);
+    color: var(--texto);
+    padding: 4px 6px;
+    border-radius: 5px;
+    font-size: 0.88rem;
+    text-align: center;
+    outline: none;
+  }
+  .tabla-items .td-qty input:focus { border-color: var(--naranja); }
+  .empty-msg { text-align:center; color:#666; padding:20px; font-style:italic; }
+
+  /* Total */
+  .totales-box {
+    background: var(--gris-medio);
+    border: 1px solid var(--naranja);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 10px;
+  }
+  .total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 0; border-bottom: 1px solid var(--gris-borde);
+  }
+  .total-row:last-child { border-bottom: none; }
+  .total-label { font-size: 0.9rem; color: #aaa; }
+  .total-valor { font-size: 1rem; font-weight: 700; color: var(--naranja); }
+  .total-grande { font-size: 1.25rem !important; }
+
+  /* Pagomovil fields */
+  #pagomovil-fields {
+    display: none;
+    margin-top: 10px;
+    background: var(--gris-medio);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid var(--gris-borde);
+  }
+  #pagomovil-fields.show { display: block; }
+
+  /* Producto manual */
+  .manual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px; align-items: end;
+  }
+  @media(max-width:500px) { .manual-grid { grid-template-columns: 1fr; } }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 20px;
+    background: var(--naranja); color: #000;
+    padding: 12px 20px; border-radius: 8px;
+    font-weight: 700; font-size: 0.92rem;
+    box-shadow: 0 4px 16px #0008;
+    z-index: 9999; display: none;
+    max-width: 320px;
+  }
+  .toast.show { display: block; animation: fadeInOut 3s forwards; }
+  @keyframes fadeInOut {
+    0% { opacity:0; transform:translateY(20px); }
+    15% { opacity:1; transform:translateY(0); }
+    80% { opacity:1; }
+    100% { opacity:0; }
+  }
+  .op-num { color: var(--naranja-claro); font-size:0.8rem; text-align:right; margin-bottom:4px; }
+  .metodo-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+  .metodo-btn {
+    flex:1; min-width:100px;
+    background: var(--gris-medio);
+    border: 2px solid var(--gris-borde);
+    color: var(--texto);
+    padding: 10px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .metodo-btn.selected { background: var(--naranja); color:#000; border-color: var(--naranja); }
+  .metodo-btn:hover { border-color: var(--naranja); }
+  .scroll-table { overflow-x: auto; }
+  .accion-col { width: 38px; }
+  .num-col { width: 34px; text-align:center; }
+  @media(max-width:700px) {
+    .tabla-items th, .tabla-items td { font-size: 0.78rem; padding: 6px 6px; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
-<h2>Punto de Venta</h2>
+<header>
+  <h1>🛒 Punto de Venta</h1>
+  <div class="tasa-widget">
+    <label>Tasa BCV (Bs/$)</label>
+    <input type="number" id="tasaBcv" step="0.01" min="1" placeholder="---" oninput="recalcTotales()"/>
+    <button class="btn-refresh" onclick="fetchTasa()" title="Actualizar tasa BCV">&#x21bb; BCV</button>
+    <span class="tasa-status" id="tasaStatus"></span>
+  </div>
+</header>
 
-<h3>Cliente</h3>
-<input id="cedula" placeholder="Cédula">
-<input id="nombre" placeholder="Nombre">
-<input id="telefono" placeholder="Teléfono">
+<div class="main">
+  <div class="op-num" id="opNumDisplay"></div>
 
-<h3>Productos</h3>
-<select id="producto"></select>
-<input id="cantidad" type="number" placeholder="Cantidad">
-<button onclick="addItem()">Agregar</button>
+  <!-- CLIENTE -->
+  <div class="section">
+    <div class="section-title">📋 Datos del Cliente</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Cédula</label>
+        <input type="text" id="clienteCedula" placeholder="V00000000" maxlength="12"/>
+      </div>
+      <div class="form-group">
+        <label>Nombre y Apellido</label>
+        <input type="text" id="clienteNombre" placeholder="Nombre completo"/>
+      </div>
+      <div class="form-group">
+        <label>Celular</label>
+        <input type="tel" id="clienteCelular" placeholder="04XX-XXXXXXX" maxlength="16"/>
+      </div>
+    </div>
+  </div>
 
-<div id="lista"></div>
+  <!-- AGREGAR PRODUCTOS -->
+  <div class="section">
+    <div class="section-title">🔍 Agregar Producto</div>
+    <div class="add-producto">
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Buscar producto del inventario</label>
+        <div class="producto-search-wrap">
+          <input type="text" id="productoSearch" placeholder="Escribe para buscar..." autocomplete="off"
+            oninput="filtrarProductos()" onfocus="mostrarDropdown()" onkeydown="navDropdown(event)"/>
+          <div class="dropdown-list" id="dropdownList"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Producto seleccionado</label>
+        <input type="text" id="productoNombreSelected" readonly placeholder="— ninguno —" style="background:#111;cursor:default;"/>
+      </div>
+      <div class="form-group">
+        <label>Precio USD</label>
+        <input type="number" id="productoPrecioSelected" readonly placeholder="0.00" style="background:#111;cursor:default;"/>
+      </div>
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" id="productoQty" class="qty-input" value="1" min="0.001" step="any" style="width:100%;"/>
+      </div>
+      <div class="form-group" style="justify-content:flex-end;">
+        <button class="btn" onclick="agregarItem()" style="width:100%;">➕ Agregar</button>
+      </div>
+    </div>
+  </div>
 
-<h3>Pago</h3>
-<select id="metodo">
-<option>Efectivo</option>
-<option>Tarjeta</option>
-<option>PagoMovil</option>
-</select>
-<input id="ref" placeholder="Referencia">
-<input id="banco" placeholder="Banco">
-<input id="telPago" placeholder="Teléfono PagoMovil">
+  <!-- PRODUCTO MANUAL -->
+  <div class="section">
+    <div class="section-title">✏️ Agregar Producto Manual (no está en la lista)</div>
+    <div class="manual-grid">
+      <div class="form-group">
+        <label>Nombre del producto</label>
+        <input type="text" id="manualNombre" placeholder="Descripción del producto"/>
+      </div>
+      <div class="form-group">
+        <label>Precio USD (con IVA)</label>
+        <input type="number" id="manualPrecio" placeholder="0.00" step="any" min="0"/>
+      </div>
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" id="manualQty" value="1" min="0.001" step="any"/>
+      </div>
+      <div class="form-group" style="justify-content:flex-end;">
+        <button class="btn btn-outline" onclick="agregarManual()" style="width:100%;">➕ Agregar</button>
+      </div>
+    </div>
+  </div>
 
-<h3>Dólar BCV</h3>
-<input id="tasa" placeholder="Tasa manual">
+  <!-- ITEMS -->
+  <div class="section">
+    <div class="section-title">🧾 Productos en la Venta</div>
+    <div class="scroll-table">
+      <table class="tabla-items">
+        <thead>
+          <tr>
+            <th class="num-col">#</th>
+            <th>Producto</th>
+            <th>P.Unit ($)</th>
+            <th>Cantidad</th>
+            <th>Subtotal ($)</th>
+            <th>Subtotal (Bs)</th>
+            <th class="accion-col"></th>
+          </tr>
+        </thead>
+        <tbody id="itemsTbody">
+          <tr><td colspan="7" class="empty-msg">Sin productos agregados</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-<h3>Total</h3>
-<p id="total"></p>
+    <div class="totales-box" style="margin-top:14px;">
+      <div class="total-row">
+        <span class="total-label">Total en Dólares (USD)</span>
+        <span class="total-valor total-grande" id="totalUsd">$ 0.00</span>
+      </div>
+      <div class="total-row">
+        <span class="total-label">Total en Bolívares (Bs)</span>
+        <span class="total-valor total-grande" id="totalBs">Bs 0.00</span>
+      </div>
+    </div>
+  </div>
 
-<button onclick="guardar()">Finalizar Venta</button>
+  <!-- METODO DE PAGO -->
+  <div class="section">
+    <div class="section-title">💳 Método de Pago</div>
+    <div class="metodo-btns">
+      <button class="metodo-btn" id="btn-efectivo" onclick="selMetodo('efectivo')">💵 Efectivo</button>
+      <button class="metodo-btn" id="btn-debito" onclick="selMetodo('debito')">💳 Tarjeta Débito</button>
+      <button class="metodo-btn" id="btn-pagomovil" onclick="selMetodo('pagomovil')">📱 Pago Móvil</button>
+    </div>
+    <div id="pagomovil-fields">
+      <div class="form-grid" style="margin-top:8px;">
+        <div class="form-group">
+          <label>N° de Referencia</label>
+          <input type="text" id="pmRef" placeholder="Número de referencia"/>
+        </div>
+        <div class="form-group">
+          <label>Banco</label>
+          <select id="pmBanco">
+            <option value="">— Seleccionar banco —</option>
+            <option value="Banco de Venezuela">Banco de Venezuela</option><option value="Banesco">Banesco</option><option value="Mercantil">Mercantil</option><option value="BBVA Provincial">BBVA Provincial</option><option value="BNC">BNC</option><option value="Banplus">Banplus</option><option value="Bancamiga">Bancamiga</option><option value="Bicentenario">Bicentenario</option><option value="Del Tesoro">Del Tesoro</option><option value="Exterior">Exterior</option><option value="Activo">Activo</option><option value="Sofitasa">Sofitasa</option><option value="Plaza">Plaza</option><option value="Caroni">Caroni</option><option value="Agricola de Venezuela">Agricola de Venezuela</option><option value="100% Banco">100% Banco</option><option value="Bancrecer">Bancrecer</option><option value="Mi Banco">Mi Banco</option><option value="Venezolano de Crédito">Venezolano de Crédito</option><option value="BOD">BOD</option><option value="Citibank">Citibank</option><option value="Fondo Común">Fondo Común</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Celular asociado a la cuenta</label>
+          <input type="tel" id="pmCelular" placeholder="04XX-XXXXXXX"/>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- GUARDAR -->
+  <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end; margin-top:4px;">
+    <button class="btn btn-outline" onclick="limpiarVenta()" style="min-width:140px;">🗑️ Nueva Venta</button>
+    <button class="btn" onclick="guardarVenta()" style="min-width:200px; font-size:1rem; padding:12px 24px;">
+      💾 Guardar y Descargar
+    </button>
+  </div>
 </div>
 
-<script>
-let productos = [{'name': '7up 1.5ml', 'price': 1.4036}, {'name': '7up 1lt', 'price': 1.1948}, {'name': '7UP Lata 355ml', 'price': 1.2528000000000001}, {'name': 'ABC Cookies', 'price': 0.7772}, {'name': 'Accion MultiUso en barra 300GR', 'price': 1.972}, {'name': 'Accion MultiUso Pastilla 130GR', 'price': 1.1136}, {'name': 'Ace 400gr', 'price': 1.9487999999999999}, {'name': 'Ace Detergente 800gr', 'price': 3.8975999999999997}, {'name': 'aceite de la consetida 500ml', 'price': 2.9}, {'name': 'Aceite de Soya Naturoil 850ml', 'price': 4.33}, {'name': 'Aceite de Soya Vatel 1l', 'price': 5.0}, {'name': 'Aceite Ideal 1lt', 'price': 4.0}, {'name': 'Aceite Ideal 430ml', 'price': 1.57}, {'name': 'Aceite Mazeite 1L', 'price': 5.2}, {'name': 'Aceite Portumesa 850ml', 'price': 3.2}, {'name': 'Aceite Vegetal Coposa 850Ml', 'price': 4.33}, {'name': 'Acqua Bella Natural 500ml', 'price': 1.3803999999999998}, {'name': 'Acqua Gasificada sabor limon 295ml', 'price': 3.0972}, {'name': 'Add Salsa de Ajo 150ml', 'price': 1.7168}, {'name': 'Add Salsa de Soya 150ml', 'price': 1.7168}, {'name': 'Add Salsa Inglesa 150ml', 'price': 1.7168}, {'name': 'Adobo Completo Iberia Sobre', 'price': 0.986}, {'name': 'Agua Minalba 1,5lt', 'price': 2.2504}, {'name': 'Agua Minalba 5l', 'price': 5.6028}, {'name': 'Agua Minalba 600Ml', 'price': 0.9976}, {'name': 'AJAX - desinfectante 500ml', 'price': 4.42}, {'name': 'Alcohol Antiseptico 240ml', 'price': 3.596}, {'name': 'Alcohol Spray 120ml', 'price': 3.6308}, {'name': 'Alfajor Cocoa', 'price': 1.4964}, {'name': 'Alfajores Carolina X3', 'price': 1.2992000000000001}, {'name': 'Alfajores Carolina X6', 'price': 2.5984000000000003}, {'name': 'alfajores cubierta de chocolate', 'price': 2.67}, {'name': 'ALFONZO RIVAS - Maizina Americana 120gr', 'price': 1.8}, {'name': 'ALFONZO RIVAS - Maizina Americana 400gr', 'price': 3.73}, {'name': 'ALFONZO RIVAS - Maizina Americana 90gr', 'price': 1.17}, {'name': 'Algodon Albe ', 'price': 4.8256}, {'name': 'ALIMEX - espalda cocida 1k', 'price': 12.06}, {'name': 'ALIMEX - Mortadela Especial 500g', 'price': 3.19}, {'name': 'ALIMEX Salchichas tipo Viena 225g', 'price': 4.08}, {'name': 'ALIMEX- Salchichas tipo Viena 450g', 'price': 7.52}, {'name': 'ALisoft Premium Papel x4', 'price': 2.4476}, {'name': 'Alival Bologna ', 'price': 5.997199999999999}, {'name': 'ALIVE - Morado Polvo 500gr', 'price': 2.38}, {'name': 'ALIVE - Polvo Azul 500gr', 'price': 2.38}, {'name': 'ALIVE - Polvo Rosado 500gr', 'price': 2.51}, {'name': 'ALVE - algodon hidrofilo 25g', 'price': 5.3}, {'name': 'ALWAYS - ULTRAFINA - suave de 10und', 'price': 4.71}, {'name': 'Always Ultrasecas Dia', 'price': 4.5008}, {'name': 'ANIPOP - Chupetas Anillo', 'price': 0.35}, {'name': 'ARAUCA - gourcafe 200g', 'price': 3.74}, {'name': 'ARIEL - detergente en polvo 400g', 'price': 2.82}, {'name': 'Ariel Polvo 800gr', 'price': 4.5008}, {'name': 'Arroz Blanco MARY esmeralda 900gr', 'price': 3.0}, {'name': 'Arroz Blanco Mary Superior 900gr', 'price': 2.2}, {'name': 'Arroz Dorado Mary 800gr', 'price': 2.65}, {'name': 'Arroz Espiga Dorada Tipo I 900gr', 'price': 1.71}, {'name': 'Arroz Mary Premium', 'price': 2.75}, {'name': 'Arroz Mary Tradicional 900gr', 'price': 2.61}, {'name': 'Arroz Primor Clasico Superior 900gr', 'price': 2.26}, {'name': 'Arroz Primor Perlado de 900gr', 'price': 3.2944}, {'name': 'Arun Robin Hood Lomitos de atun en aceite', 'price': 2.25}, {'name': 'Arveja con Zanahoria Del Monte 300gr', 'price': 4.3964}, {'name': 'Arvejas Del monte 300gr', 'price': 3.4336}, {'name': 'ATUN - solido en aceite vegetal 170gr', 'price': 3.33}, {'name': 'Atun Eveba 119g en aceite vegetal', 'price': 3.0}, {'name': 'Atun Eveba Oliva 140gr', 'price': 3.72}, {'name': 'Atun Solido Aleta Amarilla Aceite Vegetal 119gr', 'price': 4.27}, {'name': 'Atun Sultana en Agua y aceite 170gr ', 'price': 3.45}, {'name': 'AVELINA - entera 250g', 'price': 1.37}, {'name': 'AVELINA - Fortificada Avena en Hojuelas 250gr', 'price': 1.36}, {'name': 'AVELINA - Tradicional Avena en Hojuelas 250gr', 'price': 1.3}, {'name': 'Avelina Avena en hojuelas tradicional 400gr', 'price': 1.6008}, {'name': 'Avelina Avena Instantanea 400g', 'price': 1.9487999999999999}, {'name': 'Avelina Fortificada 250gr', 'price': 1.3}, {'name': 'Avelina Hojuelas Enteras 400gr', 'price': 1.6936}, {'name': 'Avelina tradicional 250g', 'price': 1.2}, {'name': 'Avena en Hojuelas Doña Alicia 400gr', 'price': 1.9952}, {'name': 'Avena Qaker 200gr Original', 'price': 1.16}, {'name': 'Avena Qaker 400gr Original', 'price': 2.0183999999999997}, {'name': 'Avena Qaker 800gr Original', 'price': 4.2804}, {'name': 'AXION - lavaplatos en crema 235mg', 'price': 2.08}, {'name': 'AXION - lavaplatos en crema limon 235g', 'price': 3.78}, {'name': 'Axion con Bicarbonato de Sodio 7 en 1 450gr', 'price': 6.7164}, {'name': 'Axion limon 235gr', 'price': 3.0972}, {'name': 'Axion Multiuso 235gr', 'price': 2.2968}, {'name': 'Azucar amanecer 1k', 'price': 2.0}, {'name': 'Azucar Barzuca 900gr', 'price': 1.9}, {'name': 'Azucar Konfit', 'price': 1.72}, {'name': 'Azucar Montalban', 'price': 1.72}, {'name': 'Azucar Morena El Palacio 1000gr', 'price': 3.52}, {'name': 'BAMBOO - papel higienico', 'price': 0.23}, {'name': 'BAMBOO - servilletas pequeñas 160und', 'price': 1.03}, {'name': 'BARZUCA - Azucar 900gr', 'price': 1.74}, {'name': 'Belmont 10Und', 'price': 1.6356}, {'name': 'Belmont 20Und', 'price': 3.3988}, {'name': 'Belmont Detallado', 'price': 0.19}, {'name': 'Belmont Detallados', 'price': 0.19720000000000001}, {'name': 'BELMONT x10', 'price': 1.87}, {'name': 'BELMONT x20', 'price': 3.75}, {'name': 'BELVITA - hony 252g', 'price': 4.64}, {'name': 'BELVITA - kraker 234g', 'price': 5.14}, {'name': 'BIMBO - Pan Artesano', 'price': 3.25}, {'name': 'BIMBO - Pan Blanco', 'price': 2.15}, {'name': 'BIMBO - Rapiditas Diet', 'price': 3.43}, {'name': 'BIMBO - Rapiditas Mantequilla', 'price': 3.43}, {'name': 'BIMBO - Rapiditas Mediterraneas', 'price': 3.43}, {'name': 'BIMBO - Rapiditas Originales', 'price': 3.12}, {'name': 'Bimbo Pan Blanco', 'price': 2.0}, {'name': 'Blancox Blanqueador Cloro Desinfectante 500ml', 'price': 1.5428000000000002}, {'name': 'BOHEM - detallado surtidos', 'price': 0.13}, {'name': 'BOHEM Blue', 'price': 1.28}, {'name': 'BOHEM Blue', 'price': 1.276}, {'name': 'BOHEM Blue Detallado', 'price': 0.07}, {'name': 'BOHEM BLUE DETALLADO', 'price': 0.10439999999999999}, {'name': 'BOHEM Sandia', 'price': 2.2968}, {'name': 'BOHEM Sandia Detallado', 'price': 0.12}, {'name': 'BOHEM SANDIA DETALLADO', 'price': 0.1508}, {'name': 'BOHEM Sandia y mango', 'price': 2.32}, {'name': 'BOLI KRUNCH - pequeño 25g', 'price': 0.77}, {'name': 'BOLSAS BASURA 150L Calibre 8', 'price': 3.32}, {'name': 'BOLSAS BASURA 200L Calibre 8', 'price': 4.92}, {'name': 'bombillos bulbo led 6500k', 'price': 1.4036}, {'name': 'BONAROPA - xtra aroma 1l', 'price': 4.34}, {'name': 'Bonaropa Xtra Aroma 1l', 'price': 3.9556}, {'name': 'Borocanfor Original', 'price': 7.516800000000001}, {'name': 'Brownie Cobertura de chocolate y mani', 'price': 1.9952}, {'name': 'BUZZY - Chicle Tattoo Hello kitty', 'price': 0.08}, {'name': 'BUZZY - Chicle Tattoo Minions', 'price': 0.08}, {'name': 'Cafe Arauca 200g', 'price': 4.11}, {'name': 'CAFE BRASIL - gourmet 100g', 'price': 2.02}, {'name': 'Cafe Brasil 100gr', 'price': 2.0}, {'name': 'Cafe brasil 200gr', 'price': 3.69}, {'name': 'Cafe Brasil 400gr', 'price': 5.8}, {'name': 'Cafe el Roble 250', 'price': 5.301200000000001}, {'name': 'Cafe Flor De arauca 200g', 'price': 4.14}, {'name': 'Cafe Fruto Santo 200gr', 'price': 6.4}, {'name': 'CAFE KOLAO - gourmet 200g', 'price': 4.42}, {'name': 'Cafe Kolao 100gr', 'price': 2.43}, {'name': 'Cafe Kolao 200gr', 'price': 4.86}, {'name': 'Cafe Kolao 450gr', 'price': 9.86}, {'name': 'Cafe Madrid 100gr', 'price': 2.21}, {'name': 'Cafe Madrid 250gr', 'price': 4.84}, {'name': 'Cafe Pancho Paredes 100gr', 'price': 1.42}, {'name': 'Cafe Roble 100gr', 'price': 2.12}, {'name': 'Cafe Santa Cruz 100gr', 'price': 2.0}, {'name': 'Cafe Santa Cruz 250gr', 'price': 4.8}, {'name': 'CALEDONIA - galletas maria 25g c/u', 'price': 1.66}, {'name': 'Canelitas', 'price': 0.6032}, {'name': 'CANELITAS - galletas', 'price': 0.66}, {'name': 'CAPRI - vermicelli fino 1kg', 'price': 3.17}, {'name': 'Capri Tornillo 500g', 'price': 1.4}, {'name': 'Capri Vermicelly 1kg', 'price': 3.0}, {'name': 'CARABOBO - leche entera 1l', 'price': 3.56}, {'name': 'CARAMELOS CHAO', 'price': 0.06}, {'name': 'CARAMELOS DE JENJIBRE', 'price': 1.32}, {'name': 'Caramelos de leche con Chocolate', 'price': 0.08120000000000001}, {'name': 'Caramelos Freegells Eucalipto', 'price': 0.4988}, {'name': 'Caramelos Freegells Extra Forte', 'price': 0.4988}, {'name': 'Caramelos Halls 3gr', 'price': 0.116}, {'name': 'Caramelos Halls Cereza', 'price': 1.044}, {'name': 'Caramelos Halls Mora Azul', 'price': 1.044}, {'name': 'Caramelos Loquino', 'price': 0.0696}, {'name': 'Caramelos Mentas Chao', 'price': 0.10439999999999999}, {'name': 'Caramelos Mini Bum ', 'price': 0.09280000000000001}, {'name': 'Caraota Negra El Estio 500gr', 'price': 3.5264}, {'name': 'Caraotas Negras Dona Alicia 400g', 'price': 1.65}, {'name': 'Caraotas Negras MARY 400g', 'price': 2.5}, {'name': 'CARAVELLE - cepillo de lavar', 'price': 3.35}, {'name': 'Cari Pluma Extra Especial 500gr', 'price': 1.9952}, {'name': 'CARICIAS - papel higienico 4und', 'price': 1.71}, {'name': 'CASABE - en paquete', 'price': 2.8}, {'name': 'CAsabe 400g', 'price': 2.64}, {'name': 'Cepillo de Color Carabelle', 'price': 2.3432}, {'name': 'cepillo de dientes colgate triple accion 2pack', 'price': 4.999599999999999}, {'name': 'Cepillo de lavar color ', 'price': 1.3456}, {'name': 'cepillo dental colgate premier medio', 'price': 1.856}, {'name': 'Cereal Fiocco Hojuelas Azuca 300gr', 'price': 3.7004}, {'name': 'Champu Palmolive OPTIMS 400ml', 'price': 11.3448}, {'name': 'CHARMY - chocolate 32g c/u', 'price': 2.4}, {'name': 'CHARMY - fresa 32g c/u', 'price': 2.4}, {'name': 'CHARMY - vainilla 32g c/u', 'price': 2.4}, {'name': 'Charmy 16g', 'price': 0.232}, {'name': 'Cheese tris 50g', 'price': 1.1019999999999999}, {'name': 'Cheesetris 150g', 'price': 3.0044}, {'name': 'Cheetos Horneados Boliqueso 25gr', 'price': 0.8932}, {'name': 'CHICCO - motas de algodon 100und', 'price': 11.07}, {'name': 'Chicharron Pigsy 60gr', 'price': 1.1948}, {'name': 'Chicle Agogo', 'price': 0.39440000000000003}, {'name': 'Chicle Bomba', 'price': 0.3016}, {'name': 'Chicle Guds', 'price': 0.3016}, {'name': 'Chicle Meteoro TNT Acido', 'price': 0.09280000000000001}, {'name': 'Chicle TNT super Acido', 'price': 0.046400000000000004}, {'name': 'Chico 100 motas del algodon', 'price': 10.0688}, {'name': 'CHINOTTO - 1.5L', 'price': 1.76}, {'name': 'CHINOTTO - 355ml', 'price': 0.58}, {'name': 'Chinotto 1.5', 'price': 1.9023999999999999}, {'name': 'CHIS KESITOS - 45G', 'price': 1.17}, {'name': 'CHIS KESITOS TOCINETA - 45g', 'price': 1.17}, {'name': 'CHIS TRIS 50g', 'price': 1.72}, {'name': 'Chiskesito Tocineta 145gr', 'price': 2.4012}, {'name': 'Chiskesito Tocineta 45g', 'price': 0.9976}, {'name': 'Chiskesitos 145gr', 'price': 2.4012}, {'name': 'ChisKesitos 45g', 'price': 0.9976}, {'name': 'Choco Kids 200ml', 'price': 0.9396000000000001}, {'name': 'choco krispis pops ', 'price': 3.5032}, {'name': 'CHOCO LISTO - Bolsa 400gr', 'price': 5.7}, {'name': 'choco ponque tia lulu', 'price': 1.798}, {'name': 'Choco Rosca Festival 38gr', 'price': 1.7516}, {'name': 'Choco Tigo Palitos', 'price': 1.3456}, {'name': 'Chocolate de Leche Jet 11gr', 'price': 0.5568}, {'name': 'Chocolate de taza st. Moritz', 'price': 2.552}, {'name': 'Chocolate Savoy', 'price': 1.9023999999999999}, {'name': 'Chocolisto 400g', 'price': 5.695600000000001}, {'name': 'Chupa pop ', 'price': 0.3016}, {'name': 'CHUPA POP - Chupeta Detallada', 'price': 0.27}, {'name': 'CHUPETA EXPLOSIVA', 'price': 0.58}, {'name': 'CHUPETA LOKIÑO SURTIDA', 'price': 0.22}, {'name': 'Chupetas Big Bom XXL ', 'price': 0.2784}, {'name': 'Chupetas Bom Bom Bum', 'price': 0.19720000000000001}, {'name': 'Chupi Wom por unidad', 'price': 0.19720000000000001}, {'name': 'Cigarro Universal Detallado', 'price': 0.10439999999999999}, {'name': 'Cigarro Universal por caja', 'price': 2.088}, {'name': 'Cigarros Consul x20', 'price': 2.2968}, {'name': 'Cigarros detallado luckies', 'price': 0.26680000000000004}, {'name': 'Cigarros Lucky eclipse', 'price': 3.7468}, {'name': 'Cigarros Lucky Nova', 'price': 3.7468}, {'name': 'CLUB SOCIAL - original 6uni', 'price': 3.48}, {'name': 'Club Social Original 26gr', 'price': 0.9743999999999999}, {'name': 'COCA COLA - Bombita 355ml', 'price': 0.87}, {'name': 'COCA COLA - original 1.5l', 'price': 2.35}, {'name': 'coca cola 2l', 'price': 2.5056000000000003}, {'name': 'Coca Cola Original 1l', 'price': 1.3688}, {'name': 'Coca Cola Original 355ml', 'price': 0.696}, {'name': 'CocaCola 1.5L', 'price': 1.7052}, {'name': 'COCOSETE', 'price': 1.79}, {'name': 'Cocosete', 'price': 1.5544}, {'name': 'cocosette260k', 'price': 1.3108}, {'name': 'Colado de Durazno Cotoperi 110g', 'price': 0.8004}, {'name': 'Colado de Mango Cotoperi', 'price': 0.8004}, {'name': 'colado de manzana compota cotoperi 110g', 'price': 0.928}, {'name': 'colado de pera compota cotoperi 110 g', 'price': 0.928}, {'name': 'COLGATE - Cepillo Triple Accion 2Pac', 'price': 4.42}, {'name': 'COLGATE - maxima protexion 90g', 'price': 2.27}, {'name': 'COLGATE - normal 144g', 'price': 4.65}, {'name': 'COLGATE - triple accion 60ml', 'price': 2.62}, {'name': 'Colgate Clasica 90gr', 'price': 1.9952}, {'name': 'Colgate Luminous White 250ml', 'price': 9.628}, {'name': 'Colgate Total Enjuague Bucal Morado', 'price': 9.2452}, {'name': 'Colgate triple Accion 60ml', 'price': 2.3779999999999997}, {'name': 'Colgate Triple Accion 60ml', 'price': 2.5056000000000003}, {'name': 'combo de salsas tomorade de 3 unidades', 'price': 3.5147999999999997}, {'name': 'Compota Chiqui Chups', 'price': 1.6356}, {'name': 'Compota Chiqui Chups', 'price': 1.6356}, {'name': 'Compota Gerber Frutas Mixtas', 'price': 1.0788}, {'name': 'Compota Gerber Pera', 'price': 1.0788}, {'name': 'Consul Detallado', 'price': 0.1508}, {'name': 'Cooltivo Mainz Dulce en lata 285gr', 'price': 5.6724}, {'name': 'COPOSA - aceite vegetal 850ml', 'price': 5.51}, {'name': 'COTOPERI - colado de pera 110g', 'price': 0.93}, {'name': 'crema colgate menta 100ml', 'price': 4.5008}, {'name': 'crema colgate menta 180gr', 'price': 4.3964}, {'name': 'crema colgate triple accion 75mg', 'price': 3.8512}, {'name': 'Crema de arroz Mary', 'price': 1.5312000000000001}, {'name': 'Crema de leche la pastora 450g', 'price': 4.5}, {'name': 'Crema de leche la pastora BOLSA 250gr', 'price': 2.75}, {'name': 'Crema de leche purisima 250g', 'price': 4.1992}, {'name': 'Crema de leche purisima 500g', 'price': 5.452}, {'name': 'Crema dental Alident', 'price': 0.928}, {'name': 'Cronch Flakes 300g', 'price': 3.7468}, {'name': 'Cronch Flakes Karymba 250gr', 'price': 3.5032}, {'name': 'CRUNCHIS GREGORY - 150g', 'price': 1.46}, {'name': 'CRUNCHIS GREGORY - 54G', 'price': 0.46}, {'name': 'cruz cafe 100g', 'price': 1.9}, {'name': 'CRUZCAFE - clasico 200g', 'price': 3.38}, {'name': 'Cuajada', 'price': 3.8}, {'name': 'Cubito Maggi detallado', 'price': 0.39440000000000003}, {'name': 'Cubitos De Pollo Maggi 12UND', 'price': 3.8047999999999997}, {'name': 'Cubitos de pollo Maggi 8 Unidades', 'price': 2.6447999999999996}, {'name': 'DANBISK - PALITO EXTREME', 'price': 3.32}, {'name': 'DANBISK - Pepitas', 'price': 0.51}, {'name': 'Dandy ', 'price': 1.1948}, {'name': 'Dedos Cookies', 'price': 0.7772}, {'name': 'DEL MONTE - guisantes 425g', 'price': 3.43}, {'name': 'DEL MONTE - guisantes y zanahorias 241g', 'price': 2.9}, {'name': 'DEL MONTE - guisantes y zanahorias 411g', 'price': 4.16}, {'name': 'DEL MONTE - Maiz Dulce Dorado Entero 220g', 'price': 2.61}, {'name': 'Del Monte Maiz Dulce Entero 220g', 'price': 2.8652}, {'name': 'DEXX - recolector de heces', 'price': 0.82}, {'name': 'Diablitos Under Wood 50gr', 'price': 2.1924}, {'name': 'Diablitos under wood 54g', 'price': 2.8536}, {'name': 'Diebalito Underwood 115gr', 'price': 4.3036}, {'name': 'DIPROMON - Cloro', 'price': 1.87}, {'name': 'DIPROMON - lavaplatos 1l', 'price': 3.63}, {'name': 'Dipromon Cloro', 'price': 1.9952}, {'name': 'DIPROMON Cloro Jabonoso', 'price': 2.5984000000000003}, {'name': 'Dipromon Desinfectante bambu', 'price': 2.552}, {'name': 'Dipromon Desinfectante Cherry ', 'price': 2.552}, {'name': 'Dipromon Desinfectante Lavanda', 'price': 2.552}, {'name': 'Dipromon Jabon liquido', 'price': 3.77}, {'name': 'Dipromon Lavaplatos', 'price': 3.538}, {'name': 'disoponible', 'price': 0.16240000000000002}, {'name': 'disponible', 'price': 0.16240000000000002}, {'name': 'Don Toallin 50 Hojas', 'price': 1.7864}, {'name': 'DOÑA ALICIA - Avena en Hojuelas 400gr', 'price': 1.53}, {'name': 'Doritos 45gr', 'price': 1.2412}, {'name': 'Doritos Mega Queso 150gr', 'price': 3.5032}, {'name': 'DOVE - original 90g', 'price': 6.93}, {'name': 'Dove Tratamiento Con Proteina', 'price': 10.9968}, {'name': 'El Chichero Chicha en polvo', 'price': 2.7956000000000003}, {'name': 'El Prado Bologna de Pollo con aceituna y pimenton', 'price': 7.7836}, {'name': 'El Prado Pechuga Cocida de Pavo', 'price': 12.9224}, {'name': 'El Tunal -  Nectar de Durazno 1L', 'price': 2.7028}, {'name': 'EL TUNAL - Huevos', 'price': 8.55}, {'name': 'EL TUNAL - HUEVOS DETALLADOS', 'price': 0.28}, {'name': 'EL TUNAL - HUEVOS MEDIO CARTON', 'price': 4.28}, {'name': 'EL TUNAL - Jugo de Naranja 1L', 'price': 3.12}, {'name': 'EL TUNAL - Jugo de Naranja 500ml', 'price': 2.11}, {'name': 'EL TUNAL - JUGOS SURTIDOS 1L', 'price': 2.58}, {'name': 'EL TUNAL - JUGOS SURTIDOS 500ml', 'price': 1.71}, {'name': 'El Tunal - Nectar de manzana 1L', 'price': 2.7028}, {'name': 'El Tunal - Nectar de Pera 1L', 'price': 2.7028}, {'name': 'El tunal Jugo de manzana 200ml', 'price': 0.9976}, {'name': 'El tunal Jugo de naranja', 'price': 3.0044}, {'name': 'El Tunal Naranja 200ml', 'price': 0.9976}, {'name': 'El Tunal Nectar de Durazno 500ml', 'price': 1.9952}, {'name': 'El Tunal Nectar de Manzana 500ml', 'price': 1.9952}, {'name': 'El Tunal Nectar de Naranja 500ml', 'price': 1.9952}, {'name': 'El Tunal Nectar de Pera 500ml', 'price': 1.9952}, {'name': 'El Tunal Salchichas Cocida de Pollo 450gr', 'price': 3.654}, {'name': 'Ellas Toallas Higienicas Combo 8+8', 'price': 2.5984000000000003}, {'name': 'ESPECIE - Adobo Completa Eliza', 'price': 0.38}, {'name': 'ESPECIE - Anis Estrellado', 'price': 0.5}, {'name': 'ESPECIE - Bicarbonato de sodio', 'price': 0.43}, {'name': 'ESPECIE - Canela concha', 'price': 0.48}, {'name': 'ESPECIE - Canela Molida', 'price': 0.48}, {'name': 'ESPECIE - Clavito', 'price': 0.43}, {'name': 'ESPECIE - Guayabita', 'price': 0.46}, {'name': 'ESPECIE - Polvo de Hornear', 'price': 0.34}, {'name': 'ESPIGA DORADA - arroz blanco 900g', 'price': 1.96}, {'name': 'ESPONJA DE BRILLO - jabonosa 3und', 'price': 1.9}, {'name': 'Esponja de brillo jabonosa', 'price': 1.9023999999999999}, {'name': 'Esponja Izy', 'price': 1.1832}, {'name': 'Esponja Max Hogar Acero Espiral', 'price': 1.16}, {'name': 'Esponja MAX HOGAR dDeluxe Doble uso', 'price': 1.0324}, {'name': 'Esponja MAX Hogar Deluxe Oro Plata', 'price': 1.7516}, {'name': 'Esponja Max Hogar Deluxe Soft', 'price': 1.6239999999999999}, {'name': 'Esponja Sultana Surtida', 'price': 1.972}, {'name': 'Esponja Washup', 'price': 1.1832}, {'name': 'Esponsa Sultana ', 'price': 1.972}, {'name': 'Europapel Servilletas 160 ud', 'price': 2.4592}, {'name': 'EVEBA - atun solido 140g', 'price': 2.87}, {'name': 'EVEBA - atun solido en aceite vegetal 170g', 'price': 2.87}, {'name': 'EVEBA - sardinas 170g', 'price': 1.53}, {'name': 'EVEBA Atun Solido En Aceite Vegetal 140gr', 'price': 3.15}, {'name': 'EVERY NIGHT - talco 24h 85g', 'price': 5.66}, {'name': 'Everynight Talco Antibacterial', 'price': 5.6608}, {'name': 'EVEVA - atun aleta amarilla en aceite 170gr', 'price': 4.07}, {'name': 'EVEVA - atun en trozos con vegetales 170gr', 'price': 3.58}, {'name': 'EVEVA - atun solido en salsa picante 140gr', 'price': 3.13}, {'name': 'EVEVA - atun solido natural 170gr', 'price': 3.57}, {'name': 'EVEVA - sardina en salsa picante 170gr', 'price': 1.6}, {'name': 'FABULOSO - ultra frescura 500ml', 'price': 3.97}, {'name': 'FAMA DE AMERICA - premium 250g', 'price': 4.85}, {'name': 'Fama de america 100g', 'price': 1.9}, {'name': 'Fama de America 250g', 'price': 4.66}, {'name': 'FAMILIA - cafeteria 100und', 'price': 1.43}, {'name': 'FAMILIA - papel higienico extra grande 4und', 'price': 3.53}, {'name': 'FAMILIA - Servilletas Medianas 100und', 'price': 0.94}, {'name': 'FAMILIA - Toallin JUMBO PACK', 'price': 3.11}, {'name': 'FANTA - naranja 1.5l', 'price': 1.67}, {'name': 'FANTA - uva 1.5l', 'price': 1.66}, {'name': 'Fanta 1.5L', 'price': 1.6587999999999998}, {'name': 'FESTIVAL - Galletas 33.6g', 'price': 0.53}, {'name': 'Flan SONRISA sin caramelo 46g', 'price': 1.6472}, {'name': 'FLIPS - Dulce de leche 220gr', 'price': 5.13}, {'name': 'Flips 220gr', 'price': 5.6028}, {'name': 'Fluocard dent 36gr', 'price': 1.2528000000000001}, {'name': 'FOSFOROS EL SOL', 'price': 0.2}, {'name': 'Fosforos el Sol', 'price': 0.20879999999999999}, {'name': 'FREEGELLS - Eucalipto Menta', 'price': 0.48}, {'name': 'FREEGELLS - Extra Strong Menthol', 'price': 0.48}, {'name': 'Frescolita', 'price': 1.9023999999999999}, {'name': 'FRESCOLITA - 1.5L', 'price': 1.76}, {'name': 'FRESCOLITA - 355ml', 'price': 0.87}, {'name': 'FRICA - Jugos 1L', 'price': 3.56}, {'name': 'FRICA - Naranjada', 'price': 4.47}, {'name': 'Frica Nectar de naranja 1L', 'price': 3.8975999999999997}, {'name': 'Frijol Rojo El Estio 500gr', 'price': 4.4312}, {'name': 'FRITZ - Ahumadita 145gr', 'price': 2.54}, {'name': 'FRITZ - Salsa Cheddar 145gr', 'price': 2.54}, {'name': 'FRITZ - salsa de maiz', 'price': 2.16}, {'name': 'FRITZ - Salsa de tomate', 'price': 1.09}, {'name': 'FRITZ - Salsa Mayonesa 150gr', 'price': 1.87}, {'name': 'FRITZ - Tripack soja, inglesa y ajo', 'price': 5.15}, {'name': 'Fritz Cheddar', 'price': 2.3084}, {'name': 'Fritz Salsa Ahumatida Tocineta', 'price': 1.9952}, {'name': 'Fritz Salsa de Maiz ', 'price': 2.4012}, {'name': 'Fritz Salsa de tomate ', 'price': 1.1948}, {'name': 'Frutino Gelatina', 'price': 1.4036}, {'name': 'FRUTIÑO - Bebida Sobre 10g', 'price': 0.92}, {'name': 'FRUTIÑO - gelatina 14g', 'price': 1.38}, {'name': 'Galak Tubito', 'price': 0.6032}, {'name': 'Galleta Chispas de chocolate Cocoa', 'price': 1.4964}, {'name': 'Galleta De Soda Premium 26gr', 'price': 0.38280000000000003}, {'name': 'Galleta Mary Tentazione 200gr', 'price': 2.32}, {'name': 'Galleta Nucita wafer', 'price': 0.464}, {'name': 'Galleta Oreo Fresa', 'price': 0.638}, {'name': 'Galleta Oreo Original', 'price': 0.5684}, {'name': 'Galleta Tip Top', 'price': 0.9048}, {'name': 'Galletas Caledonia Maria Pq', 'price': 0.6148}, {'name': 'Galletas CALEDONIA Maria Premium', 'price': 1.6587999999999998}, {'name': 'Galletas Charmy', 'price': 1.4036}, {'name': 'Galletas Charmy Caledonia 216gr', 'price': 2.1807999999999996}, {'name': 'Galletas Colombina Wafer', 'price': 0.174}, {'name': 'Galletas de soda El Sol', 'price': 2.5404}, {'name': 'Galletas Festival 33gr', 'price': 0.6032}, {'name': 'Galletas Festival 54gr', 'price': 0.986}, {'name': 'Galletas Maria Puig', 'price': 2.2039999999999997}, {'name': 'Galletas Marilu 216gr', 'price': 3.0044}, {'name': 'Galletas Muu', 'price': 0.8351999999999999}, {'name': 'Galletas Oreo', 'price': 1.4036}, {'name': 'Galletas Rikas Vainilla', 'price': 0.174}, {'name': 'Galletas Tartaletas Wynco 140gr', 'price': 1.3803999999999998}, {'name': 'Galletas Waffer Isabela 100g', 'price': 1.2992000000000001}, {'name': 'Galletas Waffer Tigo Fresa', 'price': 0.8236}, {'name': 'Galletas Waffer Tigo Vainilla', 'price': 0.8236}, {'name': 'Garbanzos MARY 500g', 'price': 4.5}, {'name': 'GATORADE - Surtido 500ml', 'price': 2.3}, {'name': 'Gatorade Rojo Frutas tropicales', 'price': 2.7724}, {'name': 'Gatorade Surtido', 'price': 2.5172}, {'name': 'Gel Fijador Every Nigth Power 100gr', 'price': 3.0275999999999996}, {'name': 'Gel Fijador Every Nigth Strong 100gr', 'price': 3.0275999999999996}, {'name': 'Gel Fijador Every Nigth Winner 100gr', 'price': 3.0275999999999996}, {'name': 'Gelatina SONRISA sabores 66g', 'price': 1.9952}, {'name': 'GILLETE - Prestobarba H/M', 'price': 1.51}, {'name': 'Gillete Anti Transpirante Roll on', 'price': 4.466}, {'name': 'Gillete Prestobarba', 'price': 1.3223999999999998}, {'name': 'Gillete Spray Cool Wave', 'price': 7.888}, {'name': 'Glup Cola', 'price': 0.58}, {'name': 'Glup Cola 1l', 'price': 1.0672000000000001}, {'name': 'Glup Fresh', 'price': 0.58}, {'name': 'Glup Fresh 1l', 'price': 1.0091999999999999}, {'name': 'Glup Manzana', 'price': 0.58}, {'name': 'GOLDEN - manzana 1.5l', 'price': 1.18}, {'name': 'Golden Kolita', 'price': 1.508}, {'name': 'Golden Manzanita', 'price': 1.4384}, {'name': 'Golden Manzanita 1.5L', 'price': 1.4036}, {'name': 'Golden Pina', 'price': 1.4384}, {'name': 'Golpe 45gr', 'price': 1.2064}, {'name': 'Gregory 150Gr', 'price': 1.4964}, {'name': 'Gregory 54g', 'price': 0.4988}, {'name': 'GUDS - Chicle de menta', 'price': 0.3}, {'name': 'guisantes con zanahoria de monnte 241g', 'price': 3.1784000000000003}, {'name': 'guisantes del monte 425g', 'price': 4.3732}, {'name': 'Guisantes del Monte Con zanahoria', 'price': 4.3964}, {'name': 'HALLS - Caramelos', 'price': 1.02}, {'name': 'Halls Negro', 'price': 0.8004}, {'name': 'Harina 7 Granos Gde', 'price': 2.0}, {'name': 'Harina 7 granos pequeno', 'price': 1.0}, {'name': 'Harina de Mainz Blanco Santoni', 'price': 1.35}, {'name': 'Harina de Maiz Mary 900gr', 'price': 1.41}, {'name': 'Harina de Maiz Masia 900gr', 'price': 2.146}, {'name': 'Harina de Maiz Pan 1k', 'price': 1.7}, {'name': 'Harina de Maiz Santoni 900gr', 'price': 2.0416}, {'name': 'Harina de trigo Robinson Leudante', 'price': 1.53}, {'name': 'Harina de trigo Robinson tradicional', 'price': 1.42}, {'name': 'Harina Mary Leudante 900Gr', 'price': 2.3}, {'name': 'Harina Pan Semillas nutritivas', 'price': 3.3988}, {'name': 'Harina Todo Uso Mary 900gr', 'price': 1.9}, {'name': 'HEAD & SHOULDERS - 2 en 1 shampoo 375ml', 'price': 8.58}, {'name': 'Head And Shoulers Acondicionador', 'price': 10.498000000000001}, {'name': 'HEINZ - Salsa de tomate 397g', 'price': 2.91}, {'name': 'Heinz Compota 186gr', 'price': 1.1019999999999999}, {'name': 'Heinz Mostaza Preparada Original 113gr', 'price': 2.2852}, {'name': 'HILO - pabilo 1und', 'price': 0.51}, {'name': 'HOLSUM - Pan blanco', 'price': 1.4}, {'name': 'HOLSUM - Pan de mantequilla', 'price': 2.93}, {'name': 'HOLSUM - Pan Integral', 'price': 3.25}, {'name': 'Holsum Pan Blanco', 'price': 1.55}, {'name': 'Hony Bran', 'price': 3.9904}, {'name': 'Household Napkins', 'price': 5.4984}, {'name': 'Huevos detallados', 'price': 0.3016}, {'name': 'Huevos Docena ', 'price': 3.0}, {'name': 'Huevos El tunal', 'price': 7.5}, {'name': 'Huevos medio carton', 'price': 3.75}, {'name': 'IBERIA - pasta de tomate', 'price': 8.29}, {'name': 'IBERIA - pasta de tomate 500g', 'price': 4.42}, {'name': 'Indosa Bebida Lactea 180GR', 'price': 1.8}, {'name': 'ISABELA - Tortinhas', 'price': 1.38}, {'name': 'ISABELA - Waffers', 'price': 1.19}, {'name': 'ITALIA - Bizcochos Premium 125g', 'price': 2.48}, {'name': 'ITALICO - visking 1k', 'price': 12.7}, {'name': 'Italico Jamon Cocido Estandar', 'price': 9.9528}, {'name': 'Jabon Ariel En Polvo Poder y Cuidado 450gr', 'price': 3.0275999999999996}, {'name': 'Jabon Axion Limon MultiSuperficies', 'price': 1.0672000000000001}, {'name': 'Jabon de Bano Dove original', 'price': 6.3104000000000005}, {'name': 'Jabon de Bano Johnsons 110gr', 'price': 2.7144}, {'name': 'Jabon de Bano Lux 110gr', 'price': 2.784}, {'name': 'Jabon de Bano Moncler 90gr', 'price': 2.3779999999999997}, {'name': 'Jabon Dove Cuidado Indulgente', 'price': 6.3104000000000005}, {'name': 'Jabon Dove Cuidado Karite', 'price': 6.3104000000000005}, {'name': 'Jabon Johnsons Almendras Y Avena', 'price': 2.7144}, {'name': 'Jabon Johnsons Daily Care', 'price': 2.7144}, {'name': 'Jabon Johnsons Sosas y sandalo', 'price': 2.7144}, {'name': 'Jabon LAK Azul', 'price': 0.9048}, {'name': 'Jabon LAK Morado', 'price': 0.9048}, {'name': 'Jabon LAK Rosa', 'price': 0.9048}, {'name': 'Jabon LAK Verde', 'price': 0.9048}, {'name': 'Jabon Palmolive Neutro Balance 100mg', 'price': 3.5032}, {'name': 'jabon Palmolive Oliva y aloe Vera', 'price': 1.74}, {'name': 'Jabon Protex Avena', 'price': 1.566}, {'name': 'Jabon Protex Carbon Detox', 'price': 1.566}, {'name': 'jabon Protex fresh', 'price': 1.6008}, {'name': 'Jabon Protex Herbal', 'price': 1.566}, {'name': 'Jabon Ultrex 1kg', 'price': 2.3432}, {'name': 'Jabon Ultrex 250', 'price': 0.9048}, {'name': 'Jabon Ultrex 500', 'price': 1.4964}, {'name': 'jamon endiablado plumrose', 'price': 2.5868}, {'name': 'Jamon endiablado Plumrose 110gr', 'price': 3.6424000000000003}, {'name': 'Jamon Espalda tipo Visking Italico', 'price': 9.999199999999998}, {'name': 'JC masa Facil mediana 500gr', 'price': 3.2828}, {'name': 'jengibre', 'price': 1.3223999999999998}, {'name': 'JGB - almohadillas faciales de algodon 80und', 'price': 6.35}, {'name': 'JGB Pads de algodon', 'price': 5.776800000000001}, {'name': 'JOHNSONS - jabon de baño rosas y sandalo 110g', 'price': 3.87}, {'name': 'Jugo Yuky Pak Durazno 250ml', 'price': 1.1019999999999999}, {'name': 'Jugos Frica 1L', 'price': 3.5612}, {'name': 'Kefir La Gran Pastora 400ml', 'price': 3.6424000000000003}, {'name': 'Kelloggs Choco Zucaritas 250gr', 'price': 3.5032}, {'name': 'kelloggs Corn Flakes 230gr', 'price': 3.0972}, {'name': 'Kelloggs Zucaritas 250gr', 'price': 3.0972}, {'name': 'KELLOGS - Choco Krispis', 'price': 3.57}, {'name': 'KELLOGS - Choco Zucaritas', 'price': 3.56}, {'name': 'KELLOGS - Corn Flakes', 'price': 3.05}, {'name': 'KELLOGS - Corp Pops', 'price': 3.21}, {'name': 'KELLOGS - Zucaritas', 'price': 3.21}, {'name': 'Kellogs Corn Pops', 'price': 3.0972}, {'name': 'KEPA - vinagre 1000cm', 'price': 1.61}, {'name': 'KEPA - vinagre 500cm', 'price': 0.83}, {'name': 'KESITOS - pequeño 25g', 'price': 0.87}, {'name': 'Ketchup Pampero', 'price': 2.9}, {'name': 'Ketchup Underwood Jamon Endiablado 380gr', 'price': 4.1644}, {'name': 'Ketchup Underwood Salsa de tomate 387', 'price': 4.1644}, {'name': 'Konga durazno', 'price': 0.7192}, {'name': 'Konga Limon', 'price': 0.7192}, {'name': 'Konga Tizana', 'price': 0.7192}, {'name': 'KOTEX - esencial toallas femeninas con alas 8und', 'price': 2.1}, {'name': 'Kotex Discreta', 'price': 2.0996}, {'name': 'Kotex UltraProtect', 'price': 1.8907999999999998}, {'name': 'Kraker Bran', 'price': 5.1388}, {'name': 'kraker bran detallado', 'price': 0.8004}, {'name': 'Kraker Detalladas', 'price': 0.51}, {'name': 'LA CAMPIÑA - Leche en polvo Completa 200g', 'price': 4.84}, {'name': 'LA GRAN PASTORA - yogurt de botella durazno 400ml', 'price': 2.49}, {'name': 'LA GRAN PASTORA - yogurt de botella kefir 400ml', 'price': 3.32}, {'name': 'La pastora Yogurt De Durazno 400ml', 'price': 1.4732}, {'name': 'La pastora Yogurt de fresa 400ml', 'price': 1.9952}, {'name': 'Lady Speed Stick 30gr', 'price': 2.5868}, {'name': 'Lady Speed Stick Barra', 'price': 9.0016}, {'name': 'Lady Speed Stick Roll on', 'price': 4.999599999999999}, {'name': 'LAS LLAVES - detergente en polvo bebe 400g', 'price': 1.98}, {'name': 'LAS LLAVES - Detergente Floral 400gr', 'price': 1.98}, {'name': 'LAS LLAVES - Fragancia Floral Doble accion 400g', 'price': 1.54}, {'name': 'LAS LLAVES - jabon en panela para lavar la ropa 200g', 'price': 1.43}, {'name': 'LAS LLAVES - multiuso en crema 250g', 'price': 2.82}, {'name': 'LAS LLAVES - multiuso en crema 500g', 'price': 5.14}, {'name': 'Las llaves detergente 900gr', 'price': 3.7468}, {'name': 'Las llaves detergente bebe 400g', 'price': 1.7516}, {'name': 'Las LLaves Detergente Bebe 900g', 'price': 3.7468}, {'name': 'LAs llaves detergente Floral 400gr', 'price': 2.1576}, {'name': 'Las LLaves detergente Limon 400g}', 'price': 1.7516}, {'name': 'Las llaves Jabon Tradicional 200gr', 'price': 0.9976}, {'name': 'Las llaves limpieza Marea Cristal 500cc', 'price': 2.5056000000000003}, {'name': 'las llaves multiuso crema 500 g', 'price': 5.1388}, {'name': 'Las Llaves Multiuso en Crema 250gr', 'price': 2.8188000000000004}, {'name': 'Leche Carabobo 1L', 'price': 3.3}, {'name': 'Leche Completa en polvo Torondoy 400gr', 'price': 6.25}, {'name': 'Leche Completa en polvo Torondoy 900gr', 'price': 14.75}, {'name': 'Leche completa Purisima', 'price': 3.51}, {'name': 'Leche condensada de lata parmalat 395g', 'price': 5.0}, {'name': 'Leche Condensada Natulac 50gr', 'price': 1.3456}, {'name': 'Leche Condensada Tigo 395gr', 'price': 2.146}, {'name': 'Leche en polvo Vitale 360g', 'price': 5.18}, {'name': 'Leche La Campina 200gr', 'price': 4.31}, {'name': 'Leche La campina 400gr', 'price': 8.75}, {'name': 'Leche La campina 900gr', 'price': 13.35}, {'name': 'Leche la Pastora 900ml', 'price': 1.57}, {'name': 'Leche Purisima Descremada', 'price': 3.9}, {'name': 'Leche purisima deslactosada', 'price': 3.6}, {'name': 'Leche San Simon 125gr', 'price': 3.4}, {'name': 'Leche San simon 400gr', 'price': 6.3}, {'name': 'Leche San simon 900gr', 'price': 11.44}, {'name': 'LENGUA DE SUEGRA', 'price': 1.16}, {'name': 'Lengua de suegra', 'price': 1.1484}, {'name': 'Lentejas La Sureña 500gr', 'price': 3.3988}, {'name': 'Lentejas MARY 400mg', 'price': 3.6}, {'name': 'Limpia Pisos Brilla King Lavanda Jazmin 1000ml', 'price': 2.842}, {'name': 'Limpia Pisos Brilla King Manzana Canela 1000ml', 'price': 2.842}, {'name': 'LIPTON - limon 1.5l', 'price': 5.72}, {'name': 'LIPTON - Surtido 500ml', 'price': 1.98}, {'name': 'LIPTON - Te de bolsa CITRUS', 'price': 4.78}, {'name': 'LIPTON - Te de bolsa EARL GREY', 'price': 4.78}, {'name': 'LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY', 'price': 4.78}, {'name': 'LIPTON - Te de bolsa YELLOW LABEL', 'price': 4.78}, {'name': 'Lipton 1.5L', 'price': 5.4984}, {'name': 'Lipton de 500ml', 'price': 1.9952}, {'name': 'Listerine Cool Mint Zero Alcohol 360ml', 'price': 15.718}, {'name': 'Lomo de Atun premium Tigo 160g', 'price': 2.8}, {'name': 'lucky Eclipse Detallado', 'price': 0.2}, {'name': 'LUCKY STRIKE Eclipse', 'price': 3.99}, {'name': 'MAGGI - Cubitos de pollo', 'price': 0.51}, {'name': 'MAGGI - Sopa Fideo', 'price': 2.3}, {'name': 'Maiz de Cotufa La Sureña 500gr', 'price': 1.856}, {'name': 'Maiz para Cotufas Mary', 'price': 2.6}, {'name': 'Maizina Americana 400g', 'price': 3.99}, {'name': 'MALTIN - Malta de botella 250ml', 'price': 0.85}, {'name': 'maltin de Botella 250ML', 'price': 0.9164000000000001}, {'name': 'MALTIN POLAR - malta 1.5l', 'price': 2.33}, {'name': 'MALTIN POLAR - malta desechable 250ml', 'price': 1.04}, {'name': 'MALTIN POLAR - malta desechable 350ml', 'price': 1.26}, {'name': 'Maltin polar 1.5lt', 'price': 2.3316}, {'name': 'Maltin polar lata 250ml', 'price': 1.044}, {'name': 'Maltin Polar lata 355ml', 'price': 1.2992000000000001}, {'name': 'Mantecada 150g', 'price': 2.7028}, {'name': 'Mantequilla Mavesa 250gr', 'price': 2.14}, {'name': 'Mantequilla Mavesa 500gr', 'price': 3.49}, {'name': 'Mantequilla Purisima con Sal ', 'price': 5.69}, {'name': 'Mantequilla Purisima sin Sal ', 'price': 4.89}, {'name': 'Mantequilla Torondoy con Sal 200gr', 'price': 7.0}, {'name': 'Margarina MIRASOL 454Gr', 'price': 3.2}, {'name': 'MARGARINA NELLY 250', 'price': 1.83}, {'name': 'Margarina Nelly 500g', 'price': 3.56}, {'name': 'MARGARITA - sardinas en aceite vegetal', 'price': 1.45}, {'name': 'MARGARITA - sardinas en salsa de tomate', 'price': 1.67}, {'name': 'Margarita Sardinas Tomate', 'price': 1.59}, {'name': 'Marilu tubular de chocolate 216gr', 'price': 2.5636}, {'name': 'Marshmallows Angelitos 5g', 'price': 0.16240000000000002}, {'name': 'MARY - aceite de oliva extra virgen 500ml', 'price': 14.99}, {'name': 'MARY - caraotas 400g', 'price': 2.29}, {'name': 'MARY - Crema de arroz 450gr', 'price': 1.31}, {'name': 'MARY - esmeralda 900g', 'price': 3.16}, {'name': 'MARY - garbanzos 500g', 'price': 4.16}, {'name': 'MARY - harina de maiz blanco 900g', 'price': 1.77}, {'name': 'MARY - Harina de trigo leudante', 'price': 2.45}, {'name': 'MARY - Harina de trigo Todo uso', 'price': 1.7}, {'name': 'MARY - lentejas 400g', 'price': 3.26}, {'name': 'MARY - maiz para cotufas 400g', 'price': 2.33}, {'name': 'MARY - superior 900g', 'price': 2.02}, {'name': 'MARY - tornillo 500g', 'price': 1.73}, {'name': 'MARY - vermicelli 1kg', 'price': 2.73}, {'name': 'MARY - vermicelli 500g', 'price': 1.48}, {'name': 'MARY Vermicelly Superior 1kg', 'price': 3.0}, {'name': 'MAVESA - Margarina Todo uso 250gr', 'price': 1.95}, {'name': 'MAVESA - Margarina Todo uso 500gr', 'price': 3.17}, {'name': 'MAVESA - Mayonesa 175g', 'price': 2.92}, {'name': 'MAVESA - vinagre 1l', 'price': 2.33}, {'name': 'MAVESA - vinagre 500ml', 'price': 1.4}, {'name': 'MAVESA- Mayonesa 445g', 'price': 5.83}, {'name': 'MAX HOGAR - esponja de acero inoxidable', 'price': 1.16}, {'name': 'MAX HOGAR - esponja doble uso', 'price': 1.03}, {'name': 'MAX HOGAR - esponja soft', 'price': 1.62}, {'name': 'Mayonesa Del monte', 'price': 1.4964}, {'name': 'Mayonesa Kraft 175gr', 'price': 2.0300000000000002}, {'name': 'Mayonesa La Giralda 445gr', 'price': 3.8047999999999997}, {'name': 'Mayonesa Mavesa 175gr', 'price': 2.79}, {'name': 'Mayonesa Mavesa 445gr', 'price': 4.4}, {'name': 'Media Cuajada', 'price': 1.7}, {'name': 'MEGA AROS - Cereal lonchera', 'price': 0.61}, {'name': 'Mezcla para Cachapas Pan', 'price': 3.3988}, {'name': 'MI GURT - durazno 125g', 'price': 1.59}, {'name': 'MI GURT - fresa 125g', 'price': 1.59}, {'name': 'Miel de Aveja La Encantada 500gr', 'price': 13.5836}, {'name': 'Miel de Aveja La Encantada Oso 350gr', 'price': 8.6304}, {'name': 'Migurt Fresa Vaso 125 ml', 'price': 1.81}, {'name': 'Milenium Bologna de pollo ', 'price': 6.5771999999999995}, {'name': 'Milenium Fiambre de cerdo', 'price': 10.3356}, {'name': 'Milenium mini Jamon cocido', 'price': 9.999199999999998}, {'name': 'Milenium mini pavo', 'price': 12.5048}, {'name': 'Milenium Mini Pierna', 'price': 12.5048}, {'name': 'Milenium Mortadela de pollo ', 'price': 2.9928}, {'name': 'Milenium Salchichas a granel', 'price': 6.09}, {'name': 'MILLENIUM - mortadela de pollo 600g', 'price': 3.03}, {'name': 'MILLENNIUM - bologna con pimenton 1k', 'price': 6.71}, {'name': 'MILLENNIUM - economico de pierna 1k', 'price': 10.56}, {'name': 'MILLENNIUM - mini pechuga de pavo 1k', 'price': 14.33}, {'name': 'MILLENNIUM - mini pierna superior 1k', 'price': 13.03}, {'name': 'MILLENNIUM - mortadela extra 1k', 'price': 6.23}, {'name': 'MILLENNIUM - salchichas a granel 1k', 'price': 8.98}, {'name': 'MINALBA - agua mineral 1.5l', 'price': 2.02}, {'name': 'Mini Samba Fresa', 'price': 0.6496000000000001}, {'name': 'MIRASOL - Margarina 500gr', 'price': 3.43}, {'name': 'MONEDAS DE CHOCOLATE', 'price': 0.06}, {'name': 'Monedas de chocolate', 'price': 0.046400000000000004}, {'name': 'MORITZ - Latte Leche', 'price': 1.21}, {'name': 'mortadela del arepero 500g', 'price': 2.9464}, {'name': 'Mortadela Extra Milenium', 'price': 6.85}, {'name': 'Mortadela Tipo Espalda Caracas', 'price': 4.56}, {'name': 'Mostaza Del Monte', 'price': 1.9023999999999999}, {'name': 'MR BROWN - Arequipe', 'price': 1.64}, {'name': 'Mr Brown Brownie', 'price': 1.4964}, {'name': 'MUCCA - Galletas', 'price': 0.96}, {'name': 'MultiClean detergente Fragancia floral 400', 'price': 1.4036}, {'name': 'MultiClean Detergente Fragancia Floral 900g', 'price': 2.9}, {'name': 'MUNCHY - triple play 70g', 'price': 2.95}, {'name': 'Muss Honey Coco Oil Acondicionador', 'price': 13.363199999999999}, {'name': 'Muss Honey Coco Oil Tratamiento', 'price': 13.363199999999999}, {'name': 'Naranja Cotoperi 500ml', 'price': 1.6936}, {'name': 'Naranjada Cotoperi 1.5l', 'price': 3.3988}, {'name': 'Natulac Colado de manzana Compota 186gr', 'price': 2.1344000000000003}, {'name': 'Natulac Frutas Tropicales', 'price': 2.1344000000000003}, {'name': 'Natulac Leche Condensada 340gr', 'price': 3.8975999999999997}, {'name': 'Natulac Pera', 'price': 2.1344000000000003}, {'name': 'NATUROIL - aceite de soya 850ml', 'price': 5.73}, {'name': 'nectaR COTOPRERI 1.5ML', 'price': 4.8024}, {'name': 'Nectar de durazno 500ml', 'price': 1.5428000000000002}, {'name': 'nectar de manzana cotoperi 500ml', 'price': 1.5892000000000002}, {'name': 'nectar de pera cotoperi 500ml', 'price': 1.5892000000000002}, {'name': 'NELLY - Margarina 250gr', 'price': 1.66}, {'name': 'NELLY - Margarina 500gr', 'price': 3.24}, {'name': 'NESTEA - limon 520gr', 'price': 7.05}, {'name': 'Nestea Durazno 520gr', 'price': 6.7976}, {'name': 'Nestea Limon 520G', 'price': 6.7976}, {'name': 'Nestea sobre 90gr', 'price': 1.4964}, {'name': 'netar de durazno cotoperi 500ml', 'price': 1.5892000000000002}, {'name': 'NEVADA - Agua mineral 600ml', 'price': 1.01}, {'name': 'NO USAR', 'price': 3.2944}, {'name': 'NO USAR', 'price': 2.2039999999999997}, {'name': 'NOSOTRAS - toallas naturales invisibles 10und', 'price': 1.14}, {'name': 'NOSTRAS - proteccion v normal 15 und', 'price': 1.3}, {'name': 'Nucita Tubo 35gr', 'price': 1.972}, {'name': 'Nutellini en crema ', 'price': 0.4988}, {'name': 'Nutiva U-Fresh Mango 200ml', 'price': 0.6148}, {'name': 'Nutiva U-Fresh Pera 200ml', 'price': 0.6264000000000001}, {'name': 'Nutiva U-Fresh Piña Naranja 200ml', 'price': 0.6264000000000001}, {'name': 'Nutri bella Celulas madre 27ml', 'price': 2.9}, {'name': 'Nutri Keratine Max sin Sal', 'price': 10.498000000000001}, {'name': 'Nutri Restaura Max Acondicionador', 'price': 10.498000000000001}, {'name': 'Nutri Restaura Max Shampoo', 'price': 10.498000000000001}, {'name': 'Nutrit Anticaspa Acondicionador', 'price': 10.498000000000001}, {'name': 'Nutrit Anticaspa Shampoo', 'price': 10.498000000000001}, {'name': 'Nutrit Cuidado Natural Acondicionador', 'price': 10.498000000000001}, {'name': 'Nutrit Cuidado Natural Shampoo', 'price': 10.498000000000001}, {'name': 'Oral-b 70gr', 'price': 4.9879999999999995}, {'name': 'OREO - Fresa 96gr', 'price': 2.78}, {'name': 'OREO - Vainilla 96gr', 'price': 2.78}, {'name': 'oreo 32g', 'price': 0.6611999999999999}, {'name': 'OSOLE - napolitana', 'price': 1.75}, {'name': 'OSOLE - pizza 200g', 'price': 1.75}, {'name': 'Osole Bolonesa 200g', 'price': 1.9487999999999999}, {'name': 'Osole Mermelada Durazno 200gr', 'price': 5.057600000000001}, {'name': 'Osole Mermelada Fresa 200gr', 'price': 3.1784000000000003}, {'name': 'Osole Mermelada Guayaba 200gr ', 'price': 3.1784000000000003}, {'name': 'Osole Mermelada Mora 200gr', 'price': 3.1784000000000003}, {'name': 'Osole pizza 200g', 'price': 1.7516}, {'name': 'Pabilo', 'price': 0.5104}, {'name': 'Palitos Danibisk 30gr', 'price': 0.58}, {'name': 'PALMERITAS', 'price': 0.46}, {'name': 'Palmeritas', 'price': 0.464}, {'name': 'Palmitos Enteros Mary 400gr', 'price': 5.8232}, {'name': 'PALMOLIVE - natural 85g', 'price': 1.54}, {'name': 'PALMOLIVE - neutro balance 100g', 'price': 3.27}, {'name': 'PAMPERO - Ketchup 198g', 'price': 1.9}, {'name': 'PAMPERO - Ketchup 397g', 'price': 2.87}, {'name': 'PAN - Harina de maiz 1k', 'price': 1.7}, {'name': 'PAN - Sandwich', 'price': 2.87}, {'name': 'PAN - Sandwich Integral', 'price': 2.87}, {'name': 'pan canilla de anjon joli', 'price': 2.7028}, {'name': 'Pan Canilla de Oregano', 'price': 1.9}, {'name': 'Pan Canilla Normal', 'price': 2.25}, {'name': 'pan de banquete ', 'price': 1.45}, {'name': 'Pan de leche', 'price': 1.7}, {'name': 'Pan Frances', 'price': 1.7}, {'name': 'PAN MORITA', 'price': 0.79}, {'name': 'Pan pasta de guayaba pequeña', 'price': 0.5916}, {'name': 'Pan Perro', 'price': 1.8}, {'name': 'pan sadwich avena ', 'price': 2.7607999999999997}, {'name': 'Pan sandwich', 'price': 2.2}, {'name': 'pan sandwich integral', 'price': 2.7607999999999997}, {'name': 'Pan Sandwichy Multicereal La Estacion', 'price': 2.69}, {'name': 'Pan Siciliano La Estacion', 'price': 1.58}, {'name': 'PAN TOVAREÑO', 'price': 1.96}, {'name': 'Pan Tovareño', 'price': 1.85}, {'name': 'Panela', 'price': 2.0}, {'name': 'panelon tigo 25 g', 'price': 0.8004}, {'name': 'Panque Cocoa', 'price': 1.044}, {'name': 'panque Vainilla trigo de Oro', 'price': 1.2876}, {'name': "Pantene Pro'v Crema de peinar Colageno 300cc", 'price': 9.999199999999998}, {'name': 'Pantene Pro-v Crema de peinar Liso 300ml', 'price': 9.999199999999998}, {'name': 'Pantene Pro-v restauracion 400ml', 'price': 10.9968}, {'name': 'papas RIzadas ', 'price': 0.6264000000000001}, {'name': 'Papel Aluminio Selva', 'price': 2.5404}, {'name': 'Papel Bamboo Detallado', 'price': 0.232}, {'name': 'Papel Caricias x4', 'price': 1.8676000000000001}, {'name': 'Papel Elite Duo Triple Hoja 4 Rollos', 'price': 5.8464}, {'name': 'Papel Higienico Familia ', 'price': 3.8975999999999997}, {'name': 'Papel Rosal Plus Rojo 4 Rollos 180 Hojas P', 'price': 1.9371999999999998}, {'name': 'Papel Rosal Plus Verde 4 Rollos 180 Hojas P', 'price': 2.436}, {'name': 'Papel Scott Ride Max Doble Hoja 4 Rollo', 'price': 4.1992}, {'name': 'Papelon de  Durazno Montalban 115gr', 'price': 2.4592}, {'name': 'Paque vainilla-chcolate trigo de oro', 'price': 1.1948}, {'name': 'Paquete Club social', 'price': 3.5032}, {'name': 'PARMALAT - El Chichero Bolsa 200gr', 'price': 2.52}, {'name': 'PARMALAT - leche condensada 395g', 'price': 5.65}, {'name': 'PARMALAT - Leche en polvo 400gr', 'price': 7.39}, {'name': 'Parmalat Alimento Lacteo 400gr', 'price': 7.0}, {'name': 'Pasta Capri Premium Codito 1K', 'price': 3.29}, {'name': 'Pasta Capri Premium Tornillo 500gr', 'price': 1.85}, {'name': 'Pasta Capri Vegetales Tornillo 500gr', 'price': 3.14}, {'name': 'Pasta Corta MARY Tornillo 500Gr', 'price': 1.9}, {'name': 'pasta corta premium pluma 500g', 'price': 2.2}, {'name': 'Pasta de Tomate Fergos 500gr', 'price': 5.162}, {'name': 'Pasta de tomate Iberia 200g', 'price': 3.9904}, {'name': 'Pasta de tomate Iberia 500g', 'price': 7.7024}, {'name': 'pasta larga mary vermicelli 1kg', 'price': 3.5032}, {'name': 'Pasta MARY tradicional Vermicelly', 'price': 1.6}, {'name': 'Pasta Plumitas Primor 1K', 'price': 3.13}, {'name': 'pasta PRIMOR dedales 1Kg', 'price': 2.9}, {'name': 'pasta Primor Tornillos 1KG', 'price': 2.8}, {'name': 'Pasta Primor Vermicelli 500g', 'price': 1.6239999999999999}, {'name': 'Pasteladas', 'price': 0.464}, {'name': 'Pastelitos de Guayaba ', 'price': 0.5916}, {'name': 'Pepitas danibisk', 'price': 0.5104}, {'name': 'Pepito Original 25gr', 'price': 1.0788}, {'name': 'Pepito Original 80gr', 'price': 1.9023999999999999}, {'name': 'Pepsi - 350ml Botella retornable', 'price': 0.59}, {'name': 'Pepsi 1,5l', 'price': 1.4036}, {'name': 'Pepsi 350ml', 'price': 0.7192}, {'name': 'PEQUEÑIN - suavidad 80 und', 'price': 2.78}, {'name': 'PIGSY - familiar 60g', 'price': 1.38}, {'name': 'PINGUINITO - mini', 'price': 0.5}, {'name': 'PINGUINITOS - 80g', 'price': 2.51}, {'name': 'PINGÜINITOS COOKIES & CREAM - 80g', 'price': 2.51}, {'name': 'Pinguinitos mini', 'price': 0.4988}, {'name': 'PLATANITOS DE BOLSA TRANSPARENTE', 'price': 1.28}, {'name': 'Platanitos de bolsa transparente', 'price': 0.9976}, {'name': 'Platanitos Natu Chips 150gr', 'price': 3.364}, {'name': 'Platanitos Natu Chips Ondulados 145gr', 'price': 4.7444}, {'name': 'Platanitos Tom 80g', 'price': 1.3108}, {'name': 'Polvoron', 'price': 0.7076}, {'name': 'POLVORONES - Galletas', 'price': 0.75}, {'name': 'ponque de chocolate ponquesitos', 'price': 0.9976}, {'name': 'ponque de vainilla ponquesitos', 'price': 0.9976}, {'name': 'Ponque Tia Lulu Vainilla', 'price': 1.682}, {'name': 'POPCRONCH - chocolate 30grs', 'price': 0.45}, {'name': 'Popetas Caramelo 44.4g', 'price': 1.508}, {'name': 'Pote de ajo', 'price': 2.5}, {'name': 'POWERADE - 500ml', 'price': 2.23}, {'name': 'powerade bebida energisante 500ml', 'price': 1.9952}, {'name': 'PRIMOR - dedales extra especial 1kg', 'price': 2.65}, {'name': 'PRIMOR - perlado 900g', 'price': 2.81}, {'name': 'PRIMOR - superior 900g', 'price': 2.26}, {'name': 'Primor Dedales 500gr', 'price': 1.6239999999999999}, {'name': 'Primor Extra Especial Vermicelly 1Kg', 'price': 2.3}, {'name': 'Primor Pasta Plumitas', 'price': 1.4}, {'name': 'Proembuti Mortadela de Pollo 100gr', 'price': 1.93}, {'name': 'Protectores Diarios nosotras 15und', 'price': 1.2296}, {'name': 'PROTEX - avena 330g', 'price': 3.2}, {'name': 'pudin de chocolate SONRISA 72g', 'price': 1.8096}, {'name': 'PURISIMA - Leche Completa', 'price': 3.5}, {'name': 'PURISIMA - Leche el polvo', 'price': 4.33}, {'name': 'QUAKER - Avena en Hojuelas 200gr', 'price': 0.91}, {'name': 'QUAKER - Avena En hojuelas 400gr', 'price': 1.79}, {'name': 'QUAKER - Avena En hojuelas Original 800gr', 'price': 0.91}, {'name': 'QUESO - blanco 1k', 'price': 8.45}, {'name': 'QUESO - Mozarella', 'price': 16.59}, {'name': 'queso ahumado', 'price': 9.0016}, {'name': 'Queso Amarillo', 'price': 17.14}, {'name': 'Queso Blanco ', 'price': 8.2}, {'name': 'Queso Cheddar', 'price': 3.1552000000000002}, {'name': 'Queso crema la gran pastora Tina 250', 'price': 4.1528}, {'name': 'Queso Criollo', 'price': 8.2}, {'name': 'Queso Fundido Rikesa Tocineta 300gr', 'price': 7.4936}, {'name': 'Queso Mozzarella', 'price': 11.4}, {'name': 'Queso Mozzarella Amarillo', 'price': 12.5}, {'name': 'Queso Palmi Bufala', 'price': 13.36}, {'name': 'Raquety queso', 'price': 0.6264000000000001}, {'name': 'Refresco Golden Kolita 1.5L', 'price': 1.5776000000000001}, {'name': 'Refresco Golden narajanja 1.5L', 'price': 1.5892000000000002}, {'name': 'Refresco Golden piña 1.5L', 'price': 1.5776000000000001}, {'name': 'Refresco Golden uva 1.5L', 'price': 1.508}, {'name': 'requeson de bolsa', 'price': 1.4964}, {'name': 'Rexona Spray Desodorante ', 'price': 11.2868}, {'name': 'RICOTA - PARAMO', 'price': 2.26}, {'name': 'Ricota Grande ', 'price': 2.5984000000000003}, {'name': 'Ricota Pequeña', 'price': 1.4964}, {'name': 'RIKESA - Cheddar', 'price': 6.15}, {'name': 'RIKESA - Cheddar Original 200gr', 'price': 4.95}, {'name': 'Rikesa Original 300gr', 'price': 6.4959999999999996}, {'name': 'Rosal Plus 4 rollos XG', 'price': 2.9928}, {'name': 'Rufles Snack 125gr', 'price': 4.4079999999999995}, {'name': 'Rufles Snack Queso 125gr', 'price': 4.872}, {'name': 'SAL MAR - refinada 1kg', 'price': 0.91}, {'name': 'Sal Meru', 'price': 0.9048}, {'name': 'SAL MERU - fina 1kg', 'price': 0.91}, {'name': 'Sal Ven', 'price': 0.5}, {'name': 'Salchi Prado Salchicha Cocida de Pollo 440gr', 'price': 5.637600000000001}, {'name': 'Salchi Prado Salchicha Viena 440gr', 'price': 6.6236}, {'name': 'Salchicha a granel Millenium', 'price': 6.902}, {'name': 'salsa de ajo tomodore 150ml', 'price': 1.16}, {'name': 'salsa de soya tomodore 150ml', 'price': 1.16}, {'name': 'Salsa de Tocineta', 'price': 3.1552000000000002}, {'name': 'salsa de tomate HEINZ 198g', 'price': 1.7052}, {'name': 'salsa de tomate HEINZ 397g', 'price': 2.7956000000000003}, {'name': 'Salsa de tomate Pampero 198g', 'price': 1.9023999999999999}, {'name': 'salsa inglesa tomodore 150ml', 'price': 1.16}, {'name': 'Salsa Osole Napolitana 200gr', 'price': 1.7516}, {'name': 'Salsa Osole Napolitana 340 gr', 'price': 2.146}, {'name': 'Samba Fresa gde', 'price': 1.2992000000000001}, {'name': 'Santoni Arroz Premium', 'price': 1.6587999999999998}, {'name': 'Sardinas Eveba en aceite', 'price': 1.7}, {'name': 'Sardinas Marbonita tomate', 'price': 0.98}, {'name': 'Sardinas Margarita Aceite Vegetal', 'price': 1.59}, {'name': 'SaVital Shampoo Complejo Hialuronico y Sabila', 'price': 10.498000000000001}, {'name': 'SAVOY - (cricri, rikiti)', 'price': 2.19}, {'name': 'SAVOY - Mini 32gr', 'price': 1.16}, {'name': 'SAVOY - SAMBA 32gr', 'price': 1.68}, {'name': 'SAVOY - Toronto Unidad', 'price': 1.0}, {'name': 'SCHWEPPES - Soda 355ml Bombita', 'price': 1.26}, {'name': 'SCOTT - mega absorb 45und', 'price': 2.45}, {'name': 'Scott Rinde max Individual', 'price': 0.638}, {'name': 'Secret Anti Transpirante Roll on', 'price': 4.234}, {'name': 'SELVA - papel de aluminio 7mt', 'price': 2.54}, {'name': 'Servilletas Familia 100 Servilletas', 'price': 1.6587999999999998}, {'name': 'Servilletas Familia Cafeteria 100 servilletas', 'price': 1.6008}, {'name': 'servilletas pequeña bamboo', 'price': 1.0324}, {'name': 'SHAMPOO - Sobre 18g', 'price': 0.74}, {'name': 'Shampoo Dove', 'price': 10.9968}, {'name': 'Shampoo Head & Shoulders 18ml', 'price': 0.7424000000000001}, {'name': 'Shampoo Head And Shoulders 2 en 1', 'price': 7.5864}, {'name': 'Shampoo MUSS honey Coco', 'price': 13.363199999999999}, {'name': 'Soda Minalba', 'price': 1.4616}, {'name': 'soda schweppes 355ml', 'price': 1.1019999999999999}, {'name': 'SONRISSA - flan sin caramelo 46g', 'price': 1.62}, {'name': 'SONRISSA - gelatina con sabor a cereza 66g', 'price': 1.97}, {'name': 'SONRISSA - gelatina con sabor a frambuesa 66g', 'price': 1.97}, {'name': 'SONRISSA - gelatina de limon 66g', 'price': 1.97}, {'name': 'SONRISSA - gelatina sabor a uva 66g', 'price': 1.97}, {'name': 'SONRISSA - pudin de chocolate 72g', 'price': 1.81}, {'name': 'Sopa De Pollo Con Fideos Maggi 62gr', 'price': 3.0972}, {'name': 'Speed Stick 30gr', 'price': 2.5868}, {'name': 'Speed stick Barra', 'price': 9.0016}, {'name': 'Speed stick Roll on', 'price': 5.0808}, {'name': 'SPEEDSTICK - 30gr', 'price': 2.35}, {'name': 'SUAVITEL - Surtidos 180ml', 'price': 1.68}, {'name': 'Suavitel 180ml', 'price': 1.9952}, {'name': 'Suavizante Buonaropa XTRA 3lt', 'price': 5.591200000000001}, {'name': 'SULTANA - toallitas humedas 72 und', 'price': 5.8}, {'name': 'Sultana Toallitas Humedas', 'price': 5.278}, {'name': 'Super pega', 'price': 0.696}, {'name': 'Super popy', 'price': 0.3016}, {'name': 'Super Rombo - Jabon pasta 200gr', 'price': 1.38}, {'name': 'Suspiros', 'price': 0.2552}, {'name': 'Susy ', 'price': 1.5544}, {'name': 'SUSY - Mini', 'price': 1.09}, {'name': 'TASTY - vainilla 212ml', 'price': 1.29}, {'name': 'Te Lipton de bolsa', 'price': 4.8024}, {'name': 'Tequenos', 'price': 4.4428}, {'name': 'tequenos P', 'price': 3.9556}, {'name': 'Testing producto temporal 2', 'price': 1.16}, {'name': 'TIA LULU - Mantecada 150gr', 'price': 3.12}, {'name': 'TIA LULU - Ponque Vainilla', 'price': 1.97}, {'name': 'TIGO - crema a base de leche 200g', 'price': 2.24}, {'name': 'TIGO - Panelon', 'price': 1.14}, {'name': 'Tigo Crema De Leche', 'price': 2.2968}, {'name': 'TIP TOP - Galletas', 'price': 1.37}, {'name': 'Tip top Chocolate', 'price': 1.16}, {'name': 'TNT - Chicle Super Acido Meteoro', 'price': 0.07}, {'name': 'TNT - Super Acido Chicle', 'price': 0.05}, {'name': 'toalla sanitaria lotex esencial', 'price': 1.74}, {'name': 'Toallas Humedas Pequenin 80UND', 'price': 2.7956000000000003}, {'name': 'Toallas Nosotras natural invisible 10 und', 'price': 1.2528000000000001}, {'name': 'Toallin Familia Jumbo doble hoja', 'price': 3.4452000000000003}, {'name': 'Toallin Scott', 'price': 2.4476}, {'name': 'Toallitas Humedas natural Feeling', 'price': 4.4312}, {'name': 'Toallitas Humesdas Winny 24 UND', 'price': 2.9347999999999996}, {'name': 'Tocinetikas', 'price': 0.6032}, {'name': 'TOCINETIKAS - original 16g', 'price': 0.74}, {'name': 'TODDY - Pote 400gr', 'price': 6.79}, {'name': 'Toddy 100gr', 'price': 2.2968}, {'name': 'Toddy 200gr', 'price': 4.2224}, {'name': 'Toddy 400gr', 'price': 7.25}, {'name': 'TOMA2 - Galletas', 'price': 0.6}, {'name': 'Toma2 chips', 'price': 0.5104}, {'name': 'TOMODORE - Salsa de Ajo', 'price': 1.06}, {'name': 'TOMODORE - salsa Queso Cheddar', 'price': 3.47}, {'name': 'TOMODORE - vainilla 150ml', 'price': 1.24}, {'name': 'Tortilla Bimbo diet', 'price': 3.2944}, {'name': 'Tortilla Bimbo Rapiditas Clasicas', 'price': 3.0044}, {'name': 'Tortillas Bimbo Mantequilla', 'price': 3.2944}, {'name': 'Tortillas bimbo Mediterraneo', 'price': 3.2944}, {'name': 'TRIDENT - MORA AZUL 153gr', 'price': 0.82}, {'name': 'trident Menta', 'price': 0.10439999999999999}, {'name': 'Trident Mora', 'price': 0.9976}, {'name': 'Trident Mora Azul', 'price': 0.10439999999999999}, {'name': 'TRIGO DE ORO - Panque de vainilla', 'price': 1.29}, {'name': 'Tripleplay Familiar', 'price': 2.9928}, {'name': 'Trululu Aros', 'price': 0.19720000000000001}, {'name': 'trululu sabores', 'price': 0.6032}, {'name': 'TWINKIE - Mora', 'price': 0.57}, {'name': 'ULTREX - detergente en polvo 250g', 'price': 0.85}, {'name': 'ULTREX - detergente en polvo 2Kg', 'price': 6.33}, {'name': 'ULTREX - detergente en polvo 500g', 'price': 1.59}, {'name': 'ULTREX - detergente en polvo Manzana 1Kg', 'price': 3.16}, {'name': 'UNDER WOOD - diablitos 54g', 'price': 2.19}, {'name': 'UNIVERSAL Cigarrillos', 'price': 2.35}, {'name': 'UNIVERSAL Detallado', 'price': 0.12}, {'name': 'Vainilla', 'price': 1.0556}, {'name': 'Vainilla Tasty', 'price': 1.2876}, {'name': 'vela liviana luminarias de colores y blancas', 'price': 0.3364}, {'name': 'VELAS - Liviana luminaria de clores y blancas', 'price': 0.3}, {'name': 'VELON', 'price': 5.61}, {'name': 'velon luminarias grande', 'price': 6.159599999999999}, {'name': 'velon luminarias mediano', 'price': 4.2224}, {'name': 'velon luminarias pequeño', 'price': 1.9256}, {'name': 'Vinagre de manzana 500ml', 'price': 1.5544}, {'name': 'Vinagre Ideal 1lt', 'price': 0.9743999999999999}, {'name': 'vinagre kepa 1l', 'price': 1.6008}, {'name': 'Vinagre Kepa 500ml', 'price': 1.4036}, {'name': 'Vinagre Mavesa 1lt', 'price': 2.7028}, {'name': 'Vinagre Mavesa 500ml', 'price': 1.6239999999999999}, {'name': 'Wanita Regulsr con Alas 10pcs', 'price': 1.5428000000000002}, {'name': 'Wiener Salchicha Cocida 220gr', 'price': 3.3524000000000003}, {'name': 'WYNCO - Marshmallows Rellenos de mermelada', 'price': 0.15}, {'name': 'Xen Talco Antibacterial', 'price': 5.289599999999999}, {'name': 'yesquero bic maxi', 'price': 1.798}, {'name': 'YESQUERO GLOBAL', 'price': 0.38}, {'name': 'Yesquero Magnifico', 'price': 0.39440000000000003}, {'name': 'yesqueros bic mini', 'price': 1.3803999999999998}, {'name': 'Yogurt Banana Tigo Tigurt 125gr', 'price': 1.0672000000000001}, {'name': 'Yogurt con Cereal Lagran Pastora 150ml', 'price': 2.9347999999999996}, {'name': 'Yogurt Ensalada del Fruta Tigo Tigurt 125gr', 'price': 0.9976}, {'name': 'yogurt griego cocoa', 'price': 2.8}, {'name': 'Yogurt Liquido Durazno La Gran Pastora 400ml', 'price': 2.7028}, {'name': 'Yogurt Liquido Fresa La Gran Pastora 400ml', 'price': 2.7028}, {'name': 'Yogurt Liquido Piña La Gran Pastora 400ml', 'price': 2.7028}, {'name': 'Yogurt Migurt liquido 250gr', 'price': 2.7028}, {'name': 'Yogurt Migurt Liquido de 125gr', 'price': 1.5892000000000002}, {'name': 'YUKERY - nectar de pera 250ml', 'price': 1.26}, {'name': 'Yukery Durazno 250ml', 'price': 1.0788}, {'name': 'Yukery Manzana 250ml', 'price': 1.4616}, {'name': 'Yukery Pera 250ml', 'price': 1.4616}, {'name': 'YUKY-PAK - nectar de manzana 250ml', 'price': 1.17}];
-let carrito = [];
+<div class="toast" id="toast"></div>
 
-let select = document.getElementById("producto");
-productos.forEach(p => {
-    let opt = document.createElement("option");
-    opt.value = p.name;
-    opt.text = p.name + " $" + p.price;
-    select.appendChild(opt);
+<script>
+// ---- DATOS ----
+const PRODUCTOS = [{"nombre":"7up 1.5ml","precio":1.4036},{"nombre":"7up 1lt","precio":1.1948},{"nombre":"7UP Lata 355ml","precio":1.2528},{"nombre":"ABC Cookies","precio":0.7772},{"nombre":"Accion MultiUso en barra 300GR","precio":1.972},{"nombre":"Accion MultiUso Pastilla 130GR","precio":1.1136},{"nombre":"Ace 400gr","precio":1.9488},{"nombre":"Ace Detergente 800gr","precio":3.8976},{"nombre":"aceite de la consetida 500ml","precio":2.9},{"nombre":"Aceite de Soya Naturoil 850ml","precio":4.33},{"nombre":"Aceite de Soya Vatel 1l","precio":5.0},{"nombre":"Aceite Ideal 1lt","precio":4.0},{"nombre":"Aceite Ideal 430ml","precio":1.57},{"nombre":"Aceite Mazeite 1L","precio":5.2},{"nombre":"Aceite Portumesa 850ml","precio":3.2},{"nombre":"Aceite Vegetal Coposa 850Ml","precio":4.33},{"nombre":"Acqua Bella Natural 500ml","precio":1.3804},{"nombre":"Acqua Gasificada sabor limon 295ml","precio":3.0972},{"nombre":"Add Salsa de Ajo 150ml","precio":1.7168},{"nombre":"Add Salsa de Soya 150ml","precio":1.7168},{"nombre":"Add Salsa Inglesa 150ml","precio":1.7168},{"nombre":"Adobo Completo Iberia Sobre","precio":0.986},{"nombre":"Agua Minalba 1,5lt","precio":2.2504},{"nombre":"Agua Minalba 5l","precio":5.6028},{"nombre":"Agua Minalba 600Ml","precio":0.9976},{"nombre":"AJAX - desinfectante 500ml","precio":4.42},{"nombre":"Alcohol Antiseptico 240ml","precio":3.596},{"nombre":"Alcohol Spray 120ml","precio":3.6308},{"nombre":"Alfajor Cocoa","precio":1.4964},{"nombre":"Alfajores Carolina X3","precio":1.2992},{"nombre":"Alfajores Carolina X6","precio":2.5984},{"nombre":"alfajores cubierta de chocolate","precio":2.67},{"nombre":"ALFONZO RIVAS - Maizina Americana 120gr","precio":1.8},{"nombre":"ALFONZO RIVAS - Maizina Americana 400gr","precio":3.73},{"nombre":"ALFONZO RIVAS - Maizina Americana 90gr","precio":1.17},{"nombre":"Algodon Albe ","precio":4.8256},{"nombre":"ALIMEX - espalda cocida 1k","precio":12.06},{"nombre":"ALIMEX - Mortadela Especial 500g","precio":3.19},{"nombre":"ALIMEX Salchichas tipo Viena 225g","precio":4.08},{"nombre":"ALIMEX- Salchichas tipo Viena 450g","precio":7.52},{"nombre":"ALisoft Premium Papel x4","precio":2.4476},{"nombre":"Alival Bologna ","precio":5.9972},{"nombre":"ALIVE - Morado Polvo 500gr","precio":2.38},{"nombre":"ALIVE - Polvo Azul 500gr","precio":2.38},{"nombre":"ALIVE - Polvo Rosado 500gr","precio":2.51},{"nombre":"ALVE - algodon hidrofilo 25g","precio":5.3},{"nombre":"ALWAYS - ULTRAFINA - suave de 10und","precio":4.71},{"nombre":"Always Ultrasecas Dia","precio":4.5008},{"nombre":"ANIPOP - Chupetas Anillo","precio":0.35},{"nombre":"ARAUCA - gourcafe 200g","precio":3.74},{"nombre":"ARIEL - detergente en polvo 400g","precio":2.82},{"nombre":"Ariel Polvo 800gr","precio":4.5008},{"nombre":"Arroz Blanco MARY esmeralda 900gr","precio":3.0},{"nombre":"Arroz Blanco Mary Superior 900gr","precio":2.2},{"nombre":"Arroz Dorado Mary 800gr","precio":2.65},{"nombre":"Arroz Espiga Dorada Tipo I 900gr","precio":1.71},{"nombre":"Arroz Mary Premium","precio":2.75},{"nombre":"Arroz Mary Tradicional 900gr","precio":2.61},{"nombre":"Arroz Primor Clasico Superior 900gr","precio":2.26},{"nombre":"Arroz Primor Perlado de 900gr","precio":3.2944},{"nombre":"Arun Robin Hood Lomitos de atun en aceite","precio":2.25},{"nombre":"Arveja con Zanahoria Del Monte 300gr","precio":4.3964},{"nombre":"Arvejas Del monte 300gr","precio":3.4336},{"nombre":"ATUN - solido en aceite vegetal 170gr","precio":3.33},{"nombre":"Atun Eveba 119g en aceite vegetal","precio":3.0},{"nombre":"Atun Eveba Oliva 140gr","precio":3.72},{"nombre":"Atun Solido Aleta Amarilla Aceite Vegetal 119gr","precio":4.27},{"nombre":"Atun Sultana en Agua y aceite 170gr ","precio":3.45},{"nombre":"AVELINA - entera 250g","precio":1.37},{"nombre":"AVELINA - Fortificada Avena en Hojuelas 250gr","precio":1.36},{"nombre":"AVELINA - Tradicional Avena en Hojuelas 250gr","precio":1.3},{"nombre":"Avelina Avena en hojuelas tradicional 400gr","precio":1.6008},{"nombre":"Avelina Avena Instantanea 400g","precio":1.9488},{"nombre":"Avelina Fortificada 250gr","precio":1.3},{"nombre":"Avelina Hojuelas Enteras 400gr","precio":1.6936},{"nombre":"Avelina tradicional 250g","precio":1.2},{"nombre":"Avena en Hojuelas Doña Alicia 400gr","precio":1.9952},{"nombre":"Avena Qaker 200gr Original","precio":1.16},{"nombre":"Avena Qaker 400gr Original","precio":2.0184},{"nombre":"Avena Qaker 800gr Original","precio":4.2804},{"nombre":"AXION - lavaplatos en crema 235mg","precio":2.08},{"nombre":"AXION - lavaplatos en crema limon 235g","precio":3.78},{"nombre":"Axion con Bicarbonato de Sodio 7 en 1 450gr","precio":6.7164},{"nombre":"Axion limon 235gr","precio":3.0972},{"nombre":"Axion Multiuso 235gr","precio":2.2968},{"nombre":"Azucar amanecer 1k","precio":2.0},{"nombre":"Azucar Barzuca 900gr","precio":1.9},{"nombre":"Azucar Konfit","precio":1.72},{"nombre":"Azucar Montalban","precio":1.72},{"nombre":"Azucar Morena El Palacio 1000gr","precio":3.52},{"nombre":"BAMBOO - papel higienico","precio":0.23},{"nombre":"BAMBOO - servilletas pequeñas 160und","precio":1.03},{"nombre":"BARZUCA - Azucar 900gr","precio":1.74},{"nombre":"Belmont 10Und","precio":1.6356},{"nombre":"Belmont 20Und","precio":3.3988},{"nombre":"Belmont Detallado","precio":0.19},{"nombre":"Belmont Detallados","precio":0.1972},{"nombre":"BELMONT x10","precio":1.87},{"nombre":"BELMONT x20","precio":3.75},{"nombre":"BELVITA - hony 252g","precio":4.64},{"nombre":"BELVITA - kraker 234g","precio":5.14},{"nombre":"BIMBO - Pan Artesano","precio":3.25},{"nombre":"BIMBO - Pan Blanco","precio":2.15},{"nombre":"BIMBO - Rapiditas Diet","precio":3.43},{"nombre":"BIMBO - Rapiditas Mantequilla","precio":3.43},{"nombre":"BIMBO - Rapiditas Mediterraneas","precio":3.43},{"nombre":"BIMBO - Rapiditas Originales","precio":3.12},{"nombre":"Bimbo Pan Blanco","precio":2.0},{"nombre":"Blancox Blanqueador Cloro Desinfectante 500ml","precio":1.5428},{"nombre":"BOHEM - detallado surtidos","precio":0.13},{"nombre":"BOHEM Blue","precio":1.28},{"nombre":"BOHEM Blue","precio":1.276},{"nombre":"BOHEM Blue Detallado","precio":0.07},{"nombre":"BOHEM BLUE DETALLADO","precio":0.1044},{"nombre":"BOHEM Sandia","precio":2.2968},{"nombre":"BOHEM Sandia Detallado","precio":0.12},{"nombre":"BOHEM SANDIA DETALLADO","precio":0.1508},{"nombre":"BOHEM Sandia y mango","precio":2.32},{"nombre":"BOLI KRUNCH - pequeño 25g","precio":0.77},{"nombre":"BOLSAS BASURA 150L Calibre 8","precio":3.32},{"nombre":"BOLSAS BASURA 200L Calibre 8","precio":4.92},{"nombre":"bombillos bulbo led 6500k","precio":1.4036},{"nombre":"BONAROPA - xtra aroma 1l","precio":4.34},{"nombre":"Bonaropa Xtra Aroma 1l","precio":3.9556},{"nombre":"Borocanfor Original","precio":7.5168},{"nombre":"Brownie Cobertura de chocolate y mani","precio":1.9952},{"nombre":"BUZZY - Chicle Tattoo Hello kitty","precio":0.08},{"nombre":"BUZZY - Chicle Tattoo Minions","precio":0.08},{"nombre":"Cafe Arauca 200g","precio":4.11},{"nombre":"CAFE BRASIL - gourmet 100g","precio":2.02},{"nombre":"Cafe Brasil 100gr","precio":2.0},{"nombre":"Cafe brasil 200gr","precio":3.69},{"nombre":"Cafe Brasil 400gr","precio":5.8},{"nombre":"Cafe el Roble 250","precio":5.3012},{"nombre":"Cafe Flor De arauca 200g","precio":4.14},{"nombre":"Cafe Fruto Santo 200gr","precio":6.4},{"nombre":"CAFE KOLAO - gourmet 200g","precio":4.42},{"nombre":"Cafe Kolao 100gr","precio":2.43},{"nombre":"Cafe Kolao 200gr","precio":4.86},{"nombre":"Cafe Kolao 450gr","precio":9.86},{"nombre":"Cafe Madrid 100gr","precio":2.21},{"nombre":"Cafe Madrid 250gr","precio":4.84},{"nombre":"Cafe Pancho Paredes 100gr","precio":1.42},{"nombre":"Cafe Roble 100gr","precio":2.12},{"nombre":"Cafe Santa Cruz 100gr","precio":2.0},{"nombre":"Cafe Santa Cruz 250gr","precio":4.8},{"nombre":"CALEDONIA - galletas maria 25g c/u","precio":1.66},{"nombre":"Canelitas","precio":0.6032},{"nombre":"CANELITAS - galletas","precio":0.66},{"nombre":"CAPRI - vermicelli fino 1kg","precio":3.17},{"nombre":"Capri Tornillo 500g","precio":1.4},{"nombre":"Capri Vermicelly 1kg","precio":3.0},{"nombre":"CARABOBO - leche entera 1l","precio":3.56},{"nombre":"CARAMELOS CHAO","precio":0.06},{"nombre":"CARAMELOS DE JENJIBRE","precio":1.32},{"nombre":"Caramelos de leche con Chocolate","precio":0.0812},{"nombre":"Caramelos Freegells Eucalipto","precio":0.4988},{"nombre":"Caramelos Freegells Extra Forte","precio":0.4988},{"nombre":"Caramelos Halls 3gr","precio":0.116},{"nombre":"Caramelos Halls Cereza","precio":1.044},{"nombre":"Caramelos Halls Mora Azul","precio":1.044},{"nombre":"Caramelos Loquino","precio":0.0696},{"nombre":"Caramelos Mentas Chao","precio":0.1044},{"nombre":"Caramelos Mini Bum ","precio":0.0928},{"nombre":"Caraota Negra El Estio 500gr","precio":3.5264},{"nombre":"Caraotas Negras Dona Alicia 400g","precio":1.65},{"nombre":"Caraotas Negras MARY 400g","precio":2.5},{"nombre":"CARAVELLE - cepillo de lavar","precio":3.35},{"nombre":"Cari Pluma Extra Especial 500gr","precio":1.9952},{"nombre":"CARICIAS - papel higienico 4und","precio":1.71},{"nombre":"CASABE - en paquete","precio":2.8},{"nombre":"CAsabe 400g","precio":2.64},{"nombre":"Cepillo de Color Carabelle","precio":2.3432},{"nombre":"cepillo de dientes colgate triple accion 2pack","precio":4.9996},{"nombre":"Cepillo de lavar color ","precio":1.3456},{"nombre":"cepillo dental colgate premier medio","precio":1.856},{"nombre":"Cereal Fiocco Hojuelas Azuca 300gr","precio":3.7004},{"nombre":"Champu Palmolive OPTIMS 400ml","precio":11.3448},{"nombre":"CHARMY - chocolate 32g c/u","precio":2.4},{"nombre":"CHARMY - fresa 32g c/u","precio":2.4},{"nombre":"CHARMY - vainilla 32g c/u","precio":2.4},{"nombre":"Charmy 16g","precio":0.232},{"nombre":"Cheese tris 50g","precio":1.102},{"nombre":"Cheesetris 150g","precio":3.0044},{"nombre":"Cheetos Horneados Boliqueso 25gr","precio":0.8932},{"nombre":"CHICCO - motas de algodon 100und","precio":11.07},{"nombre":"Chicharron Pigsy 60gr","precio":1.1948},{"nombre":"Chicle Agogo","precio":0.3944},{"nombre":"Chicle Bomba","precio":0.3016},{"nombre":"Chicle Guds","precio":0.3016},{"nombre":"Chicle Meteoro TNT Acido","precio":0.0928},{"nombre":"Chicle TNT super Acido","precio":0.0464},{"nombre":"Chico 100 motas del algodon","precio":10.0688},{"nombre":"CHINOTTO - 1.5L","precio":1.76},{"nombre":"CHINOTTO - 355ml","precio":0.58},{"nombre":"Chinotto 1.5","precio":1.9024},{"nombre":"CHIS KESITOS - 45G","precio":1.17},{"nombre":"CHIS KESITOS TOCINETA - 45g","precio":1.17},{"nombre":"CHIS TRIS 50g","precio":1.72},{"nombre":"Chiskesito Tocineta 145gr","precio":2.4012},{"nombre":"Chiskesito Tocineta 45g","precio":0.9976},{"nombre":"Chiskesitos 145gr","precio":2.4012},{"nombre":"ChisKesitos 45g","precio":0.9976},{"nombre":"Choco Kids 200ml","precio":0.9396},{"nombre":"choco krispis pops ","precio":3.5032},{"nombre":"CHOCO LISTO - Bolsa 400gr","precio":5.7},{"nombre":"choco ponque tia lulu","precio":1.798},{"nombre":"Choco Rosca Festival 38gr","precio":1.7516},{"nombre":"Choco Tigo Palitos","precio":1.3456},{"nombre":"Chocolate de Leche Jet 11gr","precio":0.5568},{"nombre":"Chocolate de taza st. Moritz","precio":2.552},{"nombre":"Chocolate Savoy","precio":1.9024},{"nombre":"Chocolisto 400g","precio":5.6956},{"nombre":"Chupa pop ","precio":0.3016},{"nombre":"CHUPA POP - Chupeta Detallada","precio":0.27},{"nombre":"CHUPETA EXPLOSIVA","precio":0.58},{"nombre":"CHUPETA LOKIÑO SURTIDA","precio":0.22},{"nombre":"Chupetas Big Bom XXL ","precio":0.2784},{"nombre":"Chupetas Bom Bom Bum","precio":0.1972},{"nombre":"Chupi Wom por unidad","precio":0.1972},{"nombre":"Cigarro Universal Detallado","precio":0.1044},{"nombre":"Cigarro Universal por caja","precio":2.088},{"nombre":"Cigarros Consul x20","precio":2.2968},{"nombre":"Cigarros detallado luckies","precio":0.2668},{"nombre":"Cigarros Lucky eclipse","precio":3.7468},{"nombre":"Cigarros Lucky Nova","precio":3.7468},{"nombre":"CLUB SOCIAL - original 6uni","precio":3.48},{"nombre":"Club Social Original 26gr","precio":0.9744},{"nombre":"COCA COLA - Bombita 355ml","precio":0.87},{"nombre":"COCA COLA - original 1.5l","precio":2.35},{"nombre":"coca cola 2l","precio":2.5056},{"nombre":"Coca Cola Original 1l","precio":1.3688},{"nombre":"Coca Cola Original 355ml","precio":0.696},{"nombre":"CocaCola 1.5L","precio":1.7052},{"nombre":"COCOSETE","precio":1.79},{"nombre":"Cocosete","precio":1.5544},{"nombre":"cocosette260k","precio":1.3108},{"nombre":"Colado de Durazno Cotoperi 110g","precio":0.8004},{"nombre":"Colado de Mango Cotoperi","precio":0.8004},{"nombre":"colado de manzana compota cotoperi 110g","precio":0.928},{"nombre":"colado de pera compota cotoperi 110 g","precio":0.928},{"nombre":"COLGATE - Cepillo Triple Accion 2Pac","precio":4.42},{"nombre":"COLGATE - maxima protexion 90g","precio":2.27},{"nombre":"COLGATE - normal 144g","precio":4.65},{"nombre":"COLGATE - triple accion 60ml","precio":2.62},{"nombre":"Colgate Clasica 90gr","precio":1.9952},{"nombre":"Colgate Luminous White 250ml","precio":9.628},{"nombre":"Colgate Total Enjuague Bucal Morado","precio":9.2452},{"nombre":"Colgate triple Accion 60ml","precio":2.378},{"nombre":"Colgate Triple Accion 60ml","precio":2.5056},{"nombre":"combo de salsas tomorade de 3 unidades","precio":3.5148},{"nombre":"Compota Chiqui Chups","precio":1.6356},{"nombre":"Compota Chiqui Chups","precio":1.6356},{"nombre":"Compota Gerber Frutas Mixtas","precio":1.0788},{"nombre":"Compota Gerber Pera","precio":1.0788},{"nombre":"Consul Detallado","precio":0.1508},{"nombre":"Cooltivo Mainz Dulce en lata 285gr","precio":5.6724},{"nombre":"COPOSA - aceite vegetal 850ml","precio":5.51},{"nombre":"COTOPERI - colado de pera 110g","precio":0.93},{"nombre":"crema colgate menta 100ml","precio":4.5008},{"nombre":"crema colgate menta 180gr","precio":4.3964},{"nombre":"crema colgate triple accion 75mg","precio":3.8512},{"nombre":"Crema de arroz Mary","precio":1.5312},{"nombre":"Crema de leche la pastora 450g","precio":4.5},{"nombre":"Crema de leche la pastora BOLSA 250gr","precio":2.75},{"nombre":"Crema de leche purisima 250g","precio":4.1992},{"nombre":"Crema de leche purisima 500g","precio":5.452},{"nombre":"Crema dental Alident","precio":0.928},{"nombre":"Cronch Flakes 300g","precio":3.7468},{"nombre":"Cronch Flakes Karymba 250gr","precio":3.5032},{"nombre":"CRUNCHIS GREGORY - 150g","precio":1.46},{"nombre":"CRUNCHIS GREGORY - 54G","precio":0.46},{"nombre":"cruz cafe 100g","precio":1.9},{"nombre":"CRUZCAFE - clasico 200g","precio":3.38},{"nombre":"Cuajada","precio":3.8},{"nombre":"Cubito Maggi detallado","precio":0.3944},{"nombre":"Cubitos De Pollo Maggi 12UND","precio":3.8048},{"nombre":"Cubitos de pollo Maggi 8 Unidades","precio":2.6448},{"nombre":"DANBISK - PALITO EXTREME","precio":3.32},{"nombre":"DANBISK - Pepitas","precio":0.51},{"nombre":"Dandy ","precio":1.1948},{"nombre":"Dedos Cookies","precio":0.7772},{"nombre":"DEL MONTE - guisantes 425g","precio":3.43},{"nombre":"DEL MONTE - guisantes y zanahorias 241g","precio":2.9},{"nombre":"DEL MONTE - guisantes y zanahorias 411g","precio":4.16},{"nombre":"DEL MONTE - Maiz Dulce Dorado Entero 220g","precio":2.61},{"nombre":"Del Monte Maiz Dulce Entero 220g","precio":2.8652},{"nombre":"DEXX - recolector de heces","precio":0.82},{"nombre":"Diablitos Under Wood 50gr","precio":2.1924},{"nombre":"Diablitos under wood 54g","precio":2.8536},{"nombre":"Diebalito Underwood 115gr","precio":4.3036},{"nombre":"DIPROMON - Cloro","precio":1.87},{"nombre":"DIPROMON - lavaplatos 1l","precio":3.63},{"nombre":"Dipromon Cloro","precio":1.9952},{"nombre":"DIPROMON Cloro Jabonoso","precio":2.5984},{"nombre":"Dipromon Desinfectante bambu","precio":2.552},{"nombre":"Dipromon Desinfectante Cherry ","precio":2.552},{"nombre":"Dipromon Desinfectante Lavanda","precio":2.552},{"nombre":"Dipromon Jabon liquido","precio":3.77},{"nombre":"Dipromon Lavaplatos","precio":3.538},{"nombre":"disoponible","precio":0.1624},{"nombre":"disponible","precio":0.1624},{"nombre":"Don Toallin 50 Hojas","precio":1.7864},{"nombre":"DOÑA ALICIA - Avena en Hojuelas 400gr","precio":1.53},{"nombre":"Doritos 45gr","precio":1.2412},{"nombre":"Doritos Mega Queso 150gr","precio":3.5032},{"nombre":"DOVE - original 90g","precio":6.93},{"nombre":"Dove Tratamiento Con Proteina","precio":10.9968},{"nombre":"El Chichero Chicha en polvo","precio":2.7956},{"nombre":"El Prado Bologna de Pollo con aceituna y pimenton","precio":7.7836},{"nombre":"El Prado Pechuga Cocida de Pavo","precio":12.9224},{"nombre":"El Tunal -  Nectar de Durazno 1L","precio":2.7028},{"nombre":"EL TUNAL - Huevos","precio":8.55},{"nombre":"EL TUNAL - HUEVOS DETALLADOS","precio":0.28},{"nombre":"EL TUNAL - HUEVOS MEDIO CARTON","precio":4.28},{"nombre":"EL TUNAL - Jugo de Naranja 1L","precio":3.12},{"nombre":"EL TUNAL - Jugo de Naranja 500ml","precio":2.11},{"nombre":"EL TUNAL - JUGOS SURTIDOS 1L","precio":2.58},{"nombre":"EL TUNAL - JUGOS SURTIDOS 500ml","precio":1.71},{"nombre":"El Tunal - Nectar de manzana 1L","precio":2.7028},{"nombre":"El Tunal - Nectar de Pera 1L","precio":2.7028},{"nombre":"El tunal Jugo de manzana 200ml","precio":0.9976},{"nombre":"El tunal Jugo de naranja","precio":3.0044},{"nombre":"El Tunal Naranja 200ml","precio":0.9976},{"nombre":"El Tunal Nectar de Durazno 500ml","precio":1.9952},{"nombre":"El Tunal Nectar de Manzana 500ml","precio":1.9952},{"nombre":"El Tunal Nectar de Naranja 500ml","precio":1.9952},{"nombre":"El Tunal Nectar de Pera 500ml","precio":1.9952},{"nombre":"El Tunal Salchichas Cocida de Pollo 450gr","precio":3.654},{"nombre":"Ellas Toallas Higienicas Combo 8+8","precio":2.5984},{"nombre":"ESPECIE - Adobo Completa Eliza","precio":0.38},{"nombre":"ESPECIE - Anis Estrellado","precio":0.5},{"nombre":"ESPECIE - Bicarbonato de sodio","precio":0.43},{"nombre":"ESPECIE - Canela concha","precio":0.48},{"nombre":"ESPECIE - Canela Molida","precio":0.48},{"nombre":"ESPECIE - Clavito","precio":0.43},{"nombre":"ESPECIE - Guayabita","precio":0.46},{"nombre":"ESPECIE - Polvo de Hornear","precio":0.34},{"nombre":"ESPIGA DORADA - arroz blanco 900g","precio":1.96},{"nombre":"ESPONJA DE BRILLO - jabonosa 3und","precio":1.9},{"nombre":"Esponja de brillo jabonosa","precio":1.9024},{"nombre":"Esponja Izy","precio":1.1832},{"nombre":"Esponja Max Hogar Acero Espiral","precio":1.16},{"nombre":"Esponja MAX HOGAR dDeluxe Doble uso","precio":1.0324},{"nombre":"Esponja MAX Hogar Deluxe Oro Plata","precio":1.7516},{"nombre":"Esponja Max Hogar Deluxe Soft","precio":1.624},{"nombre":"Esponja Sultana Surtida","precio":1.972},{"nombre":"Esponja Washup","precio":1.1832},{"nombre":"Esponsa Sultana ","precio":1.972},{"nombre":"Europapel Servilletas 160 ud","precio":2.4592},{"nombre":"EVEBA - atun solido 140g","precio":2.87},{"nombre":"EVEBA - atun solido en aceite vegetal 170g","precio":2.87},{"nombre":"EVEBA - sardinas 170g","precio":1.53},{"nombre":"EVEBA Atun Solido En Aceite Vegetal 140gr","precio":3.15},{"nombre":"EVERY NIGHT - talco 24h 85g","precio":5.66},{"nombre":"Everynight Talco Antibacterial","precio":5.6608},{"nombre":"EVEVA - atun aleta amarilla en aceite 170gr","precio":4.07},{"nombre":"EVEVA - atun en trozos con vegetales 170gr","precio":3.58},{"nombre":"EVEVA - atun solido en salsa picante 140gr","precio":3.13},{"nombre":"EVEVA - atun solido natural 170gr","precio":3.57},{"nombre":"EVEVA - sardina en salsa picante 170gr","precio":1.6},{"nombre":"FABULOSO - ultra frescura 500ml","precio":3.97},{"nombre":"FAMA DE AMERICA - premium 250g","precio":4.85},{"nombre":"Fama de america 100g","precio":1.9},{"nombre":"Fama de America 250g","precio":4.66},{"nombre":"FAMILIA - cafeteria 100und","precio":1.43},{"nombre":"FAMILIA - papel higienico extra grande 4und","precio":3.53},{"nombre":"FAMILIA - Servilletas Medianas 100und","precio":0.94},{"nombre":"FAMILIA - Toallin JUMBO PACK","precio":3.11},{"nombre":"FANTA - naranja 1.5l","precio":1.67},{"nombre":"FANTA - uva 1.5l","precio":1.66},{"nombre":"Fanta 1.5L","precio":1.6588},{"nombre":"FESTIVAL - Galletas 33.6g","precio":0.53},{"nombre":"Flan SONRISA sin caramelo 46g","precio":1.6472},{"nombre":"FLIPS - Dulce de leche 220gr","precio":5.13},{"nombre":"Flips 220gr","precio":5.6028},{"nombre":"Fluocard dent 36gr","precio":1.2528},{"nombre":"FOSFOROS EL SOL","precio":0.2},{"nombre":"Fosforos el Sol","precio":0.2088},{"nombre":"FREEGELLS - Eucalipto Menta","precio":0.48},{"nombre":"FREEGELLS - Extra Strong Menthol","precio":0.48},{"nombre":"Frescolita","precio":1.9024},{"nombre":"FRESCOLITA - 1.5L","precio":1.76},{"nombre":"FRESCOLITA - 355ml","precio":0.87},{"nombre":"FRICA - Jugos 1L","precio":3.56},{"nombre":"FRICA - Naranjada","precio":4.47},{"nombre":"Frica Nectar de naranja 1L","precio":3.8976},{"nombre":"Frijol Rojo El Estio 500gr","precio":4.4312},{"nombre":"FRITZ - Ahumadita 145gr","precio":2.54},{"nombre":"FRITZ - Salsa Cheddar 145gr","precio":2.54},{"nombre":"FRITZ - salsa de maiz","precio":2.16},{"nombre":"FRITZ - Salsa de tomate","precio":1.09},{"nombre":"FRITZ - Salsa Mayonesa 150gr","precio":1.87},{"nombre":"FRITZ - Tripack soja, inglesa y ajo","precio":5.15},{"nombre":"Fritz Cheddar","precio":2.3084},{"nombre":"Fritz Salsa Ahumatida Tocineta","precio":1.9952},{"nombre":"Fritz Salsa de Maiz ","precio":2.4012},{"nombre":"Fritz Salsa de tomate ","precio":1.1948},{"nombre":"Frutino Gelatina","precio":1.4036},{"nombre":"FRUTIÑO - Bebida Sobre 10g","precio":0.92},{"nombre":"FRUTIÑO - gelatina 14g","precio":1.38},{"nombre":"Galak Tubito","precio":0.6032},{"nombre":"Galleta Chispas de chocolate Cocoa","precio":1.4964},{"nombre":"Galleta De Soda Premium 26gr","precio":0.3828},{"nombre":"Galleta Mary Tentazione 200gr","precio":2.32},{"nombre":"Galleta Nucita wafer","precio":0.464},{"nombre":"Galleta Oreo Fresa","precio":0.638},{"nombre":"Galleta Oreo Original","precio":0.5684},{"nombre":"Galleta Tip Top","precio":0.9048},{"nombre":"Galletas Caledonia Maria Pq","precio":0.6148},{"nombre":"Galletas CALEDONIA Maria Premium","precio":1.6588},{"nombre":"Galletas Charmy","precio":1.4036},{"nombre":"Galletas Charmy Caledonia 216gr","precio":2.1808},{"nombre":"Galletas Colombina Wafer","precio":0.174},{"nombre":"Galletas de soda El Sol","precio":2.5404},{"nombre":"Galletas Festival 33gr","precio":0.6032},{"nombre":"Galletas Festival 54gr","precio":0.986},{"nombre":"Galletas Maria Puig","precio":2.204},{"nombre":"Galletas Marilu 216gr","precio":3.0044},{"nombre":"Galletas Muu","precio":0.8352},{"nombre":"Galletas Oreo","precio":1.4036},{"nombre":"Galletas Rikas Vainilla","precio":0.174},{"nombre":"Galletas Tartaletas Wynco 140gr","precio":1.3804},{"nombre":"Galletas Waffer Isabela 100g","precio":1.2992},{"nombre":"Galletas Waffer Tigo Fresa","precio":0.8236},{"nombre":"Galletas Waffer Tigo Vainilla","precio":0.8236},{"nombre":"Garbanzos MARY 500g","precio":4.5},{"nombre":"GATORADE - Surtido 500ml","precio":2.3},{"nombre":"Gatorade Rojo Frutas tropicales","precio":2.7724},{"nombre":"Gatorade Surtido","precio":2.5172},{"nombre":"Gel Fijador Every Nigth Power 100gr","precio":3.0276},{"nombre":"Gel Fijador Every Nigth Strong 100gr","precio":3.0276},{"nombre":"Gel Fijador Every Nigth Winner 100gr","precio":3.0276},{"nombre":"Gelatina SONRISA sabores 66g","precio":1.9952},{"nombre":"GILLETE - Prestobarba H/M","precio":1.51},{"nombre":"Gillete Anti Transpirante Roll on","precio":4.466},{"nombre":"Gillete Prestobarba","precio":1.3224},{"nombre":"Gillete Spray Cool Wave","precio":7.888},{"nombre":"Glup Cola","precio":0.58},{"nombre":"Glup Cola 1l","precio":1.0672},{"nombre":"Glup Fresh","precio":0.58},{"nombre":"Glup Fresh 1l","precio":1.0092},{"nombre":"Glup Manzana","precio":0.58},{"nombre":"GOLDEN - manzana 1.5l","precio":1.18},{"nombre":"Golden Kolita","precio":1.508},{"nombre":"Golden Manzanita","precio":1.4384},{"nombre":"Golden Manzanita 1.5L","precio":1.4036},{"nombre":"Golden Pina","precio":1.4384},{"nombre":"Golpe 45gr","precio":1.2064},{"nombre":"Gregory 150Gr","precio":1.4964},{"nombre":"Gregory 54g","precio":0.4988},{"nombre":"GUDS - Chicle de menta","precio":0.3},{"nombre":"guisantes con zanahoria de monnte 241g","precio":3.1784},{"nombre":"guisantes del monte 425g","precio":4.3732},{"nombre":"Guisantes del Monte Con zanahoria","precio":4.3964},{"nombre":"HALLS - Caramelos","precio":1.02},{"nombre":"Halls Negro","precio":0.8004},{"nombre":"Harina 7 Granos Gde","precio":2.0},{"nombre":"Harina 7 granos pequeno","precio":1.0},{"nombre":"Harina de Mainz Blanco Santoni","precio":1.35},{"nombre":"Harina de Maiz Mary 900gr","precio":1.41},{"nombre":"Harina de Maiz Masia 900gr","precio":2.146},{"nombre":"Harina de Maiz Pan 1k","precio":1.7},{"nombre":"Harina de Maiz Santoni 900gr","precio":2.0416},{"nombre":"Harina de trigo Robinson Leudante","precio":1.53},{"nombre":"Harina de trigo Robinson tradicional","precio":1.42},{"nombre":"Harina Mary Leudante 900Gr","precio":2.3},{"nombre":"Harina Pan Semillas nutritivas","precio":3.3988},{"nombre":"Harina Todo Uso Mary 900gr","precio":1.9},{"nombre":"HEAD & SHOULDERS - 2 en 1 shampoo 375ml","precio":8.58},{"nombre":"Head And Shoulers Acondicionador","precio":10.498},{"nombre":"HEINZ - Salsa de tomate 397g","precio":2.91},{"nombre":"Heinz Compota 186gr","precio":1.102},{"nombre":"Heinz Mostaza Preparada Original 113gr","precio":2.2852},{"nombre":"HILO - pabilo 1und","precio":0.51},{"nombre":"HOLSUM - Pan blanco","precio":1.4},{"nombre":"HOLSUM - Pan de mantequilla","precio":2.93},{"nombre":"HOLSUM - Pan Integral","precio":3.25},{"nombre":"Holsum Pan Blanco","precio":1.55},{"nombre":"Hony Bran","precio":3.9904},{"nombre":"Household Napkins","precio":5.4984},{"nombre":"Huevos detallados","precio":0.3016},{"nombre":"Huevos Docena ","precio":3.0},{"nombre":"Huevos El tunal","precio":7.5},{"nombre":"Huevos medio carton","precio":3.75},{"nombre":"IBERIA - pasta de tomate","precio":8.29},{"nombre":"IBERIA - pasta de tomate 500g","precio":4.42},{"nombre":"Indosa Bebida Lactea 180GR","precio":1.8},{"nombre":"ISABELA - Tortinhas","precio":1.38},{"nombre":"ISABELA - Waffers","precio":1.19},{"nombre":"ITALIA - Bizcochos Premium 125g","precio":2.48},{"nombre":"ITALICO - visking 1k","precio":12.7},{"nombre":"Italico Jamon Cocido Estandar","precio":9.9528},{"nombre":"Jabon Ariel En Polvo Poder y Cuidado 450gr","precio":3.0276},{"nombre":"Jabon Axion Limon MultiSuperficies","precio":1.0672},{"nombre":"Jabon de Bano Dove original","precio":6.3104},{"nombre":"Jabon de Bano Johnsons 110gr","precio":2.7144},{"nombre":"Jabon de Bano Lux 110gr","precio":2.784},{"nombre":"Jabon de Bano Moncler 90gr","precio":2.378},{"nombre":"Jabon Dove Cuidado Indulgente","precio":6.3104},{"nombre":"Jabon Dove Cuidado Karite","precio":6.3104},{"nombre":"Jabon Johnsons Almendras Y Avena","precio":2.7144},{"nombre":"Jabon Johnsons Daily Care","precio":2.7144},{"nombre":"Jabon Johnsons Sosas y sandalo","precio":2.7144},{"nombre":"Jabon LAK Azul","precio":0.9048},{"nombre":"Jabon LAK Morado","precio":0.9048},{"nombre":"Jabon LAK Rosa","precio":0.9048},{"nombre":"Jabon LAK Verde","precio":0.9048},{"nombre":"Jabon Palmolive Neutro Balance 100mg","precio":3.5032},{"nombre":"jabon Palmolive Oliva y aloe Vera","precio":1.74},{"nombre":"Jabon Protex Avena","precio":1.566},{"nombre":"Jabon Protex Carbon Detox","precio":1.566},{"nombre":"jabon Protex fresh","precio":1.6008},{"nombre":"Jabon Protex Herbal","precio":1.566},{"nombre":"Jabon Ultrex 1kg","precio":2.3432},{"nombre":"Jabon Ultrex 250","precio":0.9048},{"nombre":"Jabon Ultrex 500","precio":1.4964},{"nombre":"jamon endiablado plumrose","precio":2.5868},{"nombre":"Jamon endiablado Plumrose 110gr","precio":3.6424},{"nombre":"Jamon Espalda tipo Visking Italico","precio":9.9992},{"nombre":"JC masa Facil mediana 500gr","precio":3.2828},{"nombre":"jengibre","precio":1.3224},{"nombre":"JGB - almohadillas faciales de algodon 80und","precio":6.35},{"nombre":"JGB Pads de algodon","precio":5.7768},{"nombre":"JOHNSONS - jabon de baño rosas y sandalo 110g","precio":3.87},{"nombre":"Jugo Yuky Pak Durazno 250ml","precio":1.102},{"nombre":"Jugos Frica 1L","precio":3.5612},{"nombre":"Kefir La Gran Pastora 400ml","precio":3.6424},{"nombre":"Kelloggs Choco Zucaritas 250gr","precio":3.5032},{"nombre":"kelloggs Corn Flakes 230gr","precio":3.0972},{"nombre":"Kelloggs Zucaritas 250gr","precio":3.0972},{"nombre":"KELLOGS - Choco Krispis","precio":3.57},{"nombre":"KELLOGS - Choco Zucaritas","precio":3.56},{"nombre":"KELLOGS - Corn Flakes","precio":3.05},{"nombre":"KELLOGS - Corp Pops","precio":3.21},{"nombre":"KELLOGS - Zucaritas","precio":3.21},{"nombre":"Kellogs Corn Pops","precio":3.0972},{"nombre":"KEPA - vinagre 1000cm","precio":1.61},{"nombre":"KEPA - vinagre 500cm","precio":0.83},{"nombre":"KESITOS - pequeño 25g","precio":0.87},{"nombre":"Ketchup Pampero","precio":2.9},{"nombre":"Ketchup Underwood Jamon Endiablado 380gr","precio":4.1644},{"nombre":"Ketchup Underwood Salsa de tomate 387","precio":4.1644},{"nombre":"Konga durazno","precio":0.7192},{"nombre":"Konga Limon","precio":0.7192},{"nombre":"Konga Tizana","precio":0.7192},{"nombre":"KOTEX - esencial toallas femeninas con alas 8und","precio":2.1},{"nombre":"Kotex Discreta","precio":2.0996},{"nombre":"Kotex UltraProtect","precio":1.8908},{"nombre":"Kraker Bran","precio":5.1388},{"nombre":"kraker bran detallado","precio":0.8004},{"nombre":"Kraker Detalladas","precio":0.51},{"nombre":"LA CAMPIÑA - Leche en polvo Completa 200g","precio":4.84},{"nombre":"LA GRAN PASTORA - yogurt de botella durazno 400ml","precio":2.49},{"nombre":"LA GRAN PASTORA - yogurt de botella kefir 400ml","precio":3.32},{"nombre":"La pastora Yogurt De Durazno 400ml","precio":1.4732},{"nombre":"La pastora Yogurt de fresa 400ml","precio":1.9952},{"nombre":"Lady Speed Stick 30gr","precio":2.5868},{"nombre":"Lady Speed Stick Barra","precio":9.0016},{"nombre":"Lady Speed Stick Roll on","precio":4.9996},{"nombre":"LAS LLAVES - detergente en polvo bebe 400g","precio":1.98},{"nombre":"LAS LLAVES - Detergente Floral 400gr","precio":1.98},{"nombre":"LAS LLAVES - Fragancia Floral Doble accion 400g","precio":1.54},{"nombre":"LAS LLAVES - jabon en panela para lavar la ropa 200g","precio":1.43},{"nombre":"LAS LLAVES - multiuso en crema 250g","precio":2.82},{"nombre":"LAS LLAVES - multiuso en crema 500g","precio":5.14},{"nombre":"Las llaves detergente 900gr","precio":3.7468},{"nombre":"Las llaves detergente bebe 400g","precio":1.7516},{"nombre":"Las LLaves Detergente Bebe 900g","precio":3.7468},{"nombre":"LAs llaves detergente Floral 400gr","precio":2.1576},{"nombre":"Las LLaves detergente Limon 400g}","precio":1.7516},{"nombre":"Las llaves Jabon Tradicional 200gr","precio":0.9976},{"nombre":"Las llaves limpieza Marea Cristal 500cc","precio":2.5056},{"nombre":"las llaves multiuso crema 500 g","precio":5.1388},{"nombre":"Las Llaves Multiuso en Crema 250gr","precio":2.8188},{"nombre":"Leche Carabobo 1L","precio":3.3},{"nombre":"Leche Completa en polvo Torondoy 400gr","precio":6.25},{"nombre":"Leche Completa en polvo Torondoy 900gr","precio":14.75},{"nombre":"Leche completa Purisima","precio":3.51},{"nombre":"Leche condensada de lata parmalat 395g","precio":5.0},{"nombre":"Leche Condensada Natulac 50gr","precio":1.3456},{"nombre":"Leche Condensada Tigo 395gr","precio":2.146},{"nombre":"Leche en polvo Vitale 360g","precio":5.18},{"nombre":"Leche La Campina 200gr","precio":4.31},{"nombre":"Leche La campina 400gr","precio":8.75},{"nombre":"Leche La campina 900gr","precio":13.35},{"nombre":"Leche la Pastora 900ml","precio":1.57},{"nombre":"Leche Purisima Descremada","precio":3.9},{"nombre":"Leche purisima deslactosada","precio":3.6},{"nombre":"Leche San Simon 125gr","precio":3.4},{"nombre":"Leche San simon 400gr","precio":6.3},{"nombre":"Leche San simon 900gr","precio":11.44},{"nombre":"LENGUA DE SUEGRA","precio":1.16},{"nombre":"Lengua de suegra","precio":1.1484},{"nombre":"Lentejas La Sureña 500gr","precio":3.3988},{"nombre":"Lentejas MARY 400mg","precio":3.6},{"nombre":"Limpia Pisos Brilla King Lavanda Jazmin 1000ml","precio":2.842},{"nombre":"Limpia Pisos Brilla King Manzana Canela 1000ml","precio":2.842},{"nombre":"LIPTON - limon 1.5l","precio":5.72},{"nombre":"LIPTON - Surtido 500ml","precio":1.98},{"nombre":"LIPTON - Te de bolsa CITRUS","precio":4.78},{"nombre":"LIPTON - Te de bolsa EARL GREY","precio":4.78},{"nombre":"LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY","precio":4.78},{"nombre":"LIPTON - Te de bolsa YELLOW LABEL","precio":4.78},{"nombre":"Lipton 1.5L","precio":5.4984},{"nombre":"Lipton de 500ml","precio":1.9952},{"nombre":"Listerine Cool Mint Zero Alcohol 360ml","precio":15.718},{"nombre":"Lomo de Atun premium Tigo 160g","precio":2.8},{"nombre":"lucky Eclipse Detallado","precio":0.2},{"nombre":"LUCKY STRIKE Eclipse","precio":3.99},{"nombre":"MAGGI - Cubitos de pollo","precio":0.51},{"nombre":"MAGGI - Sopa Fideo","precio":2.3},{"nombre":"Maiz de Cotufa La Sureña 500gr","precio":1.856},{"nombre":"Maiz para Cotufas Mary","precio":2.6},{"nombre":"Maizina Americana 400g","precio":3.99},{"nombre":"MALTIN - Malta de botella 250ml","precio":0.85},{"nombre":"maltin de Botella 250ML","precio":0.9164},{"nombre":"MALTIN POLAR - malta 1.5l","precio":2.33},{"nombre":"MALTIN POLAR - malta desechable 250ml","precio":1.04},{"nombre":"MALTIN POLAR - malta desechable 350ml","precio":1.26},{"nombre":"Maltin polar 1.5lt","precio":2.3316},{"nombre":"Maltin polar lata 250ml","precio":1.044},{"nombre":"Maltin Polar lata 355ml","precio":1.2992},{"nombre":"Mantecada 150g","precio":2.7028},{"nombre":"Mantequilla Mavesa 250gr","precio":2.14},{"nombre":"Mantequilla Mavesa 500gr","precio":3.49},{"nombre":"Mantequilla Purisima con Sal ","precio":5.69},{"nombre":"Mantequilla Purisima sin Sal ","precio":4.89},{"nombre":"Mantequilla Torondoy con Sal 200gr","precio":7.0},{"nombre":"Margarina MIRASOL 454Gr","precio":3.2},{"nombre":"MARGARINA NELLY 250","precio":1.83},{"nombre":"Margarina Nelly 500g","precio":3.56},{"nombre":"MARGARITA - sardinas en aceite vegetal","precio":1.45},{"nombre":"MARGARITA - sardinas en salsa de tomate","precio":1.67},{"nombre":"Margarita Sardinas Tomate","precio":1.59},{"nombre":"Marilu tubular de chocolate 216gr","precio":2.5636},{"nombre":"Marshmallows Angelitos 5g","precio":0.1624},{"nombre":"MARY - aceite de oliva extra virgen 500ml","precio":14.99},{"nombre":"MARY - caraotas 400g","precio":2.29},{"nombre":"MARY - Crema de arroz 450gr","precio":1.31},{"nombre":"MARY - esmeralda 900g","precio":3.16},{"nombre":"MARY - garbanzos 500g","precio":4.16},{"nombre":"MARY - harina de maiz blanco 900g","precio":1.77},{"nombre":"MARY - Harina de trigo leudante","precio":2.45},{"nombre":"MARY - Harina de trigo Todo uso","precio":1.7},{"nombre":"MARY - lentejas 400g","precio":3.26},{"nombre":"MARY - maiz para cotufas 400g","precio":2.33},{"nombre":"MARY - superior 900g","precio":2.02},{"nombre":"MARY - tornillo 500g","precio":1.73},{"nombre":"MARY - vermicelli 1kg","precio":2.73},{"nombre":"MARY - vermicelli 500g","precio":1.48},{"nombre":"MARY Vermicelly Superior 1kg","precio":3.0},{"nombre":"MAVESA - Margarina Todo uso 250gr","precio":1.95},{"nombre":"MAVESA - Margarina Todo uso 500gr","precio":3.17},{"nombre":"MAVESA - Mayonesa 175g","precio":2.92},{"nombre":"MAVESA - vinagre 1l","precio":2.33},{"nombre":"MAVESA - vinagre 500ml","precio":1.4},{"nombre":"MAVESA- Mayonesa 445g","precio":5.83},{"nombre":"MAX HOGAR - esponja de acero inoxidable","precio":1.16},{"nombre":"MAX HOGAR - esponja doble uso","precio":1.03},{"nombre":"MAX HOGAR - esponja soft","precio":1.62},{"nombre":"Mayonesa Del monte","precio":1.4964},{"nombre":"Mayonesa Kraft 175gr","precio":2.03},{"nombre":"Mayonesa La Giralda 445gr","precio":3.8048},{"nombre":"Mayonesa Mavesa 175gr","precio":2.79},{"nombre":"Mayonesa Mavesa 445gr","precio":4.4},{"nombre":"Media Cuajada","precio":1.7},{"nombre":"MEGA AROS - Cereal lonchera","precio":0.61},{"nombre":"Mezcla para Cachapas Pan","precio":3.3988},{"nombre":"MI GURT - durazno 125g","precio":1.59},{"nombre":"MI GURT - fresa 125g","precio":1.59},{"nombre":"Miel de Aveja La Encantada 500gr","precio":13.5836},{"nombre":"Miel de Aveja La Encantada Oso 350gr","precio":8.6304},{"nombre":"Migurt Fresa Vaso 125 ml","precio":1.81},{"nombre":"Milenium Bologna de pollo ","precio":6.5772},{"nombre":"Milenium Fiambre de cerdo","precio":10.3356},{"nombre":"Milenium mini Jamon cocido","precio":9.9992},{"nombre":"Milenium mini pavo","precio":12.5048},{"nombre":"Milenium Mini Pierna","precio":12.5048},{"nombre":"Milenium Mortadela de pollo ","precio":2.9928},{"nombre":"Milenium Salchichas a granel","precio":6.09},{"nombre":"MILLENIUM - mortadela de pollo 600g","precio":3.03},{"nombre":"MILLENNIUM - bologna con pimenton 1k","precio":6.71},{"nombre":"MILLENNIUM - economico de pierna 1k","precio":10.56},{"nombre":"MILLENNIUM - mini pechuga de pavo 1k","precio":14.33},{"nombre":"MILLENNIUM - mini pierna superior 1k","precio":13.03},{"nombre":"MILLENNIUM - mortadela extra 1k","precio":6.23},{"nombre":"MILLENNIUM - salchichas a granel 1k","precio":8.98},{"nombre":"MINALBA - agua mineral 1.5l","precio":2.02},{"nombre":"Mini Samba Fresa","precio":0.6496},{"nombre":"MIRASOL - Margarina 500gr","precio":3.43},{"nombre":"MONEDAS DE CHOCOLATE","precio":0.06},{"nombre":"Monedas de chocolate","precio":0.0464},{"nombre":"MORITZ - Latte Leche","precio":1.21},{"nombre":"mortadela del arepero 500g","precio":2.9464},{"nombre":"Mortadela Extra Milenium","precio":6.85},{"nombre":"Mortadela Tipo Espalda Caracas","precio":4.56},{"nombre":"Mostaza Del Monte","precio":1.9024},{"nombre":"MR BROWN - Arequipe","precio":1.64},{"nombre":"Mr Brown Brownie","precio":1.4964},{"nombre":"MUCCA - Galletas","precio":0.96},{"nombre":"MultiClean detergente Fragancia floral 400","precio":1.4036},{"nombre":"MultiClean Detergente Fragancia Floral 900g","precio":2.9},{"nombre":"MUNCHY - triple play 70g","precio":2.95},{"nombre":"Muss Honey Coco Oil Acondicionador","precio":13.3632},{"nombre":"Muss Honey Coco Oil Tratamiento","precio":13.3632},{"nombre":"Naranja Cotoperi 500ml","precio":1.6936},{"nombre":"Naranjada Cotoperi 1.5l","precio":3.3988},{"nombre":"Natulac Colado de manzana Compota 186gr","precio":2.1344},{"nombre":"Natulac Frutas Tropicales","precio":2.1344},{"nombre":"Natulac Leche Condensada 340gr","precio":3.8976},{"nombre":"Natulac Pera","precio":2.1344},{"nombre":"NATUROIL - aceite de soya 850ml","precio":5.73},{"nombre":"nectaR COTOPRERI 1.5ML","precio":4.8024},{"nombre":"Nectar de durazno 500ml","precio":1.5428},{"nombre":"nectar de manzana cotoperi 500ml","precio":1.5892},{"nombre":"nectar de pera cotoperi 500ml","precio":1.5892},{"nombre":"NELLY - Margarina 250gr","precio":1.66},{"nombre":"NELLY - Margarina 500gr","precio":3.24},{"nombre":"NESTEA - limon 520gr","precio":7.05},{"nombre":"Nestea Durazno 520gr","precio":6.7976},{"nombre":"Nestea Limon 520G","precio":6.7976},{"nombre":"Nestea sobre 90gr","precio":1.4964},{"nombre":"netar de durazno cotoperi 500ml","precio":1.5892},{"nombre":"NEVADA - Agua mineral 600ml","precio":1.01},{"nombre":"NO USAR","precio":3.2944},{"nombre":"NO USAR","precio":2.204},{"nombre":"NOSOTRAS - toallas naturales invisibles 10und","precio":1.14},{"nombre":"NOSTRAS - proteccion v normal 15 und","precio":1.3},{"nombre":"Nucita Tubo 35gr","precio":1.972},{"nombre":"Nutellini en crema ","precio":0.4988},{"nombre":"Nutiva U-Fresh Mango 200ml","precio":0.6148},{"nombre":"Nutiva U-Fresh Pera 200ml","precio":0.6264},{"nombre":"Nutiva U-Fresh Piña Naranja 200ml","precio":0.6264},{"nombre":"Nutri bella Celulas madre 27ml","precio":2.9},{"nombre":"Nutri Keratine Max sin Sal","precio":10.498},{"nombre":"Nutri Restaura Max Acondicionador","precio":10.498},{"nombre":"Nutri Restaura Max Shampoo","precio":10.498},{"nombre":"Nutrit Anticaspa Acondicionador","precio":10.498},{"nombre":"Nutrit Anticaspa Shampoo","precio":10.498},{"nombre":"Nutrit Cuidado Natural Acondicionador","precio":10.498},{"nombre":"Nutrit Cuidado Natural Shampoo","precio":10.498},{"nombre":"Oral-b 70gr","precio":4.988},{"nombre":"OREO - Fresa 96gr","precio":2.78},{"nombre":"OREO - Vainilla 96gr","precio":2.78},{"nombre":"oreo 32g","precio":0.6612},{"nombre":"OSOLE - napolitana","precio":1.75},{"nombre":"OSOLE - pizza 200g","precio":1.75},{"nombre":"Osole Bolonesa 200g","precio":1.9488},{"nombre":"Osole Mermelada Durazno 200gr","precio":5.0576},{"nombre":"Osole Mermelada Fresa 200gr","precio":3.1784},{"nombre":"Osole Mermelada Guayaba 200gr ","precio":3.1784},{"nombre":"Osole Mermelada Mora 200gr","precio":3.1784},{"nombre":"Osole pizza 200g","precio":1.7516},{"nombre":"Pabilo","precio":0.5104},{"nombre":"Palitos Danibisk 30gr","precio":0.58},{"nombre":"PALMERITAS","precio":0.46},{"nombre":"Palmeritas","precio":0.464},{"nombre":"Palmitos Enteros Mary 400gr","precio":5.8232},{"nombre":"PALMOLIVE - natural 85g","precio":1.54},{"nombre":"PALMOLIVE - neutro balance 100g","precio":3.27},{"nombre":"PAMPERO - Ketchup 198g","precio":1.9},{"nombre":"PAMPERO - Ketchup 397g","precio":2.87},{"nombre":"PAN - Harina de maiz 1k","precio":1.7},{"nombre":"PAN - Sandwich","precio":2.87},{"nombre":"PAN - Sandwich Integral","precio":2.87},{"nombre":"pan canilla de anjon joli","precio":2.7028},{"nombre":"Pan Canilla de Oregano","precio":1.9},{"nombre":"Pan Canilla Normal","precio":2.25},{"nombre":"pan de banquete ","precio":1.45},{"nombre":"Pan de leche","precio":1.7},{"nombre":"Pan Frances","precio":1.7},{"nombre":"PAN MORITA","precio":0.79},{"nombre":"Pan pasta de guayaba pequeña","precio":0.5916},{"nombre":"Pan Perro","precio":1.8},{"nombre":"pan sadwich avena ","precio":2.7608},{"nombre":"Pan sandwich","precio":2.2},{"nombre":"pan sandwich integral","precio":2.7608},{"nombre":"Pan Sandwichy Multicereal La Estacion","precio":2.69},{"nombre":"Pan Siciliano La Estacion","precio":1.58},{"nombre":"PAN TOVAREÑO","precio":1.96},{"nombre":"Pan Tovareño","precio":1.85},{"nombre":"Panela","precio":2.0},{"nombre":"panelon tigo 25 g","precio":0.8004},{"nombre":"Panque Cocoa","precio":1.044},{"nombre":"panque Vainilla trigo de Oro","precio":1.2876},{"nombre":"Pantene Pro'v Crema de peinar Colageno 300cc","precio":9.9992},{"nombre":"Pantene Pro-v Crema de peinar Liso 300ml","precio":9.9992},{"nombre":"Pantene Pro-v restauracion 400ml","precio":10.9968},{"nombre":"papas RIzadas ","precio":0.6264},{"nombre":"Papel Aluminio Selva","precio":2.5404},{"nombre":"Papel Bamboo Detallado","precio":0.232},{"nombre":"Papel Caricias x4","precio":1.8676},{"nombre":"Papel Elite Duo Triple Hoja 4 Rollos","precio":5.8464},{"nombre":"Papel Higienico Familia ","precio":3.8976},{"nombre":"Papel Rosal Plus Rojo 4 Rollos 180 Hojas P","precio":1.9372},{"nombre":"Papel Rosal Plus Verde 4 Rollos 180 Hojas P","precio":2.436},{"nombre":"Papel Scott Ride Max Doble Hoja 4 Rollo","precio":4.1992},{"nombre":"Papelon de  Durazno Montalban 115gr","precio":2.4592},{"nombre":"Paque vainilla-chcolate trigo de oro","precio":1.1948},{"nombre":"Paquete Club social","precio":3.5032},{"nombre":"PARMALAT - El Chichero Bolsa 200gr","precio":2.52},{"nombre":"PARMALAT - leche condensada 395g","precio":5.65},{"nombre":"PARMALAT - Leche en polvo 400gr","precio":7.39},{"nombre":"Parmalat Alimento Lacteo 400gr","precio":7.0},{"nombre":"Pasta Capri Premium Codito 1K","precio":3.29},{"nombre":"Pasta Capri Premium Tornillo 500gr","precio":1.85},{"nombre":"Pasta Capri Vegetales Tornillo 500gr","precio":3.14},{"nombre":"Pasta Corta MARY Tornillo 500Gr","precio":1.9},{"nombre":"pasta corta premium pluma 500g","precio":2.2},{"nombre":"Pasta de Tomate Fergos 500gr","precio":5.162},{"nombre":"Pasta de tomate Iberia 200g","precio":3.9904},{"nombre":"Pasta de tomate Iberia 500g","precio":7.7024},{"nombre":"pasta larga mary vermicelli 1kg","precio":3.5032},{"nombre":"Pasta MARY tradicional Vermicelly","precio":1.6},{"nombre":"Pasta Plumitas Primor 1K","precio":3.13},{"nombre":"pasta PRIMOR dedales 1Kg","precio":2.9},{"nombre":"pasta Primor Tornillos 1KG","precio":2.8},{"nombre":"Pasta Primor Vermicelli 500g","precio":1.624},{"nombre":"Pasteladas","precio":0.464},{"nombre":"Pastelitos de Guayaba ","precio":0.5916},{"nombre":"Pepitas danibisk","precio":0.5104},{"nombre":"Pepito Original 25gr","precio":1.0788},{"nombre":"Pepito Original 80gr","precio":1.9024},{"nombre":"Pepsi - 350ml Botella retornable","precio":0.59},{"nombre":"Pepsi 1,5l","precio":1.4036},{"nombre":"Pepsi 350ml","precio":0.7192},{"nombre":"PEQUEÑIN - suavidad 80 und","precio":2.78},{"nombre":"PIGSY - familiar 60g","precio":1.38},{"nombre":"PINGUINITO - mini","precio":0.5},{"nombre":"PINGUINITOS - 80g","precio":2.51},{"nombre":"PINGÜINITOS COOKIES & CREAM - 80g","precio":2.51},{"nombre":"Pinguinitos mini","precio":0.4988},{"nombre":"PLATANITOS DE BOLSA TRANSPARENTE","precio":1.28},{"nombre":"Platanitos de bolsa transparente","precio":0.9976},{"nombre":"Platanitos Natu Chips 150gr","precio":3.364},{"nombre":"Platanitos Natu Chips Ondulados 145gr","precio":4.7444},{"nombre":"Platanitos Tom 80g","precio":1.3108},{"nombre":"Polvoron","precio":0.7076},{"nombre":"POLVORONES - Galletas","precio":0.75},{"nombre":"ponque de chocolate ponquesitos","precio":0.9976},{"nombre":"ponque de vainilla ponquesitos","precio":0.9976},{"nombre":"Ponque Tia Lulu Vainilla","precio":1.682},{"nombre":"POPCRONCH - chocolate 30grs","precio":0.45},{"nombre":"Popetas Caramelo 44.4g","precio":1.508},{"nombre":"Pote de ajo","precio":2.5},{"nombre":"POWERADE - 500ml","precio":2.23},{"nombre":"powerade bebida energisante 500ml","precio":1.9952},{"nombre":"PRIMOR - dedales extra especial 1kg","precio":2.65},{"nombre":"PRIMOR - perlado 900g","precio":2.81},{"nombre":"PRIMOR - superior 900g","precio":2.26},{"nombre":"Primor Dedales 500gr","precio":1.624},{"nombre":"Primor Extra Especial Vermicelly 1Kg","precio":2.3},{"nombre":"Primor Pasta Plumitas","precio":1.4},{"nombre":"Proembuti Mortadela de Pollo 100gr","precio":1.93},{"nombre":"Protectores Diarios nosotras 15und","precio":1.2296},{"nombre":"PROTEX - avena 330g","precio":3.2},{"nombre":"pudin de chocolate SONRISA 72g","precio":1.8096},{"nombre":"PURISIMA - Leche Completa","precio":3.5},{"nombre":"PURISIMA - Leche el polvo","precio":4.33},{"nombre":"QUAKER - Avena en Hojuelas 200gr","precio":0.91},{"nombre":"QUAKER - Avena En hojuelas 400gr","precio":1.79},{"nombre":"QUAKER - Avena En hojuelas Original 800gr","precio":0.91},{"nombre":"QUESO - blanco 1k","precio":8.45},{"nombre":"QUESO - Mozarella","precio":16.59},{"nombre":"queso ahumado","precio":9.0016},{"nombre":"Queso Amarillo","precio":17.14},{"nombre":"Queso Blanco ","precio":8.2},{"nombre":"Queso Cheddar","precio":3.1552},{"nombre":"Queso crema la gran pastora Tina 250","precio":4.1528},{"nombre":"Queso Criollo","precio":8.2},{"nombre":"Queso Fundido Rikesa Tocineta 300gr","precio":7.4936},{"nombre":"Queso Mozzarella","precio":11.4},{"nombre":"Queso Mozzarella Amarillo","precio":12.5},{"nombre":"Queso Palmi Bufala","precio":13.36},{"nombre":"Raquety queso","precio":0.6264},{"nombre":"Refresco Golden Kolita 1.5L","precio":1.5776},{"nombre":"Refresco Golden narajanja 1.5L","precio":1.5892},{"nombre":"Refresco Golden piña 1.5L","precio":1.5776},{"nombre":"Refresco Golden uva 1.5L","precio":1.508},{"nombre":"requeson de bolsa","precio":1.4964},{"nombre":"Rexona Spray Desodorante ","precio":11.2868},{"nombre":"RICOTA - PARAMO","precio":2.26},{"nombre":"Ricota Grande ","precio":2.5984},{"nombre":"Ricota Pequeña","precio":1.4964},{"nombre":"Rifa","precio":0.0},{"nombre":"RIKESA - Cheddar","precio":6.15},{"nombre":"RIKESA - Cheddar Original 200gr","precio":4.95},{"nombre":"Rikesa Original 300gr","precio":6.496},{"nombre":"Rosal Plus 4 rollos XG","precio":2.9928},{"nombre":"Rufles Snack 125gr","precio":4.408},{"nombre":"Rufles Snack Queso 125gr","precio":4.872},{"nombre":"SAL MAR - refinada 1kg","precio":0.91},{"nombre":"Sal Meru","precio":0.9048},{"nombre":"SAL MERU - fina 1kg","precio":0.91},{"nombre":"Sal Ven","precio":0.5},{"nombre":"Salchi Prado Salchicha Cocida de Pollo 440gr","precio":5.6376},{"nombre":"Salchi Prado Salchicha Viena 440gr","precio":6.6236},{"nombre":"Salchicha a granel Millenium","precio":6.902},{"nombre":"salsa de ajo tomodore 150ml","precio":1.16},{"nombre":"salsa de soya tomodore 150ml","precio":1.16},{"nombre":"Salsa de Tocineta","precio":3.1552},{"nombre":"salsa de tomate HEINZ 198g","precio":1.7052},{"nombre":"salsa de tomate HEINZ 397g","precio":2.7956},{"nombre":"Salsa de tomate Pampero 198g","precio":1.9024},{"nombre":"salsa inglesa tomodore 150ml","precio":1.16},{"nombre":"Salsa Osole Napolitana 200gr","precio":1.7516},{"nombre":"Salsa Osole Napolitana 340 gr","precio":2.146},{"nombre":"Samba Fresa gde","precio":1.2992},{"nombre":"Santoni Arroz Premium","precio":1.6588},{"nombre":"Sardinas Eveba en aceite","precio":1.7},{"nombre":"Sardinas Marbonita tomate","precio":0.98},{"nombre":"Sardinas Margarita Aceite Vegetal","precio":1.59},{"nombre":"SaVital Shampoo Complejo Hialuronico y Sabila","precio":10.498},{"nombre":"SAVOY - (cricri, rikiti)","precio":2.19},{"nombre":"SAVOY - Mini 32gr","precio":1.16},{"nombre":"SAVOY - SAMBA 32gr","precio":1.68},{"nombre":"SAVOY - Toronto Unidad","precio":1.0},{"nombre":"SCHWEPPES - Soda 355ml Bombita","precio":1.26},{"nombre":"SCOTT - mega absorb 45und","precio":2.45},{"nombre":"Scott Rinde max Individual","precio":0.638},{"nombre":"Secret Anti Transpirante Roll on","precio":4.234},{"nombre":"SELVA - papel de aluminio 7mt","precio":2.54},{"nombre":"Servilletas Familia 100 Servilletas","precio":1.6588},{"nombre":"Servilletas Familia Cafeteria 100 servilletas","precio":1.6008},{"nombre":"servilletas pequeña bamboo","precio":1.0324},{"nombre":"SHAMPOO - Sobre 18g","precio":0.74},{"nombre":"Shampoo Dove","precio":10.9968},{"nombre":"Shampoo Head & Shoulders 18ml","precio":0.7424},{"nombre":"Shampoo Head And Shoulders 2 en 1","precio":7.5864},{"nombre":"Shampoo MUSS honey Coco","precio":13.3632},{"nombre":"Soda Minalba","precio":1.4616},{"nombre":"soda schweppes 355ml","precio":1.102},{"nombre":"SONRISSA - flan sin caramelo 46g","precio":1.62},{"nombre":"SONRISSA - gelatina con sabor a cereza 66g","precio":1.97},{"nombre":"SONRISSA - gelatina con sabor a frambuesa 66g","precio":1.97},{"nombre":"SONRISSA - gelatina de limon 66g","precio":1.97},{"nombre":"SONRISSA - gelatina sabor a uva 66g","precio":1.97},{"nombre":"SONRISSA - pudin de chocolate 72g","precio":1.81},{"nombre":"Sopa De Pollo Con Fideos Maggi 62gr","precio":3.0972},{"nombre":"Speed Stick 30gr","precio":2.5868},{"nombre":"Speed stick Barra","precio":9.0016},{"nombre":"Speed stick Roll on","precio":5.0808},{"nombre":"SPEEDSTICK - 30gr","precio":2.35},{"nombre":"SUAVITEL - Surtidos 180ml","precio":1.68},{"nombre":"Suavitel 180ml","precio":1.9952},{"nombre":"Suavizante Buonaropa XTRA 3lt","precio":5.5912},{"nombre":"SULTANA - toallitas humedas 72 und","precio":5.8},{"nombre":"Sultana Toallitas Humedas","precio":5.278},{"nombre":"Super pega","precio":0.696},{"nombre":"Super popy","precio":0.3016},{"nombre":"Super Rombo - Jabon pasta 200gr","precio":1.38},{"nombre":"Suspiros","precio":0.2552},{"nombre":"Susy ","precio":1.5544},{"nombre":"SUSY - Mini","precio":1.09},{"nombre":"TASTY - vainilla 212ml","precio":1.29},{"nombre":"Te Lipton de bolsa","precio":4.8024},{"nombre":"Tequenos","precio":4.4428},{"nombre":"tequenos P","precio":3.9556},{"nombre":"Testing producto temporal 2","precio":1.16},{"nombre":"TIA LULU - Mantecada 150gr","precio":3.12},{"nombre":"TIA LULU - Ponque Vainilla","precio":1.97},{"nombre":"TIGO - crema a base de leche 200g","precio":2.24},{"nombre":"TIGO - Panelon","precio":1.14},{"nombre":"Tigo Crema De Leche","precio":2.2968},{"nombre":"TIP TOP - Galletas","precio":1.37},{"nombre":"Tip top Chocolate","precio":1.16},{"nombre":"TNT - Chicle Super Acido Meteoro","precio":0.07},{"nombre":"TNT - Super Acido Chicle","precio":0.05},{"nombre":"toalla sanitaria lotex esencial","precio":1.74},{"nombre":"Toallas Humedas Pequenin 80UND","precio":2.7956},{"nombre":"Toallas Nosotras natural invisible 10 und","precio":1.2528},{"nombre":"Toallin Familia Jumbo doble hoja","precio":3.4452},{"nombre":"Toallin Scott","precio":2.4476},{"nombre":"Toallitas Humedas natural Feeling","precio":4.4312},{"nombre":"Toallitas Humesdas Winny 24 UND","precio":2.9348},{"nombre":"Tocinetikas","precio":0.6032},{"nombre":"TOCINETIKAS - original 16g","precio":0.74},{"nombre":"TODDY - Pote 400gr","precio":6.79},{"nombre":"Toddy 100gr","precio":2.2968},{"nombre":"Toddy 200gr","precio":4.2224},{"nombre":"Toddy 400gr","precio":7.25},{"nombre":"TOMA2 - Galletas","precio":0.6},{"nombre":"Toma2 chips","precio":0.5104},{"nombre":"TOMODORE - Salsa de Ajo","precio":1.06},{"nombre":"TOMODORE - salsa Queso Cheddar","precio":3.47},{"nombre":"TOMODORE - vainilla 150ml","precio":1.24},{"nombre":"Tortilla Bimbo diet","precio":3.2944},{"nombre":"Tortilla Bimbo Rapiditas Clasicas","precio":3.0044},{"nombre":"Tortillas Bimbo Mantequilla","precio":3.2944},{"nombre":"Tortillas bimbo Mediterraneo","precio":3.2944},{"nombre":"TRIDENT - MORA AZUL 153gr","precio":0.82},{"nombre":"trident Menta","precio":0.1044},{"nombre":"Trident Mora","precio":0.9976},{"nombre":"Trident Mora Azul","precio":0.1044},{"nombre":"TRIGO DE ORO - Panque de vainilla","precio":1.29},{"nombre":"Tripleplay Familiar","precio":2.9928},{"nombre":"Trululu Aros","precio":0.1972},{"nombre":"trululu sabores","precio":0.6032},{"nombre":"TWINKIE - Mora","precio":0.57},{"nombre":"ULTREX - detergente en polvo 250g","precio":0.85},{"nombre":"ULTREX - detergente en polvo 2Kg","precio":6.33},{"nombre":"ULTREX - detergente en polvo 500g","precio":1.59},{"nombre":"ULTREX - detergente en polvo Manzana 1Kg","precio":3.16},{"nombre":"UNDER WOOD - diablitos 54g","precio":2.19},{"nombre":"UNIVERSAL Cigarrillos","precio":2.35},{"nombre":"UNIVERSAL Detallado","precio":0.12},{"nombre":"Vainilla","precio":1.0556},{"nombre":"Vainilla Tasty","precio":1.2876},{"nombre":"vela liviana luminarias de colores y blancas","precio":0.3364},{"nombre":"VELAS - Liviana luminaria de clores y blancas","precio":0.3},{"nombre":"VELON","precio":5.61},{"nombre":"velon luminarias grande","precio":6.1596},{"nombre":"velon luminarias mediano","precio":4.2224},{"nombre":"velon luminarias pequeño","precio":1.9256},{"nombre":"Vinagre de manzana 500ml","precio":1.5544},{"nombre":"Vinagre Ideal 1lt","precio":0.9744},{"nombre":"vinagre kepa 1l","precio":1.6008},{"nombre":"Vinagre Kepa 500ml","precio":1.4036},{"nombre":"Vinagre Mavesa 1lt","precio":2.7028},{"nombre":"Vinagre Mavesa 500ml","precio":1.624},{"nombre":"Wanita Regulsr con Alas 10pcs","precio":1.5428},{"nombre":"Wiener Salchicha Cocida 220gr","precio":3.3524},{"nombre":"WYNCO - Marshmallows Rellenos de mermelada","precio":0.15},{"nombre":"Xen Talco Antibacterial","precio":5.2896},{"nombre":"yesquero bic maxi","precio":1.798},{"nombre":"YESQUERO GLOBAL","precio":0.38},{"nombre":"Yesquero Magnifico","precio":0.3944},{"nombre":"yesqueros bic mini","precio":1.3804},{"nombre":"Yogurt Banana Tigo Tigurt 125gr","precio":1.0672},{"nombre":"Yogurt con Cereal Lagran Pastora 150ml","precio":2.9348},{"nombre":"Yogurt Ensalada del Fruta Tigo Tigurt 125gr","precio":0.9976},{"nombre":"yogurt griego cocoa","precio":2.8},{"nombre":"Yogurt Liquido Durazno La Gran Pastora 400ml","precio":2.7028},{"nombre":"Yogurt Liquido Fresa La Gran Pastora 400ml","precio":2.7028},{"nombre":"Yogurt Liquido Piña La Gran Pastora 400ml","precio":2.7028},{"nombre":"Yogurt Migurt liquido 250gr","precio":2.7028},{"nombre":"Yogurt Migurt Liquido de 125gr","precio":1.5892},{"nombre":"YUKERY - nectar de pera 250ml","precio":1.26},{"nombre":"Yukery Durazno 250ml","precio":1.0788},{"nombre":"Yukery Manzana 250ml","precio":1.4616},{"nombre":"Yukery Pera 250ml","precio":1.4616},{"nombre":"YUKY-PAK - nectar de manzana 250ml","precio":1.17}];
+const BANCOS = ["Banco de Venezuela", "Banesco", "Mercantil", "BBVA Provincial", "BNC", "Banplus", "Bancamiga", "Bicentenario", "Del Tesoro", "Exterior", "Activo", "Sofitasa", "Plaza", "Caroni", "Agricola de Venezuela", "100% Banco", "Bancrecer", "Mi Banco", "Venezolano de Crédito", "BOD", "Citibank", "Fondo Común"];
+
+// ---- ESTADO ----
+let items = [];
+let metodoPago = '';
+let opCounter = parseInt(localStorage.getItem('posOpCounter') || '1');
+let dropdownIndex = -1;
+let dropdownItems = [];
+let selectedProducto = null;
+
+// ---- INIT ----
+window.addEventListener('DOMContentLoaded', () => {
+  actualizarOpNum();
+  fetchTasa();
 });
 
-function addItem(){
-    let nombre = document.getElementById("producto").value;
-    let cantidad = parseInt(document.getElementById("cantidad").value);
-    let prod = productos.find(p=>p.name===nombre);
-    carrito.push({nombre, cantidad, price:prod.price});
-    render();
+function actualizarOpNum() {
+  document.getElementById('opNumDisplay').textContent = `Operación N° ${String(opCounter).padStart(6,'0')}`;
 }
 
-function render(){
-    let div = document.getElementById("lista");
-    div.innerHTML="";
-    let total=0;
-    carrito.forEach(i=>{
-        total+= i.price*i.cantidad;
-        div.innerHTML += `<p>${i.nombre} x${i.cantidad}</p>`;
-    });
-    document.getElementById("total").innerText = "Total $"+total;
+// ---- TASA BCV ----
+async function fetchTasa() {
+  const st = document.getElementById('tasaStatus');
+  st.textContent = 'Actualizando...';
+  try {
+    // Intentar via CORS proxy
+    const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.bcv.org.ve/');
+    const res = await fetch(url, {signal: AbortSignal.timeout(8000)});
+    const data = await res.json();
+    const html = data.contents;
+    // Buscar el valor del dolar en el HTML del BCV
+    const match = html.match(/USD[^\d]*(\d{1,3}(?:[.,]\d{3})*[.,]\d{1,4})/i)
+      || html.match(/>([\d]{1,3}(?:[,.]\d{3})*[,.]\d{1,4})<\/strong>\s*<\/div>\s*<\/div>\s*<div[^>]*>\s*USD/i)
+      || html.match(/id="dolar"[\s\S]{0,300}?<strong>([\d,\.]+)<\/strong>/i);
+    if(match) {
+      let raw = match[1].replace(/\s/g,'');
+      // Normalizar separadores venezolanos: punto = mil, coma = decimal
+      // o al reves dependiendo del formato
+      raw = raw.replace(/\./g,'X').replace(/,/g,'.').replace(/X/g,'');
+      const val = parseFloat(raw);
+      if(val > 1) {
+        document.getElementById('tasaBcv').value = val.toFixed(2);
+        st.textContent = '✓ ' + new Date().toLocaleTimeString('es-VE');
+        recalcTotales();
+        return;
+      }
+    }
+    st.textContent = '⚠ Manual';
+  } catch(e) {
+    st.textContent = '⚠ Sin conexión';
+  }
 }
 
-function guardar(){
-    let now = new Date();
-    let nombreArchivo = now.toISOString().replace(/[:T]/g,'-').split('.')[0];
+// ---- BUSQUEDA DROPDOWN ----
+function filtrarProductos() {
+  const q = document.getElementById('productoSearch').value.trim().toLowerCase();
+  const dl = document.getElementById('dropdownList');
+  dropdownIndex = -1;
+  if(!q) { dl.classList.remove('show'); dropdownItems=[]; return; }
+  dropdownItems = PRODUCTOS.filter(p => p.nombre.toLowerCase().includes(q)).slice(0,40);
+  if(!dropdownItems.length) { dl.innerHTML='<div class="dropdown-item" style="color:#888;">Sin resultados</div>'; dl.classList.add('show'); return; }
+  dl.innerHTML = dropdownItems.map((p,i) =>
+    `<div class="dropdown-item" data-i="${i}" onmousedown="seleccionarProducto(${i})">
+      <span>${escHtml(p.nombre)}</span>
+      <span class="precio-tag">$${p.precio.toFixed(4)}</span>
+    </div>`
+  ).join('');
+  dl.classList.add('show');
+}
 
-    let texto = "VENTA\n";
-    carrito.forEach(i=>{
-        texto += i.nombre+" x"+i.cantidad+"\n";
-    });
+function mostrarDropdown() {
+  if(dropdownItems.length) document.getElementById('dropdownList').classList.add('show');
+}
 
-    let blob = new Blob([texto], {type:"text/plain"});
-    let a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = nombreArchivo+".txt";
-    a.click();
+document.addEventListener('click', e => {
+  if(!e.target.closest('.producto-search-wrap')) {
+    document.getElementById('dropdownList').classList.remove('show');
+  }
+});
+
+function navDropdown(e) {
+  const items = document.querySelectorAll('#dropdownList .dropdown-item[data-i]');
+  if(e.key==='ArrowDown') { dropdownIndex=Math.min(dropdownIndex+1,items.length-1); resaltarDropdown(items); e.preventDefault(); }
+  else if(e.key==='ArrowUp') { dropdownIndex=Math.max(dropdownIndex-1,0); resaltarDropdown(items); e.preventDefault(); }
+  else if(e.key==='Enter' && dropdownIndex>=0) { seleccionarProducto(dropdownIndex); e.preventDefault(); }
+  else if(e.key==='Escape') { document.getElementById('dropdownList').classList.remove('show'); }
+}
+
+function resaltarDropdown(items) {
+  items.forEach((el,i) => el.classList.toggle('active', i===dropdownIndex));
+  if(items[dropdownIndex]) items[dropdownIndex].scrollIntoView({block:'nearest'});
+}
+
+function seleccionarProducto(i) {
+  selectedProducto = dropdownItems[i];
+  document.getElementById('productoSearch').value = selectedProducto.nombre;
+  document.getElementById('productoNombreSelected').value = selectedProducto.nombre;
+  document.getElementById('productoPrecioSelected').value = selectedProducto.precio.toFixed(4);
+  document.getElementById('dropdownList').classList.remove('show');
+  document.getElementById('productoQty').focus();
+}
+
+// ---- AGREGAR ITEM ----
+function agregarItem() {
+  if(!selectedProducto) { showToast('Selecciona un producto de la lista'); return; }
+  const qty = parseFloat(document.getElementById('productoQty').value);
+  if(!qty || qty<=0) { showToast('Cantidad inválida'); return; }
+  addItemToList(selectedProducto.nombre, selectedProducto.precio, qty, false);
+  // reset
+  selectedProducto = null;
+  document.getElementById('productoSearch').value='';
+  document.getElementById('productoNombreSelected').value='';
+  document.getElementById('productoPrecioSelected').value='';
+  document.getElementById('productoQty').value='1';
+}
+
+function agregarManual() {
+  const nombre = document.getElementById('manualNombre').value.trim();
+  const precio = parseFloat(document.getElementById('manualPrecio').value);
+  const qty = parseFloat(document.getElementById('manualQty').value);
+  if(!nombre) { showToast('Ingresa el nombre del producto'); return; }
+  if(!precio||precio<0) { showToast('Precio inválido'); return; }
+  if(!qty||qty<=0) { showToast('Cantidad inválida'); return; }
+  addItemToList(nombre, precio, qty, true);
+  document.getElementById('manualNombre').value='';
+  document.getElementById('manualPrecio').value='';
+  document.getElementById('manualQty').value='1';
+}
+
+function addItemToList(nombre, precio, qty, esManual) {
+  // Si ya existe, sumar cantidad
+  const existing = items.find(it => it.nombre===nombre && it.precio===precio);
+  if(existing) { existing.qty += qty; }
+  else { items.push({id: Date.now(), nombre, precio, qty, esManual}); }
+  renderItems();
+  recalcTotales();
+  showToast('Producto agregado ✓');
+}
+
+// ---- RENDER ----
+function renderItems() {
+  const tbody = document.getElementById('itemsTbody');
+  const tasa = parseFloat(document.getElementById('tasaBcv').value)||0;
+  if(!items.length) {
+    tbody.innerHTML='<tr><td colspan="7" class="empty-msg">Sin productos agregados</td></tr>';
+    return;
+  }
+  tbody.innerHTML = items.map((it,i) => {
+    const sub = it.precio * it.qty;
+    const subBs = tasa ? sub*tasa : 0;
+    return `<tr>
+      <td class="num-col">${i+1}</td>
+      <td>${escHtml(it.nombre)}${it.esManual?' <span style="color:var(--naranja-claro);font-size:0.72rem;">[manual]</span>':''}</td>
+      <td>$${it.precio.toFixed(4)}</td>
+      <td>
+        <div class="td-qty">
+          <input type="number" value="${it.qty}" min="0.001" step="any"
+            oninput="cambiarQty(${it.id}, this.value)" style="width:70px;"/>
+        </div>
+      </td>
+      <td>$${sub.toFixed(2)}</td>
+      <td>${tasa ? 'Bs '+fmtBs(subBs) : '—'}</td>
+      <td><button class="btn-danger" onclick="eliminarItem(${it.id})">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function cambiarQty(id, val) {
+  const it = items.find(i=>i.id===id);
+  if(it) { it.qty = parseFloat(val)||0; recalcTotales(); renderItems_noFocus(); }
+}
+
+function renderItems_noFocus() { renderItems(); }
+
+function eliminarItem(id) {
+  items = items.filter(i=>i.id!==id);
+  renderItems(); recalcTotales();
+}
+
+function recalcTotales() {
+  renderItems();
+  const tasa = parseFloat(document.getElementById('tasaBcv').value)||0;
+  const total = items.reduce((s,it)=>s+it.precio*it.qty,0);
+  document.getElementById('totalUsd').textContent = '$ ' + total.toFixed(2);
+  document.getElementById('totalBs').textContent = tasa ? 'Bs ' + fmtBs(total*tasa) : '— (sin tasa)';
+}
+
+// ---- METODO PAGO ----
+function selMetodo(m) {
+  metodoPago = m;
+  ['efectivo','debito','pagomovil'].forEach(x=>{
+    document.getElementById('btn-'+x).classList.toggle('selected', x===m);
+  });
+  const pm = document.getElementById('pagomovil-fields');
+  pm.classList.toggle('show', m==='pagomovil');
+}
+
+// ---- GUARDAR ----
+function guardarVenta() {
+  // Validaciones
+  const cedula = document.getElementById('clienteCedula').value.trim();
+  const nombre = document.getElementById('clienteNombre').value.trim();
+  const celular = document.getElementById('clienteCelular').value.trim();
+  if(!cedula) { showToast('Ingresa la cédula del cliente'); return; }
+  if(!nombre) { showToast('Ingresa el nombre del cliente'); return; }
+  if(!items.length) { showToast('Agrega al menos un producto'); return; }
+  if(!metodoPago) { showToast('Selecciona el método de pago'); return; }
+  const tasa = parseFloat(document.getElementById('tasaBcv').value)||0;
+  const total = items.reduce((s,it)=>s+it.precio*it.qty,0);
+
+  let pagoInfo = '';
+  if(metodoPago==='pagomovil') {
+    const ref = document.getElementById('pmRef').value.trim();
+    const banco = document.getElementById('pmBanco').value;
+    const pmCel = document.getElementById('pmCelular').value.trim();
+    if(!ref||!banco||!pmCel) { showToast('Completa los datos del Pago Móvil'); return; }
+    pagoInfo = `  Referencia   : ${ref}\n  Banco        : ${banco}\n  Celular      : ${pmCel}`;
+  }
+
+  const ahora = new Date();
+  const dd = String(ahora.getDate()).padStart(2,'0');
+  const mm = String(ahora.getMonth()+1).padStart(2,'0');
+  const aa = String(ahora.getFullYear()).slice(2);
+  const hh = String(ahora.getHours()).padStart(2,'0');
+  const mi = String(ahora.getMinutes()).padStart(2,'0');
+  const ss = String(ahora.getSeconds()).padStart(2,'0');
+  const numOp = String(opCounter).padStart(6,'0');
+  const cedulaFile = cedula.replace(/[^a-zA-Z0-9]/g,'');
+
+  const nombreArchivo = `${dd}.${mm}.${aa}--${hh}.${mi}.${ss}--${cedulaFile}.txt`;
+
+  const linea = '='.repeat(56);
+  const lineaM = '-'.repeat(56);
+
+  let contenido = `${linea}
+         REGISTRO DE VENTA - PUNTO DE VENTA
+${linea}
+  N° Operación  : ${numOp}
+  Fecha         : ${dd}/${mm}/20${aa}
+  Hora          : ${hh}:${mi}:${ss}
+${lineaM}
+  DATOS DEL CLIENTE
+${lineaM}
+  Cédula        : ${cedula}
+  Nombre        : ${nombre}
+  Celular       : ${celular||'No indicado'}
+${lineaM}
+  PRODUCTOS ADQUIRIDOS
+${lineaM}
+`;
+  items.forEach((it,i) => {
+    const sub = it.precio * it.qty;
+    const subBs = tasa ? sub*tasa : 0;
+    const qtyStr = Number.isInteger(it.qty) ? it.qty : it.qty.toFixed(3);
+    contenido += `  ${String(i+1).padStart(2)}. ${it.nombre}${it.esManual?' [MANUAL]':''}\n`;
+    contenido += `      Precio unitario : $${it.precio.toFixed(4)}\n`;
+    contenido += `      Cantidad        : ${qtyStr}\n`;
+    contenido += `      Subtotal USD    : $${sub.toFixed(2)}\n`;
+    if(tasa) contenido += `      Subtotal Bs     : Bs ${fmtBs(subBs)}\n`;
+    contenido += '\n';
+  });
+
+  contenido += `${lineaM}
+  RESUMEN DE TOTALES
+${lineaM}
+  Total USD     : $${total.toFixed(2)}
+  Tasa BCV      : ${tasa ? 'Bs '+tasa.toFixed(2)+' / $1' : 'No registrada'}
+  Total Bs      : ${tasa ? 'Bs '+fmtBs(total*tasa) : 'No disponible'}
+${lineaM}
+  MÉTODO DE PAGO
+${lineaM}
+  Método        : ${metodoPago==='efectivo'?'Efectivo':metodoPago==='debito'?'Tarjeta Débito':'Pago Móvil'}
+${pagoInfo ? pagoInfo+'\n' : ''}${linea}
+  Gracias por su compra
+${linea}
+`;
+
+  // Descargar
+  const blob = new Blob([contenido], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=nombreArchivo; a.click();
+  URL.revokeObjectURL(url);
+
+  // Incrementar contador
+  opCounter++;
+  localStorage.setItem('posOpCounter', opCounter);
+  showToast('✅ Venta guardada y descargada');
+  setTimeout(()=>{ if(confirm('¿Iniciar nueva venta?')) limpiarVenta(); }, 1200);
+}
+
+function limpiarVenta() {
+  items=[];
+  metodoPago='';
+  selectedProducto=null;
+  document.getElementById('clienteCedula').value='';
+  document.getElementById('clienteNombre').value='';
+  document.getElementById('clienteCelular').value='';
+  document.getElementById('productoSearch').value='';
+  document.getElementById('productoNombreSelected').value='';
+  document.getElementById('productoPrecioSelected').value='';
+  document.getElementById('productoQty').value='1';
+  document.getElementById('manualNombre').value='';
+  document.getElementById('manualPrecio').value='';
+  document.getElementById('manualQty').value='1';
+  document.getElementById('pmRef').value='';
+  document.getElementById('pmBanco').value='';
+  document.getElementById('pmCelular').value='';
+  ['efectivo','debito','pagomovil'].forEach(x=>document.getElementById('btn-'+x).classList.remove('selected'));
+  document.getElementById('pagomovil-fields').classList.remove('show');
+  renderItems(); recalcTotales();
+  actualizarOpNum();
+}
+
+// ---- UTILS ----
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fmtBs(n) {
+  return n.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3100);
 }
 </script>
-
 </body>
 </html>
