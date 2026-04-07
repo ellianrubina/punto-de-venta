@@ -6,7 +6,11 @@
 <title>Ventas del Día – Super Kapi</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2329;--border:#30363d;--accent:#00d4aa;--accent3:#7c6fff;--text:#e6edf3;--muted:#7d8590;--danger:#f85149;--success:#3fb950}
+:root{
+  --bg:#000;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;
+  --accent:#f4730e;--accent-dim:rgba(244,115,14,.1);--accent-dark:#c05800;
+  --text:#f0f0f0;--muted:#888;--danger:#e03a3a;--success:#3fb950;--info:#7c6fff
+}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh}
 .topbar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap}
@@ -14,9 +18,9 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
 .topbar h1 span{color:var(--text);font-weight:400}
 .btn-back{padding:6px 13px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:.2s}
 .btn-back:hover{border-color:var(--accent);color:var(--accent)}
-.btn-txt{margin-left:auto;padding:6px 14px;background:var(--accent);color:#0d1117;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-weight:800;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.2s}
-.btn-txt:hover{background:#00f0c4}
-.btn-clientes{padding:6px 13px;background:transparent;color:var(--accent3);border:1px solid var(--accent3);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.2s}
+.btn-txt{margin-left:auto;padding:6px 14px;background:var(--accent);color:#000;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-weight:800;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.2s}
+.btn-txt:hover{background:var(--accent-dark);color:#fff}
+.btn-clientes{padding:6px 13px;background:transparent;color:var(--info);border:1px solid var(--info);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.2s}
 .btn-clientes:hover{background:rgba(124,111,255,.12)}
 .date-bar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .date-bar label{font-size:.76rem;color:var(--muted)}
@@ -26,32 +30,32 @@ select.date-sel:focus{border-color:var(--accent)}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px}
 .card .lbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
 .card .val{font-family:'DM Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--accent)}
-.card .val.purple{color:var(--accent3)}
+.card .val.purple{color:var(--info)}
 .card .val.green{color:var(--success)}
 .ventas-wrap{padding:0 16px 28px}
 .ventas-title{font-size:.76rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px}
 .venta-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:9px}
 .venta-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:9px}
-.venta-op{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--accent);font-weight:700}
+.venta-op{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--accent);font-weight:700}
 .venta-hora{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted)}
 .venta-cliente{font-weight:700;font-size:.86rem;margin-top:2px}
 .venta-cedula{font-size:.7rem;color:var(--muted)}
 .pay-tag{font-size:.63rem;font-weight:700;padding:3px 7px;border-radius:20px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
-.pay-tag.efectivo{border-color:#3fb950;color:#3fb950}
-.pay-tag.debito{border-color:#7c6fff;color:#7c6fff}
-.pay-tag.pago-movil{border-color:#00d4aa;color:#00d4aa}
+.pay-tag.efectivo{border-color:var(--success);color:var(--success)}
+.pay-tag.debito{border-color:var(--info);color:var(--info)}
+.pay-tag.pago-movil{border-color:var(--accent);color:var(--accent)}
 .pm-info{font-size:.66rem;color:var(--muted);margin-top:3px}
 .venta-items{font-size:.73rem;color:var(--muted);margin-bottom:9px;line-height:1.65}
+.manual-item{color:var(--accent)}
 .venta-totals{display:flex;justify-content:flex-end;gap:14px;padding-top:8px;border-top:1px solid var(--border)}
 .vt-item{text-align:right}
 .vt-lbl{font-size:.63rem;color:var(--muted);display:block}
-.vt-val{font-family:'DM Mono',monospace;font-size:.83rem;font-weight:700;color:var(--text)}
+.vt-val{font-family:'DM Mono',monospace;font-size:.85rem;font-weight:700;color:var(--text)}
 .vt-val.accent{color:var(--accent)}
-.vt-val.purple{color:var(--accent3)}
+.vt-val.purple{color:var(--info)}
 .empty{text-align:center;padding:56px 18px;color:var(--muted);font-size:.83rem}
 .empty-icon{font-size:2.8rem;margin-bottom:10px}
-/* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:100;align-items:center;justify-content:center;padding:14px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;padding:14px}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:500px;max-height:90dvh;overflow-y:auto;padding:20px}
 .modal h2{font-size:.98rem;font-weight:800;margin-bottom:3px;color:var(--accent)}
@@ -60,8 +64,8 @@ select.date-sel:focus{border-color:var(--accent)}
 .cli-row.hdr{font-weight:700;color:var(--muted);font-size:.66rem;text-transform:uppercase}
 .modal-btns{display:flex;gap:7px;margin-top:13px}
 .modal-btn{flex:1;padding:9px;border-radius:8px;border:none;font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:.2s}
-.modal-btn.primary{background:var(--accent);color:#0d1117}
-.modal-btn.primary:hover{background:#00f0c4}
+.modal-btn.primary{background:var(--accent);color:#000}
+.modal-btn.primary:hover{background:var(--accent-dark);color:#fff}
 .modal-btn.secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 </style>
 </head>
@@ -85,7 +89,6 @@ select.date-sel:focus{border-color:var(--accent)}
   <div id="ventasList"></div>
 </div>
 
-<!-- Modal clientes -->
 <div class="modal-overlay" id="clientesModal">
   <div class="modal">
     <h2>👥 Base de Clientes</h2>
@@ -101,31 +104,22 @@ select.date-sel:focus{border-color:var(--accent)}
 
 <script>
 let currentDay='';
-
-function getAllDays(){ return JSON.parse(localStorage.getItem('sk_dias')||'[]').sort().reverse(); }
-function getVentas(day){ return JSON.parse(localStorage.getItem('sk_ventas_'+day)||'[]'); }
+function getAllDays(){return JSON.parse(localStorage.getItem('sk_dias')||'[]').sort().reverse();}
+function getVentas(day){return JSON.parse(localStorage.getItem('sk_ventas_'+day)||'[]');}
 
 function initDateSel(){
   const sel=document.getElementById('dateSel');
   const dias=getAllDays();
-  if(!dias.length){ sel.innerHTML='<option>Sin ventas registradas</option>'; renderVentas([]); return; }
+  if(!dias.length){sel.innerHTML='<option>Sin ventas registradas</option>';renderVentas([]);return;}
   sel.innerHTML=dias.map(d=>`<option value="${d}">${formatDate(d)}</option>`).join('');
   currentDay=dias[0]; loadDay(currentDay);
 }
-
-function formatDate(iso){
-  const [y,m,d]=iso.split('-'); return `${d}/${m}/${y}`;
-}
-
-function loadDay(day){
-  currentDay=day;
-  const v=getVentas(day);
-  renderSummary(v); renderVentas(v);
-}
+function formatDate(iso){const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;}
+function loadDay(day){currentDay=day;const v=getVentas(day);renderSummary(v);renderVentas(v);}
 
 function renderSummary(ventas){
   const box=document.getElementById('summaryBox');
-  if(!ventas.length){ box.innerHTML=''; return; }
+  if(!ventas.length){box.innerHTML='';return;}
   const tUsd=ventas.reduce((s,v)=>s+v.total,0);
   const tBs=ventas.reduce((s,v)=>s+(v.totalBs||0),0);
   const ef=ventas.filter(v=>v.metodoPago==='efectivo').reduce((s,v)=>s+v.total,0);
@@ -143,39 +137,28 @@ function renderSummary(ventas){
 function renderVentas(ventas){
   const list=document.getElementById('ventasList');
   const title=document.getElementById('ventasTitle');
-  if(!ventas.length){
-    title.textContent='';
-    list.innerHTML='<div class="empty"><div class="empty-icon">📭</div>No hay ventas para este día</div>';
-    return;
-  }
+  if(!ventas.length){title.textContent='';list.innerHTML='<div class="empty"><div class="empty-icon">📭</div>No hay ventas para este día</div>';return;}
   title.textContent=`${ventas.length} venta${ventas.length!==1?'s':''} registrada${ventas.length!==1?'s':''}`;
   list.innerHTML=ventas.map((v,i)=>{
     const opLabel=v.opNum?`OP-${String(v.opNum).padStart(6,'0')}`:`#${String(i+1).padStart(3,'0')}`;
-    const itemsTxt=v.items.map(it=>`${it.nombre} ×${it.qty} = $${it.subtotal.toFixed(2)}`).join(' · ');
+    const itemsTxt=v.items.map(it=>`<span class="${it.isManual?'manual-item':''}">${it.isManual?'★ ':''}${it.nombre} ×${it.qty} = $${it.subtotal.toFixed(2)}</span>`).join(' · ');
     let pmInfo='';
     if(v.metodoPago==='pago-movil'){
       const parts=[v.pmRef&&`Ref: ${v.pmRef}`,v.pmBanco&&`Banco: ${v.pmBanco}`,v.pmCel&&`Cel: ${v.pmCel}`].filter(Boolean);
-      if(parts.length) pmInfo=`<div class="pm-info">${parts.join(' · ')}</div>`;
+      if(parts.length)pmInfo=`<div class="pm-info">${parts.join(' · ')}</div>`;
     }
     const payLabel=v.metodoPago==='pago-movil'?'📱 PagoMóvil':v.metodoPago==='debito'?'💳 Débito':'💵 Efectivo';
     return `<div class="venta-card">
       <div class="venta-top">
         <div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <span class="venta-op">${opLabel}</span>
-            <span class="venta-hora">${v.hora}</span>
-          </div>
+          <div style="display:flex;gap:8px;align-items:center"><span class="venta-op">${opLabel}</span><span class="venta-hora">${v.hora}</span></div>
           <div class="venta-cliente">${v.nombre}</div>
           <div class="venta-cedula">${v.cedula}${v.celular?' · '+v.celular:''}</div>
         </div>
-        <div style="text-align:right">
-          <span class="pay-tag ${v.metodoPago}">${payLabel}</span>
-          ${pmInfo}
-        </div>
+        <div style="text-align:right"><span class="pay-tag ${v.metodoPago}">${payLabel}</span>${pmInfo}</div>
       </div>
       <div class="venta-items">${itemsTxt}</div>
       <div class="venta-totals">
-        <div class="vt-item"><span class="vt-lbl">IVA</span><span class="vt-val">$${v.iva.toFixed(2)}</span></div>
         <div class="vt-item"><span class="vt-lbl">Total USD</span><span class="vt-val accent">$${v.total.toFixed(2)}</span></div>
         ${v.totalBs?`<div class="vt-item"><span class="vt-lbl">Total Bs.</span><span class="vt-val purple">${v.totalBs.toLocaleString('es-VE',{maximumFractionDigits:0})}</span></div>`:''}
       </div>
@@ -183,7 +166,6 @@ function renderVentas(ventas){
   }).join('');
 }
 
-// ── EXPORTAR TXT ──
 function exportTXT(){
   const ventas=getVentas(currentDay);
   if(!ventas.length){alert('No hay ventas para exportar en este día.');return;}
@@ -193,44 +175,41 @@ function exportTXT(){
   const ef=ventas.filter(v=>v.metodoPago==='efectivo').reduce((s,v)=>s+v.total,0);
   const db=ventas.filter(v=>v.metodoPago==='debito').reduce((s,v)=>s+v.total,0);
   const pm=ventas.filter(v=>v.metodoPago==='pago-movil').reduce((s,v)=>s+v.total,0);
-
-  let txt=`=========================================\n`;
-  txt+=`     REPORTE DE VENTAS DIARIAS\n`;
-  txt+=`     Super Kapi\n`;
-  txt+=`=========================================\n`;
+  let txt='=========================================\n';
+  txt+='     REPORTE DE VENTAS DIARIAS\n';
+  txt+='     Super Kapi\n';
+  txt+='=========================================\n';
   txt+=`Fecha          : ${fecha}\n`;
   txt+=`Total ventas   : ${ventas.length}\n`;
-  txt+=`-----------------------------------------\n`;
-  txt+=`RESUMEN POR MÉTODO DE PAGO\n`;
-  txt+=`  💵 Efectivo  : $${ef.toFixed(2)}\n`;
-  txt+=`  💳 Débito    : $${db.toFixed(2)}\n`;
-  txt+=`  📱 PagoMóvil : $${pm.toFixed(2)}\n`;
-  txt+=`-----------------------------------------\n`;
-  txt+=`  TOTAL USD    : $${tUsd.toFixed(2)}\n`;
-  txt+=`  TOTAL Bs.    : ${tBs?tBs.toLocaleString('es-VE',{maximumFractionDigits:0})+' Bs.':'N/D'}\n`;
-  txt+=`=========================================\n\n`;
-
+  txt+='-----------------------------------------\n';
+  txt+='RESUMEN POR MÉTODO DE PAGO\n';
+  txt+=`  Efectivo      : $${ef.toFixed(2)}\n`;
+  txt+=`  Débito        : $${db.toFixed(2)}\n`;
+  txt+=`  PagoMóvil     : $${pm.toFixed(2)}\n`;
+  txt+='-----------------------------------------\n';
+  txt+=`  TOTAL USD     : $${tUsd.toFixed(2)}\n`;
+  txt+=`  TOTAL Bs.     : ${tBs?tBs.toLocaleString('es-VE',{maximumFractionDigits:0})+' Bs.':'N/D'}\n`;
+  txt+='=========================================\n\n';
   ventas.forEach((v,i)=>{
     const opLabel=v.opNum?`OP-${String(v.opNum).padStart(6,'0')}`:`#${String(i+1).padStart(3,'0')}`;
     txt+=`-----------------------------------------\n`;
     txt+=`${opLabel}  |  ${v.hora}  |  ${v.metodoPago.toUpperCase()}\n`;
     txt+=`Cliente: ${v.nombre} (${v.cedula})${v.celular?' – '+v.celular:''}\n`;
     if(v.metodoPago==='pago-movil'){
-      if(v.pmRef) txt+=`Ref: ${v.pmRef}`;
-      if(v.pmBanco) txt+=`  Banco: ${v.pmBanco}`;
-      if(v.pmCel) txt+=`  Cel: ${v.pmCel}`;
-      txt+=`\n`;
+      if(v.pmRef)txt+=`Ref: ${v.pmRef}`;
+      if(v.pmBanco)txt+=`  Banco: ${v.pmBanco}`;
+      if(v.pmCel)txt+=`  Cel: ${v.pmCel}`;
+      txt+='\n';
     }
-    txt+=`Productos:\n`;
-    v.items.forEach(it=>{ txt+=`  ${it.nombre.slice(0,28).padEnd(28)} x${it.qty}  $${it.subtotal.toFixed(2)}\n`; });
-    txt+=`Subtotal: $${v.subtotal.toFixed(2)}  IVA: $${v.iva.toFixed(2)}  TOTAL: $${v.total.toFixed(2)}`;
-    if(v.totalBs) txt+=`  (${v.totalBs.toLocaleString('es-VE',{maximumFractionDigits:0})} Bs.)`;
-    txt+=`\n`;
+    txt+='Productos:\n';
+    v.items.forEach(it=>{txt+=`  ${it.isManual?'★ ':''}${it.nombre.slice(0,26).padEnd(26)} x${it.qty}  $${it.subtotal.toFixed(2)}\n`;});
+    txt+=`TOTAL: $${v.total.toFixed(2)}`;
+    if(v.totalBs)txt+=`  (${v.totalBs.toLocaleString('es-VE',{maximumFractionDigits:0})} Bs.)`;
+    txt+='\n';
   });
-  txt+=`=========================================\n`;
+  txt+='=========================================\n';
   txt+=`Generado: ${new Date().toLocaleString('es-VE')}\n`;
-  txt+=`=========================================\n`;
-
+  txt+='=========================================\n';
   const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -238,16 +217,13 @@ function exportTXT(){
   a.click(); URL.revokeObjectURL(a.href);
 }
 
-// ── CLIENTES ──
 function openClientes(){
   const clientes=Object.values(JSON.parse(localStorage.getItem('sk_clientes')||'{}'));
   const list=document.getElementById('clientesList');
-  list.innerHTML=clientes.length
-    ? clientes.map(c=>`<div class="cli-row"><span>${c.cedula}</span><span>${c.nombre}</span><span>${c.celular||'–'}</span></div>`).join('')
-    : '<p style="color:var(--muted);font-size:.78rem;padding:10px 0">Sin clientes registrados.</p>';
+  list.innerHTML=clientes.length?clientes.map(c=>`<div class="cli-row"><span>${c.cedula}</span><span>${c.nombre}</span><span>${c.celular||'–'}</span></div>`).join(''):'<p style="color:var(--muted);font-size:.78rem;padding:10px 0">Sin clientes registrados.</p>';
   document.getElementById('clientesModal').classList.add('open');
 }
-function closeClientes(){ document.getElementById('clientesModal').classList.remove('open'); }
+function closeClientes(){document.getElementById('clientesModal').classList.remove('open');}
 function exportClientesCSV(){
   const clientes=Object.values(JSON.parse(localStorage.getItem('sk_clientes')||'{}'));
   if(!clientes.length){alert('No hay clientes registrados.');return;}
@@ -256,8 +232,7 @@ function exportClientesCSV(){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download='clientes_super_kapi.csv'; a.click(); URL.revokeObjectURL(a.href);
 }
-document.getElementById('clientesModal').addEventListener('click',e=>{ if(e.target===e.currentTarget)closeClientes(); });
-
+document.getElementById('clientesModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeClientes();});
 initDateSel();
 </script>
 </body>
