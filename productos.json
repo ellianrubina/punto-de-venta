@@ -1,1370 +1,1394 @@
 [
   {
-    "Producto": "7UP - 1.5l",
-    "Precio (USD)": "1.18"
+    "name": "7UP - 1.5l",
+    "price": 1.18
   },
   {
-    "Producto": "AJAX - desinfectante 500ml",
-    "Precio (USD)": "4.42"
+    "name": "AJAX - desinfectante 500ml",
+    "price": 4.42
   },
   {
-    "Producto": "alfajores cubierta de chocolate",
-    "Precio (USD)": "2.67"
+    "name": "alfajores cubierta de chocolate",
+    "price": 2.67
   },
   {
-    "Producto": "ALFONZO RIVAS - Maizina Americana 120gr",
-    "Precio (USD)": "1.80"
+    "name": "ALFONZO RIVAS - Maizina Americana 120gr",
+    "price": 1.8
   },
   {
-    "Producto": "ALFONZO RIVAS - Maizina Americana 400gr",
-    "Precio (USD)": "3.73"
+    "name": "ALFONZO RIVAS - Maizina Americana 400gr",
+    "price": 3.73
   },
   {
-    "Producto": "ALFONZO RIVAS - Maizina Americana 90gr",
-    "Precio (USD)": "1.17"
+    "name": "ALFONZO RIVAS - Maizina Americana 90gr",
+    "price": 1.17
   },
   {
-    "Producto": "ALIMEX - espalda cocida 1k",
-    "Precio (USD)": "12.06"
+    "name": "ALIMEX - espalda cocida 1k",
+    "price": 12.06
   },
   {
-    "Producto": "ALIMEX - Mortadela Especial 500g",
-    "Precio (USD)": "3.19"
+    "name": "ALIMEX - Mortadela Especial 500g",
+    "price": 3.19
   },
   {
-    "Producto": "ALIMEX Salchichas tipo Viena 225g",
-    "Precio (USD)": "4.08"
+    "name": "ALIMEX Salchichas tipo Viena 225g",
+    "price": 4.08
   },
   {
-    "Producto": "ALIMEX- Salchichas tipo Viena 450g",
-    "Precio (USD)": "7.52"
+    "name": "ALIMEX- Salchichas tipo Viena 450g",
+    "price": 7.52
   },
   {
-    "Producto": "ALIVE - Morado Polvo 500gr",
-    "Precio (USD)": "2.38"
+    "name": "ALIVE - Morado Polvo 500gr",
+    "price": 2.38
   },
   {
-    "Producto": "ALIVE - Polvo Azul 500gr",
-    "Precio (USD)": "2.38"
+    "name": "ALIVE - Polvo Azul 500gr",
+    "price": 2.38
   },
   {
-    "Producto": "ALIVE - Polvo Rosado 500gr",
-    "Precio (USD)": "2.51"
+    "name": "ALIVE - Polvo Rosado 500gr",
+    "price": 2.51
   },
   {
-    "Producto": "ALVE - algodon hidrofilo 25g",
-    "Precio (USD)": "5.30"
+    "name": "ALVE - algodon hidrofilo 25g",
+    "price": 5.3
   },
   {
-    "Producto": "ALWAYS - ULTRAFINA - suave de 10und",
-    "Precio (USD)": "4.71"
+    "name": "ALWAYS - ULTRAFINA - suave de 10und",
+    "price": 4.71
   },
   {
-    "Producto": "ANIPOP - Chupetas Anillo",
-    "Precio (USD)": "0.35"
+    "name": "ANIPOP - Chupetas Anillo",
+    "price": 0.35
   },
   {
-    "Producto": "ARAUCA - gourcafe 200g",
-    "Precio (USD)": "3.74"
+    "name": "ARAUCA - gourcafe 200g",
+    "price": 3.74
   },
   {
-    "Producto": "ARIEL - detergente en polvo 400g",
-    "Precio (USD)": "2.82"
+    "name": "ARIEL - detergente en polvo 400g",
+    "price": 2.82
   },
   {
-    "Producto": "ATUN - solido en aceite vegetal 170gr",
-    "Precio (USD)": "3.33"
+    "name": "ATUN - solido en aceite vegetal 170gr",
+    "price": 3.33
   },
   {
-    "Producto": "AVELINA - entera 250g",
-    "Precio (USD)": "1.37"
+    "name": "AVELINA - entera 250g",
+    "price": 1.37
   },
   {
-    "Producto": "AVELINA - Fortificada Avena en Hojuelas 250gr",
-    "Precio (USD)": "1.36"
+    "name": "AVELINA - Fortificada Avena en Hojuelas 250gr",
+    "price": 1.36
   },
   {
-    "Producto": "AVELINA - Tradicional Avena en Hojuelas 250gr",
-    "Precio (USD)": "1.30"
+    "name": "AVELINA - Tradicional Avena en Hojuelas 250gr",
+    "price": 1.3
   },
   {
-    "Producto": "AXION - lavaplatos en crema 235mg",
-    "Precio (USD)": "2.08"
+    "name": "AXION - lavaplatos en crema 235mg",
+    "price": 2.08
   },
   {
-    "Producto": "AXION - lavaplatos en crema limon 235g",
-    "Precio (USD)": "3.78"
+    "name": "AXION - lavaplatos en crema limon 235g",
+    "price": 3.78
   },
   {
-    "Producto": "BAMBOO - papel higienico",
-    "Precio (USD)": "0.23"
+    "name": "BAMBOO - papel higienico",
+    "price": 0.23
   },
   {
-    "Producto": "BAMBOO - servilletas pequeñas 160und",
-    "Precio (USD)": "1.03"
+    "name": "BAMBOO - servilletas pequeñas 160und",
+    "price": 1.03
   },
   {
-    "Producto": "BARZUCA - Azucar 900gr",
-    "Precio (USD)": "1.74"
+    "name": "BARZUCA - Azucar 900gr",
+    "price": 1.74
   },
   {
-    "Producto": "Belmont Detallado",
-    "Precio (USD)": "0.19"
+    "name": "Belmont Detallado",
+    "price": 0.19
   },
   {
-    "Producto": "BELMONT x10",
-    "Precio (USD)": "1.87"
+    "name": "BELMONT x10",
+    "price": 1.87
   },
   {
-    "Producto": "BELMONT x20",
-    "Precio (USD)": "3.75"
+    "name": "BELMONT x20",
+    "price": 3.75
   },
   {
-    "Producto": "BELVITA - hony 252g",
-    "Precio (USD)": "4.64"
+    "name": "BELVITA - hony 252g",
+    "price": 4.64
   },
   {
-    "Producto": "BELVITA - kraker 234g",
-    "Precio (USD)": "5.14"
+    "name": "BELVITA - kraker 234g",
+    "price": 5.14
   },
   {
-    "Producto": "BIMBO - Pan Artesano",
-    "Precio (USD)": "3.25"
+    "name": "BIMBO - Pan Artesano",
+    "price": 3.25
   },
   {
-    "Producto": "BIMBO - Pan Blanco",
-    "Precio (USD)": "2.15"
+    "name": "BIMBO - Pan Blanco",
+    "price": 2.15
   },
   {
-    "Producto": "BIMBO - Rapiditas Diet",
-    "Precio (USD)": "3.43"
+    "name": "BIMBO - Rapiditas Diet",
+    "price": 3.43
   },
   {
-    "Producto": "BIMBO - Rapiditas Mantequilla",
-    "Precio (USD)": "3.43"
+    "name": "BIMBO - Rapiditas Mantequilla",
+    "price": 3.43
   },
   {
-    "Producto": "BIMBO - Rapiditas Mediterraneas",
-    "Precio (USD)": "3.43"
+    "name": "BIMBO - Rapiditas Mediterraneas",
+    "price": 3.43
   },
   {
-    "Producto": "BIMBO - Rapiditas Originales",
-    "Precio (USD)": "3.12"
+    "name": "BIMBO - Rapiditas Originales",
+    "price": 3.12
   },
   {
-    "Producto": "BOHEM - detallado surtidos",
-    "Precio (USD)": "0.13"
+    "name": "BOHEM - detallado surtidos",
+    "price": 0.13
   },
   {
-    "Producto": "BOHEM Blue",
-    "Precio (USD)": "1.28"
+    "name": "BOHEM Blue",
+    "price": 1.28
   },
   {
-    "Producto": "BOHEM Blue Detallado",
-    "Precio (USD)": "0.07"
+    "name": "BOHEM Blue Detallado",
+    "price": 0.07
   },
   {
-    "Producto": "BOHEM Sandia Detallado",
-    "Precio (USD)": "0.12"
+    "name": "BOHEM Sandia Detallado",
+    "price": 0.12
   },
   {
-    "Producto": "BOHEM Sandia y mango",
-    "Precio (USD)": "2.32"
+    "name": "BOHEM Sandia y mango",
+    "price": 2.32
   },
   {
-    "Producto": "BOLI KRUNCH - pequeño 25g",
-    "Precio (USD)": "0.77"
+    "name": "BOLI KRUNCH - pequeño 25g",
+    "price": 0.77
   },
   {
-    "Producto": "BOLSAS BASURA 150L Calibre 8",
-    "Precio (USD)": "3.32"
+    "name": "BOLSAS BASURA 150L Calibre 8",
+    "price": 3.32
   },
   {
-    "Producto": "BOLSAS BASURA 200L Calibre 8",
-    "Precio (USD)": "4.92"
+    "name": "BOLSAS BASURA 200L Calibre 8",
+    "price": 4.92
   },
   {
-    "Producto": "BONAROPA - xtra aroma 1l",
-    "Precio (USD)": "4.34"
+    "name": "BONAROPA - xtra aroma 1l",
+    "price": 4.34
   },
   {
-    "Producto": "BUZZY - Chicle Tattoo Hello kitty",
-    "Precio (USD)": "0.08"
+    "name": "BUZZY - Chicle Tattoo Hello kitty",
+    "price": 0.08
   },
   {
-    "Producto": "BUZZY - Chicle Tattoo Minions",
-    "Precio (USD)": "0.08"
+    "name": "BUZZY - Chicle Tattoo Minions",
+    "price": 0.08
   },
   {
-    "Producto": "CAFE BRASIL - gourmet 100g",
-    "Precio (USD)": "2.02"
+    "name": "CAFE BRASIL - gourmet 100g",
+    "price": 2.02
   },
   {
-    "Producto": "CAFE KOLAO - gourmet 200g",
-    "Precio (USD)": "4.42"
+    "name": "CAFE KOLAO - gourmet 200g",
+    "price": 4.42
   },
   {
-    "Producto": "CALEDONIA - galletas maria 25g c/u",
-    "Precio (USD)": "1.66"
+    "name": "CALEDONIA - galletas maria 25g c/u",
+    "price": 1.66
   },
   {
-    "Producto": "CANELITAS - galletas",
-    "Precio (USD)": "0.66"
+    "name": "CANELITAS - galletas",
+    "price": 0.66
   },
   {
-    "Producto": "CAPRI - vermicelli fino 1kg",
-    "Precio (USD)": "3.17"
+    "name": "CAPRI - vermicelli fino 1kg",
+    "price": 3.17
   },
   {
-    "Producto": "CARABOBO - leche entera 1l",
-    "Precio (USD)": "3.56"
+    "name": "CARABOBO - leche entera 1l",
+    "price": 3.56
   },
   {
-    "Producto": "CARAMELOS CHAO",
-    "Precio (USD)": "0.06"
+    "name": "CARAMELOS CHAO",
+    "price": 0.06
   },
   {
-    "Producto": "CARAMELOS DE JENGIBRE",
-    "Precio (USD)": "1.32"
+    "name": "CARAMELOS DE JENGIBRE",
+    "price": 1.32
   },
   {
-    "Producto": "CARAVELLE - cepillo de lavar",
-    "Precio (USD)": "3.35"
+    "name": "CARAVELLE - cepillo de lavar",
+    "price": 3.35
   },
   {
-    "Producto": "CARICIAS - papel higienico 4und",
-    "Precio (USD)": "1.71"
+    "name": "CARICIAS - papel higienico 4und",
+    "price": 1.71
   },
   {
-    "Producto": "CASABE - en paquete",
-    "Precio (USD)": "2.80"
+    "name": "CASABE - en paquete",
+    "price": 2.8
   },
   {
-    "Producto": "CHARMY - chocolate 32g c/u",
-    "Precio (USD)": "2.40"
+    "name": "CHARMY - chocolate 32g c/u",
+    "price": 2.4
   },
   {
-    "Producto": "CHARMY - fresa 32g c/u",
-    "Precio (USD)": "2.40"
+    "name": "CHARMY - fresa 32g c/u",
+    "price": 2.4
   },
   {
-    "Producto": "CHARMY - vainilla 32g c/u",
-    "Precio (USD)": "2.40"
+    "name": "CHARMY - vainilla 32g c/u",
+    "price": 2.4
   },
   {
-    "Producto": "CHICCO - motas de algodon 100und",
-    "Precio (USD)": "11.07"
+    "name": "CHICCO - motas de algodon 100und",
+    "price": 11.07
   },
   {
-    "Producto": "CHINOTTO - 1.5L",
-    "Precio (USD)": "1.76"
+    "name": "CHINOTTO - 1.5L",
+    "price": 1.76
   },
   {
-    "Producto": "CHINOTTO - 355ml",
-    "Precio (USD)": "0.58"
+    "name": "CHINOTTO - 355ml",
+    "price": 0.58
   },
   {
-    "Producto": "CHIS KESITOS - 45G",
-    "Precio (USD)": "1.17"
+    "name": "CHIS KESITOS - 45G",
+    "price": 1.17
   },
   {
-    "Producto": "CHIS KESITOS TOCINETA - 45g",
-    "Precio (USD)": "1.17"
+    "name": "CHIS KESITOS TOCINETA - 45g",
+    "price": 1.17
   },
   {
-    "Producto": "CHIS TRIS 50g",
-    "Precio (USD)": "1.72"
+    "name": "CHIS TRIS 50g",
+    "price": 1.72
   },
   {
-    "Producto": "CHOCO LISTO - Bolsa 400gr",
-    "Precio (USD)": "5.70"
+    "name": "CHOCO LISTO - Bolsa 400gr",
+    "price": 5.7
   },
   {
-    "Producto": "CHUPA POP - Chupeta Detallada",
-    "Precio (USD)": "0.27"
+    "name": "CHUPA POP - Chupeta Detallada",
+    "price": 0.27
   },
   {
-    "Producto": "CHUPETA EXPLOSIVA",
-    "Precio (USD)": "0.58"
+    "name": "CHUPETA EXPLOSIVA",
+    "price": 0.58
   },
   {
-    "Producto": "CHUPETA LOKIÑO SURTIDA",
-    "Precio (USD)": "0.22"
+    "name": "CHUPETA LOKIÑO SURTIDA",
+    "price": 0.22
   },
   {
-    "Producto": "CLUB SOCIAL - original 6uni",
-    "Precio (USD)": "3.48"
+    "name": "CLUB SOCIAL - original 6uni",
+    "price": 3.48
   },
   {
-    "Producto": "COCA COLA - Bombita 355ml",
-    "Precio (USD)": "0.87"
+    "name": "COCA COLA - Bombita 355ml",
+    "price": 0.87
   },
   {
-    "Producto": "COCA COLA - original 1.5l",
-    "Precio (USD)": "2.35"
+    "name": "COCA COLA - original 1.5l",
+    "price": 2.35
   },
   {
-    "Producto": "COCOSETE",
-    "Precio (USD)": "1.79"
+    "name": "COCOSETE",
+    "price": 1.79
   },
   {
-    "Producto": "COLGATE - Cepillo Triple Accion 2Pac",
-    "Precio (USD)": "4.42"
+    "name": "COLGATE - Cepillo Triple Accion 2Pac",
+    "price": 4.42
   },
   {
-    "Producto": "COLGATE - maxima protexion 90g",
-    "Precio (USD)": "2.27"
+    "name": "COLGATE - maxima protexion 90g",
+    "price": 2.27
   },
   {
-    "Producto": "COLGATE - normal 144g",
-    "Precio (USD)": "4.65"
+    "name": "COLGATE - normal 144g",
+    "price": 4.65
   },
   {
-    "Producto": "COLGATE - triple accion 60ml",
-    "Precio (USD)": "2.62"
+    "name": "COLGATE - triple accion 60ml",
+    "price": 2.62
   },
   {
-    "Producto": "CONSUL cigarrillos",
-    "Precio (USD)": "2.46"
+    "name": "CONSUL cigarrillos",
+    "price": 2.46
   },
   {
-    "Producto": "CONSUL Detallado",
-    "Precio (USD)": "0.13"
+    "name": "CONSUL Detallado",
+    "price": 0.13
   },
   {
-    "Producto": "COPOSA - aceite vegetal 850ml",
-    "Precio (USD)": "5.51"
+    "name": "COPOSA - aceite vegetal 850ml",
+    "price": 5.51
   },
   {
-    "Producto": "COTOPERI - colado de pera 110g",
-    "Precio (USD)": "0.93"
+    "name": "COTOPERI - colado de pera 110g",
+    "price": 0.93
   },
   {
-    "Producto": "CRUNCHIS GREGORY - 150g",
-    "Precio (USD)": "1.46"
+    "name": "CRUNCHIS GREGORY - 150g",
+    "price": 1.46
   },
   {
-    "Producto": "CRUNCHIS GREGORY - 54G",
-    "Precio (USD)": "0.46"
+    "name": "CRUNCHIS GREGORY - 54G",
+    "price": 0.46
   },
   {
-    "Producto": "CRUZCAFE - clasico 200g",
-    "Precio (USD)": "3.38"
+    "name": "CRUZCAFE - clasico 200g",
+    "price": 3.38
   },
   {
-    "Producto": "DANBISK - PALITO EXTREME",
-    "Precio (USD)": "3.32"
+    "name": "DANBISK - PALITO EXTREME",
+    "price": 3.32
   },
   {
-    "Producto": "DEL MONTE - guisantes 425g",
-    "Precio (USD)": "3.43"
+    "name": "DEL MONTE - guisantes 425g",
+    "price": 3.43
   },
   {
-    "Producto": "DEL MONTE - guisantes y zanahorias 241g",
-    "Precio (USD)": "2.90"
+    "name": "DEL MONTE - guisantes y zanahorias 241g",
+    "price": 2.9
   },
   {
-    "Producto": "DEL MONTE - guisantes y zanahorias 411g",
-    "Precio (USD)": "4.16"
+    "name": "DEL MONTE - guisantes y zanahorias 411g",
+    "price": 4.16
   },
   {
-    "Producto": "DEL MONTE - Maiz Dulce Dorado Entero 220g",
-    "Precio (USD)": "2.61"
+    "name": "DEL MONTE - Maiz Dulce Dorado Entero 220g",
+    "price": 2.61
   },
   {
-    "Producto": "DEXX - recolector de heces",
-    "Precio (USD)": "0.82"
+    "name": "DEXX - recolector de heces",
+    "price": 0.82
   },
   {
-    "Producto": "DIPROMON - Cloro",
-    "Precio (USD)": "1.87"
+    "name": "DIPROMON - Cloro",
+    "price": 1.87
   },
   {
-    "Producto": "DIPROMON - lavaplatos 1l",
-    "Precio (USD)": "3.63"
+    "name": "DIPROMON - lavaplatos 1l",
+    "price": 3.63
   },
   {
-    "Producto": "DOÑA ALICIA - Avena en Hojuelas 400gr",
-    "Precio (USD)": "1.53"
+    "name": "DOÑA ALICIA - Avena en Hojuelas 400gr",
+    "price": 1.53
   },
   {
-    "Producto": "DOVE - original 90g",
-    "Precio (USD)": "6.93"
+    "name": "DOVE - original 90g",
+    "price": 6.93
   },
   {
-    "Producto": "EL TUNAL - Jugo de Naranja 1L",
-    "Precio (USD)": "3.12"
+    "name": "EL TUNAL - Jugo de Naranja 1L",
+    "price": 3.12
   },
   {
-    "Producto": "EL TUNAL - Jugo de Naranja 500ml",
-    "Precio (USD)": "2.11"
+    "name": "EL TUNAL - Jugo de Naranja 500ml",
+    "price": 2.11
   },
   {
-    "Producto": "EL TUNAL - JUGOS SURTIDOS 1L",
-    "Precio (USD)": "2.58"
+    "name": "EL TUNAL - JUGOS SURTIDOS 1L",
+    "price": 2.58
   },
   {
-    "Producto": "EL TUNAL - JUGOS SURTIDOS 500ml",
-    "Precio (USD)": "1.71"
+    "name": "EL TUNAL - JUGOS SURTIDOS 500ml",
+    "price": 1.71
   },
   {
-    "Producto": "ESPECIE - Adobo Completa Eliza",
-    "Precio (USD)": "0.38"
+    "name": "ESPECIE - Adobo Completa Eliza",
+    "price": 0.38
   },
   {
-    "Producto": "ESPECIE - Anis Estrellado",
-    "Precio (USD)": "0.50"
+    "name": "ESPECIE - Anis Estrellado",
+    "price": 0.5
   },
   {
-    "Producto": "ESPECIE - Bicarbonato de sodio",
-    "Precio (USD)": "0.43"
+    "name": "ESPECIE - Bicarbonato de sodio",
+    "price": 0.43
   },
   {
-    "Producto": "ESPECIE - Canela concha",
-    "Precio (USD)": "0.48"
+    "name": "ESPECIE - Canela concha",
+    "price": 0.48
   },
   {
-    "Producto": "ESPECIE - Canela Molida",
-    "Precio (USD)": "0.48"
+    "name": "ESPECIE - Canela Molida",
+    "price": 0.48
   },
   {
-    "Producto": "ESPECIE - Clavito",
-    "Precio (USD)": "0.43"
+    "name": "ESPECIE - Clavito",
+    "price": 0.43
   },
   {
-    "Producto": "ESPECIE - Guayabita",
-    "Precio (USD)": "0.46"
+    "name": "ESPECIE - Guayabita",
+    "price": 0.46
   },
   {
-    "Producto": "ESPECIE - Polvo de Hornear",
-    "Precio (USD)": "0.34"
+    "name": "ESPECIE - Polvo de Hornear",
+    "price": 0.34
   },
   {
-    "Producto": "ESPIGA DORADA - arroz blanco 900g",
-    "Precio (USD)": "1.96"
+    "name": "ESPIGA DORADA - arroz blanco 900g",
+    "price": 1.96
   },
   {
-    "Producto": "ESPONJA DE BRILLO - jabonosa 3und",
-    "Precio (USD)": "1.90"
+    "name": "ESPONJA DE BRILLO - jabonosa 3und",
+    "price": 1.9
   },
   {
-    "Producto": "EVEBA - atun solido 140g",
-    "Precio (USD)": "2.87"
+    "name": "EVEBA - atun aleta amarilla en aceite 170gr",
+    "price": 4.07
   },
   {
-    "Producto": "EVEBA - atun solido en aceite vegetal 170g",
-    "Precio (USD)": "2.87"
+    "name": "EVEBA - atun en trozos con vegetales 170gr",
+    "price": 3.58
   },
   {
-    "Producto": "EVEBA - sardinas 170g",
-    "Precio (USD)": "1.53"
+    "name": "EVEBA - atun solido 140g",
+    "price": 2.87
   },
   {
-    "Producto": "EVERY NIGHT - talco 24h 85g",
-    "Precio (USD)": "5.66"
+    "name": "EVEBA - atun solido en aceite vegetal 170g",
+    "price": 2.87
   },
   {
-    "Producto": "EVEVA - atun aleta amarilla en aceite 170gr",
-    "Precio (USD)": "4.07"
+    "name": "EVEBA - atun solido en salsa picante 140gr",
+    "price": 3.13
   },
   {
-    "Producto": "EVEVA - atun en trozos con vegetales 170gr",
-    "Precio (USD)": "3.58"
+    "name": "EVEBA - atun solido natural 170gr",
+    "price": 3.57
   },
   {
-    "Producto": "EVEVA - atun solido en salsa picante 140gr",
-    "Precio (USD)": "3.13"
+    "name": "EVEBA - Pepitonas al natural  140gr",
+    "price": 1.96
   },
   {
-    "Producto": "EVEVA - atun solido natural 170gr",
-    "Precio (USD)": "3.57"
+    "name": "EVEBA - sardina en salsa picante 170gr",
+    "price": 1.6
   },
   {
-    "Producto": "EVEVA - sardina en salsa picante 170gr",
-    "Precio (USD)": "1.60"
+    "name": "EVEBA - sardinas 170g",
+    "price": 1.53
   },
   {
-    "Producto": "FABULOSO - ultra frescura 500ml",
-    "Precio (USD)": "3.97"
+    "name": "EVERY NIGHT - talco 24h 85g",
+    "price": 5.66
   },
   {
-    "Producto": "FAMA DE AMERICA - premium 250g",
-    "Precio (USD)": "4.85"
+    "name": "FABULOSO - ultra frescura 500ml",
+    "price": 3.97
   },
   {
-    "Producto": "FAMILIA - cafeteria 100und",
-    "Precio (USD)": "1.43"
+    "name": "FAMA DE AMERICA - premium 250g",
+    "price": 4.85
   },
   {
-    "Producto": "FAMILIA - papel higienico extra grande 4und",
-    "Precio (USD)": "3.53"
+    "name": "FAMILIA - cafeteria 100und",
+    "price": 1.43
   },
   {
-    "Producto": "FAMILIA - Servilletas Medianas 100und",
-    "Precio (USD)": "0.94"
+    "name": "FAMILIA - papel higienico extra grande 4und",
+    "price": 3.53
   },
   {
-    "Producto": "FAMILIA - Toallin JUMBO PACK",
-    "Precio (USD)": "3.11"
+    "name": "FAMILIA - Servilletas Medianas 100und",
+    "price": 0.94
   },
   {
-    "Producto": "FANTA - naranja 1.5l",
-    "Precio (USD)": "1.67"
+    "name": "FAMILIA - Toallin JUMBO PACK",
+    "price": 3.11
   },
   {
-    "Producto": "FANTA - uva 1.5l",
-    "Precio (USD)": "1.66"
+    "name": "FANTA - naranja 1.5l",
+    "price": 1.67
   },
   {
-    "Producto": "FESTIVAL - Galletas 33.6g",
-    "Precio (USD)": "0.53"
+    "name": "FANTA - uva 1.5l",
+    "price": 1.66
   },
   {
-    "Producto": "FLIPS - Dulce de leche 220gr",
-    "Precio (USD)": "5.13"
+    "name": "FESTIVAL - Galletas 33.6g",
+    "price": 0.53
   },
   {
-    "Producto": "FOSFOROS EL SOL",
-    "Precio (USD)": "0.20"
+    "name": "FLIPS - Dulce de leche 220gr",
+    "price": 5.13
   },
   {
-    "Producto": "FREEGELLS - Eucalipto Menta",
-    "Precio (USD)": "0.48"
+    "name": "FOSFOROS EL SOL",
+    "price": 0.2
   },
   {
-    "Producto": "FREEGELLS - Extra Strong Menthol",
-    "Precio (USD)": "0.48"
+    "name": "FREEGELLS - Eucalipto Menta",
+    "price": 0.48
   },
   {
-    "Producto": "FRESCOLITA - 1.5L",
-    "Precio (USD)": "1.76"
+    "name": "FREEGELLS - Extra Strong Menthol",
+    "price": 0.48
   },
   {
-    "Producto": "FRESCOLITA - 355ml",
-    "Precio (USD)": "0.87"
+    "name": "FRESCOLITA - 1.5L",
+    "price": 1.76
   },
   {
-    "Producto": "FRICA - Jugos 1L",
-    "Precio (USD)": "3.56"
+    "name": "FRESCOLITA - 355ml",
+    "price": 0.87
   },
   {
-    "Producto": "FRICA - Naranjada",
-    "Precio (USD)": "4.47"
+    "name": "FRICA - Jugos 1L",
+    "price": 3.56
   },
   {
-    "Producto": "FRITZ - Ahumadita 145gr",
-    "Precio (USD)": "2.54"
+    "name": "FRICA - Naranjada",
+    "price": 4.47
   },
   {
-    "Producto": "FRITZ - Salsa Cheddar 145gr",
-    "Precio (USD)": "2.54"
+    "name": "FRITZ - Ahumadita 145gr",
+    "price": 2.54
   },
   {
-    "Producto": "FRITZ - salsa de maiz",
-    "Precio (USD)": "2.16"
+    "name": "FRITZ - Salsa Cheddar 145gr",
+    "price": 2.54
   },
   {
-    "Producto": "FRITZ - Salsa de tomate",
-    "Precio (USD)": "1.09"
+    "name": "FRITZ - salsa de maiz",
+    "price": 2.16
   },
   {
-    "Producto": "FRITZ - Salsa Mayonesa 150gr",
-    "Precio (USD)": "1.87"
+    "name": "FRITZ - Salsa de tomate",
+    "price": 1.09
   },
   {
-    "Producto": "FRITZ - Tripack soja, inglesa y ajo",
-    "Precio (USD)": "5.15"
+    "name": "FRITZ - Salsa Mayonesa 150gr",
+    "price": 1.87
   },
   {
-    "Producto": "FRUTIÑO - Bebida Sobre 10g",
-    "Precio (USD)": "0.92"
+    "name": "FRITZ - Tripack soja, inglesa y ajo",
+    "price": 5.15
   },
   {
-    "Producto": "FRUTIÑO - gelatina 14g",
-    "Precio (USD)": "1.38"
+    "name": "FRUTIÑO - Bebida Sobre 10g",
+    "price": 0.92
   },
   {
-    "Producto": "GATORADE - Surtido 500ml",
-    "Precio (USD)": "2.30"
+    "name": "FRUTIÑO - gelatina 14g",
+    "price": 1.38
   },
   {
-    "Producto": "GILLETE - Prestobarba H/M",
-    "Precio (USD)": "1.51"
+    "name": "GATORADE - Surtido 500ml",
+    "price": 2.3
   },
   {
-    "Producto": "GOLDEN - manzana 1.5l",
-    "Precio (USD)": "1.18"
+    "name": "GILLETE - Prestobarba H/M",
+    "price": 1.51
   },
   {
-    "Producto": "GUDS - Chicle de menta",
-    "Precio (USD)": "0.30"
+    "name": "GOLDEN - manzana 1.5l",
+    "price": 1.18
   },
   {
-    "Producto": "HALLS - Caramelos",
-    "Precio (USD)": "1.02"
+    "name": "GUDS - Chicle de menta",
+    "price": 0.3
   },
   {
-    "Producto": "HEAD & SHOULDERS - 2 en 1 shampoo 375ml",
-    "Precio (USD)": "8.58"
+    "name": "HALLS - Caramelos",
+    "price": 1.02
   },
   {
-    "Producto": "HILO - pabilo 1und",
-    "Precio (USD)": "0.51"
+    "name": "HEAD & SHOULDERS - 2 en 1 shampoo 375ml",
+    "price": 8.58
   },
   {
-    "Producto": "HOLSUM - Pan blanco",
-    "Precio (USD)": "1.40"
+    "name": "HEINZ - Salsa de Tomate 198gr",
+    "price": 1.67
   },
   {
-    "Producto": "HOLSUM - Pan de mantequilla",
-    "Precio (USD)": "2.93"
+    "name": "HEINZ - Salsa de Tomate 397gr",
+    "price": 2.83
   },
   {
-    "Producto": "HOLSUM - Pan Integral",
-    "Precio (USD)": "3.25"
+    "name": "HILO - pabilo 1und",
+    "price": 0.51
   },
   {
-    "Producto": "IBERIA - pasta de tomate",
-    "Precio (USD)": "8.29"
+    "name": "HOLSUM - Pan blanco",
+    "price": 1.4
   },
   {
-    "Producto": "IBERIA - pasta de tomate 500g",
-    "Precio (USD)": "4.42"
+    "name": "HOLSUM - Pan de mantequilla",
+    "price": 2.93
   },
   {
-    "Producto": "INDOSA - Leche en polvo Completa 180gr",
-    "Precio (USD)": "1.65"
+    "name": "HOLSUM - Pan Integral",
+    "price": 3.25
   },
   {
-    "Producto": "ISABELA - Tortinhas",
-    "Precio (USD)": "1.38"
+    "name": "IBERIA - pasta de tomate",
+    "price": 8.29
   },
   {
-    "Producto": "ISABELA - Waffers",
-    "Precio (USD)": "1.19"
+    "name": "IBERIA - pasta de tomate 500g",
+    "price": 4.42
   },
   {
-    "Producto": "ITALIA - Bizcochos Premium 125g",
-    "Precio (USD)": "2.48"
+    "name": "INDOSA - Leche en polvo Completa 180gr",
+    "price": 1.65
   },
   {
-    "Producto": "ITALICO - visking 1k",
-    "Precio (USD)": "12.70"
+    "name": "ISABELA - Tortinhas",
+    "price": 1.38
   },
   {
-    "Producto": "JGB - almohadillas faciales de algodon 80und",
-    "Precio (USD)": "6.35"
+    "name": "ISABELA - Waffers",
+    "price": 1.19
   },
   {
-    "Producto": "JOHNSONS - jabon de baño rosas y sandalo 110g",
-    "Precio (USD)": "3.87"
+    "name": "ITALIA - Bizcochos Premium 125g",
+    "price": 2.48
   },
   {
-    "Producto": "KELLOGS - Choco Krispis",
-    "Precio (USD)": "3.57"
+    "name": "ITALICO - visking 1k",
+    "price": 12.7
   },
   {
-    "Producto": "KELLOGS - Choco Zucaritas",
-    "Precio (USD)": "3.56"
+    "name": "JGB - almohadillas faciales de algodon 80und",
+    "price": 6.35
   },
   {
-    "Producto": "KELLOGS - Corn Flakes",
-    "Precio (USD)": "3.05"
+    "name": "JOHNSONS - jabon de baño rosas y sandalo 110g",
+    "price": 3.87
   },
   {
-    "Producto": "KELLOGS - Corp Pops",
-    "Precio (USD)": "3.21"
+    "name": "KELLOGS - Choco Krispis",
+    "price": 3.57
   },
   {
-    "Producto": "KELLOGS - Zucaritas",
-    "Precio (USD)": "3.21"
+    "name": "KELLOGS - Choco Zucaritas",
+    "price": 3.56
   },
   {
-    "Producto": "KEPA - vinagre 1000cm",
-    "Precio (USD)": "1.61"
+    "name": "KELLOGS - Corn Flakes",
+    "price": 3.05
   },
   {
-    "Producto": "KEPA - vinagre 500cm",
-    "Precio (USD)": "0.83"
+    "name": "KELLOGS - Corp Pops",
+    "price": 3.21
   },
   {
-    "Producto": "KESITOS - pequeño 25g",
-    "Precio (USD)": "0.87"
+    "name": "KELLOGS - Zucaritas",
+    "price": 3.21
   },
   {
-    "Producto": "KOTEX - esencial toallas femeninas con alas 8und",
-    "Precio (USD)": "2.10"
+    "name": "KEPA - vinagre 1000cm",
+    "price": 1.61
   },
   {
-    "Producto": "Kraker Detalladas",
-    "Precio (USD)": "0.51"
+    "name": "KEPA - vinagre 500cm",
+    "price": 0.83
   },
   {
-    "Producto": "LA CAMPIÑA - Leche en polvo Completa 200g",
-    "Precio (USD)": "4.84"
+    "name": "KESITOS - pequeño 25g",
+    "price": 0.87
   },
   {
-    "Producto": "LA GRAN PASTORA - yogurt de botella durazno 400ml",
-    "Precio (USD)": "2.49"
+    "name": "KOTEX - esencial toallas femeninas con alas 8und",
+    "price": 2.1
   },
   {
-    "Producto": "LA GRAN PASTORA - yogurt de botella kefir 400ml",
-    "Precio (USD)": "3.32"
+    "name": "Kraker Detalladas",
+    "price": 0.51
   },
   {
-    "Producto": "LAS LLAVES - detergente en polvo bebe 400g",
-    "Precio (USD)": "1.98"
+    "name": "LA CAMPIÑA - Leche en polvo Completa 200g",
+    "price": 4.17
   },
   {
-    "Producto": "LAS LLAVES - Detergente Floral 400gr",
-    "Precio (USD)": "1.98"
+    "name": "LA CAMPIÑA - Leche en polvo Completa 400g",
+    "price": 8.61
   },
   {
-    "Producto": "LAS LLAVES - Fragancia Floral Doble accion 400g",
-    "Precio (USD)": "1.54"
+    "name": "LA GRAN PASTORA - yogurt de botella durazno 400ml",
+    "price": 2.49
   },
   {
-    "Producto": "LAS LLAVES - jabon en panela para lavar la ropa 200g",
-    "Precio (USD)": "1.43"
+    "name": "LA GRAN PASTORA - yogurt de botella kefir 400ml",
+    "price": 3.32
   },
   {
-    "Producto": "LAS LLAVES - multiuso en crema 250g",
-    "Precio (USD)": "2.82"
+    "name": "LAS LLAVES - detergente en polvo bebe 400g",
+    "price": 1.98
   },
   {
-    "Producto": "LAS LLAVES - multiuso en crema 500g",
-    "Precio (USD)": "5.14"
+    "name": "LAS LLAVES - Detergente Floral 400gr",
+    "price": 1.98
   },
   {
-    "Producto": "LENGUA DE SUEGRA",
-    "Precio (USD)": "1.16"
+    "name": "LAS LLAVES - Fragancia Floral Doble accion 400g",
+    "price": 1.54
   },
   {
-    "Producto": "LIPTON - limon 1.5l",
-    "Precio (USD)": "5.72"
+    "name": "LAS LLAVES - jabon en panela para lavar la ropa 200g",
+    "price": 1.43
   },
   {
-    "Producto": "LIPTON - Surtido 500ml",
-    "Precio (USD)": "1.98"
+    "name": "LAS LLAVES - multiuso en crema 250g",
+    "price": 2.82
   },
   {
-    "Producto": "LIPTON - Te de bolsa CITRUS",
-    "Precio (USD)": "4.78"
+    "name": "LAS LLAVES - multiuso en crema 500g",
+    "price": 5.14
   },
   {
-    "Producto": "LIPTON - Te de bolsa EARL GREY",
-    "Precio (USD)": "4.78"
+    "name": "LENGUA DE SUEGRA",
+    "price": 1.16
   },
   {
-    "Producto": "LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY",
-    "Precio (USD)": "4.78"
+    "name": "LIPTON - limon 1.5l",
+    "price": 5.72
   },
   {
-    "Producto": "LIPTON - Te de bolsa YELLOW LABEL",
-    "Precio (USD)": "4.78"
+    "name": "LIPTON - Surtido 500ml",
+    "price": 1.98
   },
   {
-    "Producto": "MAGGI - Cubitos de pollo",
-    "Precio (USD)": "0.51"
+    "name": "LIPTON - Te de bolsa CITRUS",
+    "price": 4.78
   },
   {
-    "Producto": "MAGGI - Sopa Fideo",
-    "Precio (USD)": "2.30"
+    "name": "LIPTON - Te de bolsa EARL GREY",
+    "price": 4.78
   },
   {
-    "Producto": "MALTIN - Malta de botella 250ml",
-    "Precio (USD)": "0.85"
+    "name": "LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY",
+    "price": 4.78
   },
   {
-    "Producto": "MALTIN POLAR - malta 1.5l",
-    "Precio (USD)": "2.33"
+    "name": "LIPTON - Te de bolsa YELLOW LABEL",
+    "price": 4.78
   },
   {
-    "Producto": "MALTIN POLAR - malta desechable 250ml",
-    "Precio (USD)": "1.04"
+    "name": "MAGGI - Cubitos de pollo",
+    "price": 0.51
   },
   {
-    "Producto": "MARGARITA - sardinas en aceite vegetal",
-    "Precio (USD)": "1.45"
+    "name": "MAGGI - Sopa Fideo",
+    "price": 2.3
   },
   {
-    "Producto": "MARGARITA - sardinas en salsa de tomate",
-    "Precio (USD)": "1.67"
+    "name": "MALTIN - Malta de botella 250ml",
+    "price": 0.85
   },
   {
-    "Producto": "MARY - aceite de oliva extra virgen 500ml",
-    "Precio (USD)": "14.99"
+    "name": "MALTIN POLAR - malta 1.5l",
+    "price": 2.33
   },
   {
-    "Producto": "MARY - caraotas 400g",
-    "Precio (USD)": "2.29"
+    "name": "MALTIN POLAR - malta desechable 250ml",
+    "price": 1.04
   },
   {
-    "Producto": "MARY - Crema de arroz 450gr",
-    "Precio (USD)": "1.31"
+    "name": "MARGARITA - sardinas en aceite vegetal",
+    "price": 1.45
   },
   {
-    "Producto": "MARY - esmeralda 900g",
-    "Precio (USD)": "3.16"
+    "name": "MARGARITA - sardinas en salsa de tomate",
+    "price": 1.67
   },
   {
-    "Producto": "MARY - garbanzos 500g",
-    "Precio (USD)": "4.16"
+    "name": "MARY - aceite de oliva extra virgen 500ml",
+    "price": 14.99
   },
   {
-    "Producto": "MARY - harina de maiz blanco 900g",
-    "Precio (USD)": "1.77"
+    "name": "MARY - caraotas 400g",
+    "price": 2.29
   },
   {
-    "Producto": "MARY - Harina de trigo leudante",
-    "Precio (USD)": "2.45"
+    "name": "MARY - caraotas rojas 500g",
+    "price": 3.85
   },
   {
-    "Producto": "MARY - Harina de trigo Todo uso",
-    "Precio (USD)": "1.70"
+    "name": "MARY - Crema de arroz 450gr",
+    "price": 1.31
   },
   {
-    "Producto": "MARY - lentejas 400g",
-    "Precio (USD)": "3.26"
+    "name": "MARY - esmeralda 900g",
+    "price": 3.16
   },
   {
-    "Producto": "MARY - maiz para cotufas 400g",
-    "Precio (USD)": "2.33"
+    "name": "MARY - garbanzos 500g",
+    "price": 4.16
   },
   {
-    "Producto": "MARY - superior 900g",
-    "Precio (USD)": "2.02"
+    "name": "MARY - harina de maiz blanco 900g",
+    "price": 1.77
   },
   {
-    "Producto": "MARY - tornillo 500g",
-    "Precio (USD)": "1.73"
+    "name": "MARY - Harina de trigo leudante",
+    "price": 2.45
   },
   {
-    "Producto": "MARY - vermicelli 1kg",
-    "Precio (USD)": "2.73"
+    "name": "MARY - Harina de trigo Todo uso",
+    "price": 1.7
   },
   {
-    "Producto": "MARY - vermicelli 500g",
-    "Precio (USD)": "1.48"
+    "name": "MARY - lentejas 400g",
+    "price": 3.26
   },
   {
-    "Producto": "MAVESA - Margarina Todo uso 250gr",
-    "Precio (USD)": "1.95"
+    "name": "MARY - maiz para cotufas 400g",
+    "price": 2.33
   },
   {
-    "Producto": "MAVESA - Margarina Todo uso 500gr",
-    "Precio (USD)": "3.17"
+    "name": "MARY - superior 900g",
+    "price": 2.02
   },
   {
-    "Producto": "MAVESA - Mayonesa 175g",
-    "Precio (USD)": "2.92"
+    "name": "MARY - tornillo 500g",
+    "price": 1.73
   },
   {
-    "Producto": "MAVESA - Mayonesa 445g",
-    "Precio (USD)": "5.83"
+    "name": "MARY - vermicelli 1kg",
+    "price": 2.73
   },
   {
-    "Producto": "MAVESA - vinagre 1l",
-    "Precio (USD)": "2.33"
+    "name": "MARY - vermicelli 500g",
+    "price": 1.48
   },
   {
-    "Producto": "MAVESA - vinagre 500ml",
-    "Precio (USD)": "1.40"
+    "name": "MAVESA - Margarina Todo uso 250gr",
+    "price": 1.95
   },
   {
-    "Producto": "MAVESA- Margarina Todo uso 250gr",
-    "Precio (USD)": "1.95"
+    "name": "MAVESA - Margarina Todo uso 500gr",
+    "price": 3.17
   },
   {
-    "Producto": "MAVESA- Mayonesa 445g",
-    "Precio (USD)": "5.83"
+    "name": "MAVESA - Mayonesa 175g",
+    "price": 2.92
   },
   {
-    "Producto": "MAX HOGAR - esponja de acero inoxidable",
-    "Precio (USD)": "1.16"
+    "name": "MAVESA - Mayonesa 445g",
+    "price": 5.83
   },
   {
-    "Producto": "MAX HOGAR - esponja doble uso",
-    "Precio (USD)": "1.03"
+    "name": "MAVESA - vinagre 1l",
+    "price": 2.33
   },
   {
-    "Producto": "MAX HOGAR - esponja soft",
-    "Precio (USD)": "1.62"
+    "name": "MAVESA - vinagre 500ml",
+    "price": 1.4
   },
   {
-    "Producto": "MEGA AROS - Cereal lonchera",
-    "Precio (USD)": "0.61"
+    "name": "MAVESA- Margarina Todo uso 250gr",
+    "price": 1.95
   },
   {
-    "Producto": "MI GURT - durazno 125g",
-    "Precio (USD)": "1.59"
+    "name": "MAVESA- Mayonesa 445g",
+    "price": 5.83
   },
   {
-    "Producto": "MI GURT - fresa 125g",
-    "Precio (USD)": "1.59"
+    "name": "MAX HOGAR - esponja de acero inoxidable",
+    "price": 1.16
   },
   {
-    "Producto": "Migurt Fresa Vaso 125 ml",
-    "Precio (USD)": "1.81"
+    "name": "MAX HOGAR - esponja doble uso",
+    "price": 1.03
   },
   {
-    "Producto": "MILLENIUM - mortadela de pollo 600g",
-    "Precio (USD)": "3.03"
+    "name": "MAX HOGAR - esponja soft",
+    "price": 1.62
   },
   {
-    "Producto": "MILLENNIUM - bologna con pimenton 1k",
-    "Precio (USD)": "6.71"
+    "name": "MEGA AROS - Cereal lonchera",
+    "price": 0.61
   },
   {
-    "Producto": "MILLENNIUM - economico de pierna 1k",
-    "Precio (USD)": "10.56"
+    "name": "MI GURT - durazno 125g",
+    "price": 1.59
   },
   {
-    "Producto": "MILLENNIUM - mini pechuga de pavo 1k",
-    "Precio (USD)": "14.33"
+    "name": "MI GURT - fresa 125g",
+    "price": 1.59
   },
   {
-    "Producto": "MILLENNIUM - mini pierna superior 1k",
-    "Precio (USD)": "13.03"
+    "name": "Migurt Fresa Vaso 125 ml",
+    "price": 1.81
   },
   {
-    "Producto": "MILLENNIUM - mortadela de pollo 600g",
-    "Precio (USD)": "3.03"
+    "name": "MILLENIUM - mortadela de pollo 600g",
+    "price": 3.03
   },
   {
-    "Producto": "MILLENNIUM - mortadela extra 1k",
-    "Precio (USD)": "6.23"
+    "name": "MILLENNIUM - bologna con pimenton 1k",
+    "price": 6.71
   },
   {
-    "Producto": "MILLENNIUM - salchichas a granel 1k",
-    "Precio (USD)": "8.98"
+    "name": "MILLENNIUM - economico de pierna 1k",
+    "price": 10.56
   },
   {
-    "Producto": "MINALBA - agua mineral 1.5l",
-    "Precio (USD)": "2.02"
+    "name": "MILLENNIUM - mini pechuga de pavo 1k",
+    "price": 14.33
   },
   {
-    "Producto": "MIRASOL - Margarina 500gr",
-    "Precio (USD)": "3.43"
+    "name": "MILLENNIUM - mini pierna superior 1k",
+    "price": 13.03
   },
   {
-    "Producto": "MONEDAS DE CHOCOLATE",
-    "Precio (USD)": "0.06"
+    "name": "MILLENNIUM - mortadela de pollo 600g",
+    "price": 3.03
   },
   {
-    "Producto": "MORITZ - Latte Leche",
-    "Precio (USD)": "1.21"
+    "name": "MILLENNIUM - mortadela extra 1k",
+    "price": 6.23
   },
   {
-    "Producto": "MR BROWN - Arequipe",
-    "Precio (USD)": "1.64"
+    "name": "MILLENNIUM - salchichas a granel 1k",
+    "price": 8.98
   },
   {
-    "Producto": "MUCCA - Galletas",
-    "Precio (USD)": "0.96"
+    "name": "MINALBA - agua mineral 1.5l",
+    "price": 2.02
   },
   {
-    "Producto": "MUNCHY - triple play 70g",
-    "Precio (USD)": "2.95"
+    "name": "MIRASOL - Margarina 227gr",
+    "price": 1.53
   },
   {
-    "Producto": "NATUROIL - aceite de soya 850ml",
-    "Precio (USD)": "5.73"
+    "name": "MIRASOL - Margarina 454gr",
+    "price": 2.96
   },
   {
-    "Producto": "NELLY - Margarina 250gr",
-    "Precio (USD)": "1.66"
+    "name": "MONEDAS DE CHOCOLATE",
+    "price": 0.06
   },
   {
-    "Producto": "NELLY - Margarina 500gr",
-    "Precio (USD)": "3.24"
+    "name": "MORITZ - Latte Leche",
+    "price": 1.21
   },
   {
-    "Producto": "NESTEA - limon 520gr",
-    "Precio (USD)": "7.05"
+    "name": "MR BROWN - Arequipe",
+    "price": 1.64
   },
   {
-    "Producto": "NEVADA - Agua mineral 600ml",
-    "Precio (USD)": "1.01"
+    "name": "MUCCA - Galletas",
+    "price": 0.96
   },
   {
-    "Producto": "NOSOTRAS - toallas naturales invisibles 10und",
-    "Precio (USD)": "1.14"
+    "name": "MUNCHY - triple play 70g",
+    "price": 2.95
   },
   {
-    "Producto": "NOSTRAS - proteccion v normal 15 und",
-    "Precio (USD)": "1.30"
+    "name": "NATUROIL - aceite de soya 850ml",
+    "price": 4.94
   },
   {
-    "Producto": "OREO - Fresa 96gr",
-    "Precio (USD)": "2.78"
+    "name": "NELLY - Margarina 250gr",
+    "price": 1.66
   },
   {
-    "Producto": "OREO - Vainilla 96gr",
-    "Precio (USD)": "2.78"
+    "name": "NELLY - Margarina 500gr",
+    "price": 3.24
   },
   {
-    "Producto": "OSOLE - napolitana",
-    "Precio (USD)": "1.75"
+    "name": "NESTEA - limon 520gr",
+    "price": 7.05
   },
   {
-    "Producto": "OSOLE - pizza 200g",
-    "Precio (USD)": "1.75"
+    "name": "NEVADA - Agua mineral 600ml",
+    "price": 1.01
   },
   {
-    "Producto": "PALMERITAS",
-    "Precio (USD)": "0.46"
+    "name": "NOSOTRAS - toallas naturales invisibles 10und",
+    "price": 1.14
   },
   {
-    "Producto": "PALMOLIVE - natural 85g",
-    "Precio (USD)": "1.54"
+    "name": "NOSTRAS - proteccion v normal 15 und",
+    "price": 1.3
   },
   {
-    "Producto": "PALMOLIVE - neutro balance 100g",
-    "Precio (USD)": "3.27"
+    "name": "OREO - Fresa 96gr",
+    "price": 2.78
   },
   {
-    "Producto": "PAMPERO - Ketchup 198g",
-    "Precio (USD)": "1.90"
+    "name": "OREO - Vainilla 96gr",
+    "price": 2.78
   },
   {
-    "Producto": "PAMPERO - Ketchup 397g",
-    "Precio (USD)": "2.87"
+    "name": "OSOLE - napolitana",
+    "price": 1.75
   },
   {
-    "Producto": "PAN - Harina de maiz 1k",
-    "Precio (USD)": "1.70"
+    "name": "OSOLE - pizza 200g",
+    "price": 1.75
   },
   {
-    "Producto": "PAN - Sandwich",
-    "Precio (USD)": "2.87"
+    "name": "PALMERITAS",
+    "price": 0.46
   },
   {
-    "Producto": "PAN - Sandwich Integral",
-    "Precio (USD)": "2.87"
+    "name": "PALMOLIVE - natural 85g",
+    "price": 1.54
   },
   {
-    "Producto": "PAN TOVAREÑO",
-    "Precio (USD)": "1.96"
+    "name": "PALMOLIVE - neutro balance 100g",
+    "price": 3.27
   },
   {
-    "Producto": "PARMALAT - El Chichero Bolsa 200gr",
-    "Precio (USD)": "2.52"
+    "name": "PAMPERO - Ketchup 198g",
+    "price": 1.9
   },
   {
-    "Producto": "PARMALAT - leche condensada 395g",
-    "Precio (USD)": "5.65"
+    "name": "PAMPERO - Ketchup 397g",
+    "price": 2.87
   },
   {
-    "Producto": "PARMALAT - Leche en polvo 400gr",
-    "Precio (USD)": "7.39"
+    "name": "PAN - Harina de maiz 1k",
+    "price": 1.7
   },
   {
-    "Producto": "Pepsi - 350ml Botella retornable",
-    "Precio (USD)": "0.59"
+    "name": "PAN - Sandwich",
+    "price": 2.87
   },
   {
-    "Producto": "PEQUEÑIN - suavidad 80 und",
-    "Precio (USD)": "2.78"
+    "name": "PAN - Sandwich Integral",
+    "price": 2.87
   },
   {
-    "Producto": "PIGSY - familiar 60g",
-    "Precio (USD)": "1.38"
+    "name": "PAN TOVAREÑO",
+    "price": 1.96
   },
   {
-    "Producto": "PINGUINITO - mini",
-    "Precio (USD)": "0.50"
+    "name": "PARMALAT - El Chichero Bolsa 200gr",
+    "price": 2.52
   },
   {
-    "Producto": "PINGUINITOS - 80g",
-    "Precio (USD)": "2.51"
+    "name": "PARMALAT - leche condensada 395g",
+    "price": 5.65
   },
   {
-    "Producto": "PINGÜINITOS COOKIES & CREAM - 80g",
-    "Precio (USD)": "2.51"
+    "name": "PARMALAT - Leche en polvo 400gr",
+    "price": 7.39
   },
   {
-    "Producto": "PLATANITOS DE BOLSA TRANSPARENTE",
-    "Precio (USD)": "1.28"
+    "name": "Pepsi - 350ml Botella retornable",
+    "price": 0.59
   },
   {
-    "Producto": "POLVORONES - Galletas",
-    "Precio (USD)": "0.75"
+    "name": "PEQUEÑIN - suavidad 80 und",
+    "price": 2.78
   },
   {
-    "Producto": "POPCRONCH - chocolate 30grs",
-    "Precio (USD)": "0.45"
+    "name": "PIGSY - familiar 60g",
+    "price": 1.38
   },
   {
-    "Producto": "POWERADE - 500ml",
-    "Precio (USD)": "2.23"
+    "name": "PINGUINITO - mini",
+    "price": 0.5
   },
   {
-    "Producto": "PRIMOR - dedales extra especial 1kg",
-    "Precio (USD)": "2.65"
+    "name": "PINGUINITOS - 80g",
+    "price": 2.51
   },
   {
-    "Producto": "PRIMOR - perlado 900g",
-    "Precio (USD)": "2.81"
+    "name": "PINGÜINITOS COOKIES & CREAM - 80g",
+    "price": 2.51
   },
   {
-    "Producto": "PRIMOR - superior 900g",
-    "Precio (USD)": "2.26"
+    "name": "PLATANITOS DE BOLSA TRANSPARENTE",
+    "price": 1.28
   },
   {
-    "Producto": "PROTEX - avena 330g",
-    "Precio (USD)": "3.20"
+    "name": "POLVORONES - Galletas",
+    "price": 0.75
   },
   {
-    "Producto": "PURISIMA - Leche Completa",
-    "Precio (USD)": "3.50"
+    "name": "POPCRONCH - chocolate 30grs",
+    "price": 0.45
   },
   {
-    "Producto": "PURISIMA - Leche el polvo",
-    "Precio (USD)": "4.33"
+    "name": "POWERADE - 500ml",
+    "price": 2.23
   },
   {
-    "Producto": "QUAKER - Avena en Hojuelas 200gr",
-    "Precio (USD)": "0.91"
+    "name": "PRIMOR - dedales extra especial 1kg",
+    "price": 2.65
   },
   {
-    "Producto": "QUAKER - Avena En hojuelas 400gr",
-    "Precio (USD)": "1.79"
+    "name": "PRIMOR - perlado 900g",
+    "price": 2.81
   },
   {
-    "Producto": "QUAKER - Avena En hojuelas Original 800gr",
-    "Precio (USD)": "0.91"
+    "name": "PRIMOR - superior 900g",
+    "price": 2.26
   },
   {
-    "Producto": "QUESO - blanco 1k",
-    "Precio (USD)": "8.45"
+    "name": "PROTEX - avena 330g",
+    "price": 3.2
   },
   {
-    "Producto": "QUESO - Mozarella",
-    "Precio (USD)": "16.59"
+    "name": "PURISIMA - Leche Completa",
+    "price": 3.5
   },
   {
-    "Producto": "RICOTA - PARAMO",
-    "Precio (USD)": "2.26"
+    "name": "PURISIMA - Leche el polvo",
+    "price": 4.33
   },
   {
-    "Producto": "RIKESA - Cheddar",
-    "Precio (USD)": "6.15"
+    "name": "QUAKER - Avena en Hojuelas 200gr",
+    "price": 0.91
   },
   {
-    "Producto": "RIKESA - Cheddar Original 200gr",
-    "Precio (USD)": "4.95"
+    "name": "QUAKER - Avena En hojuelas 400gr",
+    "price": 1.79
   },
   {
-    "Producto": "SAL MAR - refinada 1kg",
-    "Precio (USD)": "0.91"
+    "name": "QUAKER - Avena En hojuelas Original 800gr",
+    "price": 0.91
   },
   {
-    "Producto": "SAL MERU - fina 1kg",
-    "Precio (USD)": "0.91"
+    "name": "QUESO - blanco 1k",
+    "price": 8.45
   },
   {
-    "Producto": "SAVOY - (cricri, rikiti)",
-    "Precio (USD)": "2.19"
+    "name": "QUESO - Mozarella",
+    "price": 16.59
   },
   {
-    "Producto": "SAVOY - Mini 32gr",
-    "Precio (USD)": "1.16"
+    "name": "RICOTA - PARAMO",
+    "price": 2.26
   },
   {
-    "Producto": "SAVOY - SAMBA 32gr",
-    "Precio (USD)": "1.68"
+    "name": "RIKESA - Cheddar",
+    "price": 6.15
   },
   {
-    "Producto": "SAVOY - Toronto Unidad",
-    "Precio (USD)": "1.00"
+    "name": "RIKESA - Cheddar Original 200gr",
+    "price": 4.95
   },
   {
-    "Producto": "SCHWEPPES - Soda 355ml Bombita",
-    "Precio (USD)": "1.26"
+    "name": "SAL MAR - refinada 1kg",
+    "price": 0.91
   },
   {
-    "Producto": "SCOTT - mega absorb 45und",
-    "Precio (USD)": "2.45"
+    "name": "SAL MERU - fina 1kg",
+    "price": 0.91
   },
   {
-    "Producto": "SELVA - papel de aluminio 7mt",
-    "Precio (USD)": "2.54"
+    "name": "SAVOY - (cricri, rikiti)",
+    "price": 2.19
   },
   {
-    "Producto": "SHAMPOO - Sobre 18g",
-    "Precio (USD)": "0.74"
+    "name": "SAVOY - Mini 32gr",
+    "price": 1.16
   },
   {
-    "Producto": "SONRISSA - flan sin caramelo 46g",
-    "Precio (USD)": "1.62"
+    "name": "SAVOY - SAMBA 32gr",
+    "price": 1.68
   },
   {
-    "Producto": "SONRISSA - gelatina con sabor a cereza 66g",
-    "Precio (USD)": "1.97"
+    "name": "SAVOY - Toronto Unidad",
+    "price": 1.0
   },
   {
-    "Producto": "SONRISSA - gelatina con sabor a frambuesa 66g",
-    "Precio (USD)": "1.97"
+    "name": "SCHWEPPES - Soda 355ml Bombita",
+    "price": 1.26
   },
   {
-    "Producto": "SONRISSA - gelatina de limon 66g",
-    "Precio (USD)": "1.97"
+    "name": "SCOTT - mega absorb 45und",
+    "price": 2.45
   },
   {
-    "Producto": "SONRISSA - gelatina sabor a uva 66g",
-    "Precio (USD)": "1.97"
+    "name": "SELVA - papel de aluminio 7mt",
+    "price": 2.54
   },
   {
-    "Producto": "SONRISSA - pudin de chocolate 72g",
-    "Precio (USD)": "1.81"
+    "name": "SHAMPOO - Sobre 18g",
+    "price": 0.74
   },
   {
-    "Producto": "SPEEDSTICK - 30gr",
-    "Precio (USD)": "2.35"
+    "name": "SONRISSA - flan sin caramelo 46g",
+    "price": 1.62
   },
   {
-    "Producto": "SUAVITEL - Surtidos 180ml",
-    "Precio (USD)": "1.68"
+    "name": "SONRISSA - gelatina con sabor a cereza 66g",
+    "price": 1.97
   },
   {
-    "Producto": "SULTANA - toallitas humedas 72 und",
-    "Precio (USD)": "5.80"
+    "name": "SONRISSA - gelatina con sabor a frambuesa 66g",
+    "price": 1.97
   },
   {
-    "Producto": "Super Rombo - Jabon pasta 200gr",
-    "Precio (USD)": "1.38"
+    "name": "SONRISSA - gelatina de limon 66g",
+    "price": 1.97
   },
   {
-    "Producto": "SUSY - Mini",
-    "Precio (USD)": "1.09"
+    "name": "SONRISSA - gelatina sabor a uva 66g",
+    "price": 1.97
   },
   {
-    "Producto": "TASTY - vainilla 212ml",
-    "Precio (USD)": "1.29"
+    "name": "SONRISSA - pudin de chocolate 72g",
+    "price": 1.81
   },
   {
-    "Producto": "Testing producto temporal 2",
-    "Precio (USD)": "1.16"
+    "name": "SPEEDSTICK - 30gr",
+    "price": 2.35
   },
   {
-    "Producto": "TIA LULU - Mantecada 150gr",
-    "Precio (USD)": "3.12"
+    "name": "SUAVITEL - Surtidos 180ml",
+    "price": 1.68
   },
   {
-    "Producto": "TIA LULU - Ponque Vainilla",
-    "Precio (USD)": "1.97"
+    "name": "SULTANA - toallitas humedas 72 und",
+    "price": 5.8
   },
   {
-    "Producto": "TIGO - crema a base de leche 200g",
-    "Precio (USD)": "2.24"
+    "name": "Super Rombo - Jabon pasta 200gr",
+    "price": 1.38
   },
   {
-    "Producto": "TIGO - Panelon",
-    "Precio (USD)": "1.14"
+    "name": "SUSY - Mini",
+    "price": 1.09
   },
   {
-    "Producto": "TIP TOP - Galletas",
-    "Precio (USD)": "1.37"
+    "name": "TASTY - vainilla 212ml",
+    "price": 1.29
   },
   {
-    "Producto": "TNT - Chicle Super Acido Meteoro",
-    "Precio (USD)": "0.07"
+    "name": "Testing producto temporal 2",
+    "price": 1.16
   },
   {
-    "Producto": "TNT - Super Acido Chicle",
-    "Precio (USD)": "0.05"
+    "name": "TIA LULU - Mantecada 150gr",
+    "price": 3.12
   },
   {
-    "Producto": "TOCINETIKAS - original 16g",
-    "Precio (USD)": "0.74"
+    "name": "TIA LULU - Ponque Vainilla",
+    "price": 1.97
   },
   {
-    "Producto": "TODDY - Pote 400gr",
-    "Precio (USD)": "6.79"
+    "name": "TIGO - crema a base de leche 200g",
+    "price": 2.24
   },
   {
-    "Producto": "TOMA2 - Galletas",
-    "Precio (USD)": "0.60"
+    "name": "TIGO - Panelon",
+    "price": 1.14
   },
   {
-    "Producto": "TOMODORE - Salsa de Ajo",
-    "Precio (USD)": "1.06"
+    "name": "TIP TOP - Galletas",
+    "price": 1.37
   },
   {
-    "Producto": "TOMODORE - salsa Queso Cheddar",
-    "Precio (USD)": "3.47"
+    "name": "TNT - Chicle Super Acido Meteoro",
+    "price": 0.07
   },
   {
-    "Producto": "TOMODORE - vainilla 150ml",
-    "Precio (USD)": "1.24"
+    "name": "TNT - Super Acido Chicle",
+    "price": 0.05
   },
   {
-    "Producto": "TRIDENT - MORA AZUL 153gr",
-    "Precio (USD)": "0.82"
+    "name": "TOCINETIKAS - original 16g",
+    "price": 0.74
   },
   {
-    "Producto": "TRIGO DE ORO - Panque de vainilla",
-    "Precio (USD)": "1.29"
+    "name": "TODDY - Pote 400gr",
+    "price": 6.79
   },
   {
-    "Producto": "TWINKIE - Mora",
-    "Precio (USD)": "0.57"
+    "name": "TOMA2 - Galletas",
+    "price": 0.6
   },
   {
-    "Producto": "ULTREX - detergente en polvo 250g",
-    "Precio (USD)": "0.85"
+    "name": "TOMODORE - Salsa de Ajo",
+    "price": 1.06
   },
   {
-    "Producto": "ULTREX - detergente en polvo 2Kg",
-    "Precio (USD)": "6.33"
+    "name": "TOMODORE - salsa Queso Cheddar",
+    "price": 3.47
   },
   {
-    "Producto": "ULTREX - detergente en polvo 500g",
-    "Precio (USD)": "1.59"
+    "name": "TOMODORE - vainilla 150ml",
+    "price": 1.24
   },
   {
-    "Producto": "ULTREX - detergente en polvo Manzana 1Kg",
-    "Precio (USD)": "3.16"
+    "name": "TRIDENT - MORA AZUL 153gr",
+    "price": 0.82
   },
   {
-    "Producto": "UNDER WOOD - diablitos 54g",
-    "Precio (USD)": "2.19"
+    "name": "TRIGO DE ORO - Panque de vainilla",
+    "price": 1.29
   },
   {
-    "Producto": "UNIVERSAL Cigarrillos",
-    "Precio (USD)": "2.35"
+    "name": "TWINKIE - Mora",
+    "price": 0.57
   },
   {
-    "Producto": "UNIVERSAL Detallado",
-    "Precio (USD)": "0.12"
+    "name": "ULTREX - detergente en polvo 250g",
+    "price": 0.85
   },
   {
-    "Producto": "UNIVERSAL Detallado",
-    "Precio (USD)": "0.12"
+    "name": "ULTREX - detergente en polvo 2Kg",
+    "price": 6.33
   },
   {
-    "Producto": "VELAS - Liviana luminaria de clores y blancas",
-    "Precio (USD)": "0.30"
+    "name": "ULTREX - detergente en polvo 500g",
+    "price": 1.59
   },
   {
-    "Producto": "VELON",
-    "Precio (USD)": "5.61"
+    "name": "ULTREX - detergente en polvo Manzana 1Kg",
+    "price": 3.16
   },
   {
-    "Producto": "WYNCO - Marshmallows Rellenos de mermelada",
-    "Precio (USD)": "0.15"
+    "name": "UNDER WOOD - diablitos 54g",
+    "price": 2.19
   },
   {
-    "Producto": "YESQUERO GLOBAL",
-    "Precio (USD)": "0.38"
+    "name": "UNIVERSAL Cigarrillos",
+    "price": 2.35
   },
   {
-    "Producto": "YUKERY - nectar de pera 250ml",
-    "Precio (USD)": "1.26"
+    "name": "UNIVERSAL Detallado",
+    "price": 0.12
   },
   {
-    "Producto": "YUKY-PAK - nectar de manzana 250ml",
-    "Precio (USD)": "1.17"
+    "name": "UNIVERSAL Detallado",
+    "price": 0.12
+  },
+  {
+    "name": "VELAS - Liviana luminaria de clores y blancas",
+    "price": 0.3
+  },
+  {
+    "name": "VELON",
+    "price": 5.61
+  },
+  {
+    "name": "WYNCO - Marshmallows Rellenos de mermelada",
+    "price": 0.15
+  },
+  {
+    "name": "YESQUERO GLOBAL",
+    "price": 0.38
+  },
+  {
+    "name": "YUKERY - nectar de pera 250ml",
+    "price": 1.26
+  },
+  {
+    "name": "YUKY-PAK - nectar de manzana 250ml",
+    "price": 1.17
   }
 ]
