@@ -385,6 +385,122 @@
   .bcv-status { font-size: 0.75rem; color: var(--text-muted); }
   .bcv-status.ok { color: #6dff9a; }
   .bcv-status.err { color: #ff7777; }
+
+  /* ===== HISTORIAL ===== */
+  #history-section { margin-top: 10px; }
+
+  #history-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .history-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .hist-stat { text-align: center; }
+  .hist-stat .hs-label { font-size: 0.75rem; color: var(--text-muted); }
+  .hist-stat .hs-val { font-size: 1.1rem; font-weight: 800; color: var(--orange); }
+  .hist-stat .hs-val.blue { color: #6dd6ff; }
+
+  #btn-liberar {
+    background: transparent;
+    color: #ff5555;
+    border: 2px solid #ff5555;
+    border-radius: 8px;
+    padding: 9px 18px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #btn-liberar:hover { background: #ff555520; }
+
+  .hist-entry {
+    background: var(--dark3);
+    border: 1px solid var(--gray2);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .hist-entry-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: pointer;
+    gap: 10px;
+    flex-wrap: wrap;
+    user-select: none;
+  }
+  .hist-entry-header:hover { background: var(--gray); }
+  .hist-op { color: var(--orange); font-weight: 700; font-size: 0.88rem; white-space: nowrap; }
+  .hist-client { font-size: 0.88rem; color: var(--text); }
+  .hist-date { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+  .hist-totals { font-size: 0.88rem; text-align: right; }
+  .hist-totals span { color: var(--orange); font-weight: 700; }
+  .hist-totals .bs { color: #6dd6ff; }
+  .hist-chevron { color: var(--text-muted); font-size: 0.85rem; transition: transform 0.2s; }
+  .hist-entry.open .hist-chevron { transform: rotate(180deg); }
+
+  .hist-entry-body {
+    display: none;
+    padding: 12px 14px;
+    border-top: 1px solid var(--gray);
+    font-size: 0.85rem;
+  }
+  .hist-entry.open .hist-entry-body { display: block; }
+  .hist-body-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px 20px;
+    margin-bottom: 10px;
+  }
+  .hist-body-field .hf-label { font-size: 0.75rem; color: var(--text-muted); }
+  .hist-body-field .hf-val { color: var(--text); }
+  .hist-prod-list { margin-top: 10px; }
+  .hist-prod-list table { font-size: 0.82rem; }
+  .hist-prod-list th { font-size: 0.78rem; }
+  #hist-empty { color: var(--text-muted); font-style: italic; text-align: center; padding: 20px; }
+
+  #confirm-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000000cc;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+  }
+  #confirm-modal.show { display: flex; }
+  .confirm-box {
+    background: var(--dark2);
+    border: 2px solid #ff5555;
+    border-radius: 12px;
+    padding: 28px 24px;
+    width: 360px;
+    max-width: 95vw;
+    text-align: center;
+  }
+  .confirm-box h3 { color: #ff5555; margin-bottom: 10px; font-size: 1.1rem; }
+  .confirm-box p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+  .confirm-actions { display: flex; gap: 12px; justify-content: center; }
+  .btn-confirm-delete {
+    background: #ff5555;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 22px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .btn-confirm-delete:hover { background: #ff2222; }
 </style>
 </head>
 <body>
@@ -418,6 +534,18 @@
 
 <!-- TOAST -->
 <div id="toast"></div>
+
+<!-- CONFIRM LIBERAR MODAL -->
+<div id="confirm-modal">
+  <div class="confirm-box">
+    <h3>⚠ Liberar Memoria</h3>
+    <p>Se eliminarán <strong>todos</strong> los registros del historial almacenados en este navegador. Esta acción no se puede deshacer.</p>
+    <div class="confirm-actions">
+      <button class="btn-gray" onclick="closeConfirmModal()">Cancelar</button>
+      <button class="btn-confirm-delete" onclick="liberarMemoria()">Sí, eliminar todo</button>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 
@@ -557,6 +685,31 @@
   <!-- FINALIZAR -->
   <button class="btn-orange" id="btn-finish" onclick="finishSale()">✅ Finalizar Venta y Guardar Registro</button>
 
+  <!-- HISTORIAL DE VENTAS -->
+  <div class="card" id="history-section">
+    <div class="section-title">📋 Historial de Ventas</div>
+
+    <div id="history-summary">
+      <div class="history-stats">
+        <div class="hist-stat">
+          <div class="hs-label">Operaciones</div>
+          <div class="hs-val" id="hs-count">0</div>
+        </div>
+        <div class="hist-stat">
+          <div class="hs-label">Total USD</div>
+          <div class="hs-val" id="hs-usd">$0.00</div>
+        </div>
+        <div class="hist-stat">
+          <div class="hs-label">Total Bs.</div>
+          <div class="hs-val blue" id="hs-bs">Bs. 0,00</div>
+        </div>
+      </div>
+      <button id="btn-liberar" onclick="openConfirmModal()">🗑 Liberar Memoria</button>
+    </div>
+
+    <div id="history-list"><div id="hist-empty">Aún no hay ventas registradas en este dispositivo.</div></div>
+  </div>
+
 </div><!-- /container -->
 
 <script>
@@ -568,12 +721,20 @@ let bcvRate = 0;
 let manualRate = false;
 let paymentMethod = 'efectivo';
 let operationNumber = 1;
+let salesHistory = [];
 
-// Load op number from localStorage
+// Load op number and history from localStorage
 (function(){
   const saved = localStorage.getItem('pos_op_number');
   if (saved) operationNumber = parseInt(saved);
   document.getElementById('op-num').textContent = String(operationNumber).padStart(6,'0');
+
+  try {
+    const hist = localStorage.getItem('pos_sales_history');
+    if (hist) salesHistory = JSON.parse(hist);
+  } catch(e) { salesHistory = []; }
+
+  renderHistory();
 })();
 
 // ===================== LOAD PRODUCTS =====================
@@ -900,6 +1061,28 @@ function finishSale() {
   localStorage.setItem('pos_op_number', operationNumber);
   document.getElementById('op-num').textContent = String(operationNumber).padStart(6,'0');
 
+  // Save to history
+  const saleRecord = {
+    opNum: opNum,
+    filename: filename,
+    datetime: `${dd}/${mm}/${yy} ${hh}:${mi}:${ss}`,
+    cedula: cedula,
+    clientName: name,
+    clientPhone: phone || 'No especificado',
+    items: cart.map(i => ({ name: i.name, price: i.price, qty: i.qty })),
+    totalUSD: totalUSD,
+    totalBs: totalBs,
+    bcvRate: bcvRate,
+    manualRate: manualRate,
+    paymentMethod: paymentMethod,
+    movilRef: movilRef || '',
+    movilBank: movilBank || '',
+    movilPhone: movilPhone || ''
+  };
+  salesHistory.unshift(saleRecord);
+  localStorage.setItem('pos_sales_history', JSON.stringify(salesHistory));
+  renderHistory();
+
   // Reset
   cart = [];
   renderCart();
@@ -912,6 +1095,99 @@ function finishSale() {
   selectPayment('efectivo', document.querySelector('[data-method="efectivo"]'));
 
   showToast('✔ Venta registrada y guardada', 3000);
+}
+
+// ===================== HISTORIAL =====================
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const countEl = document.getElementById('hs-count');
+  const usdEl = document.getElementById('hs-usd');
+  const bsEl = document.getElementById('hs-bs');
+
+  countEl.textContent = salesHistory.length;
+
+  const totalUSD = salesHistory.reduce((s, r) => s + r.totalUSD, 0);
+  const totalBs  = salesHistory.reduce((s, r) => s + r.totalBs, 0);
+  usdEl.textContent = `$${totalUSD.toFixed(2)}`;
+  bsEl.textContent  = `Bs. ${totalBs.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+
+  if (!salesHistory.length) {
+    list.innerHTML = '<div id="hist-empty" style="color:var(--text-muted);font-style:italic;text-align:center;padding:20px;">Aún no hay ventas registradas en este dispositivo.</div>';
+    return;
+  }
+
+  const payLabel = m => ({ efectivo:'💵 Efectivo', debito:'🏧 Débito', movil:'📱 Pago Móvil' }[m] || m);
+
+  list.innerHTML = salesHistory.map((r, idx) => {
+    const itemRows = r.items.map((it, i) => {
+      const sub = it.price * it.qty;
+      return `<tr>
+        <td>${i+1}</td>
+        <td>${escHtml(it.name)}</td>
+        <td>${it.qty}</td>
+        <td>$${it.price.toFixed(4)}</td>
+        <td>$${sub.toFixed(4)}</td>
+      </tr>`;
+    }).join('');
+
+    let movilInfo = '';
+    if (r.paymentMethod === 'movil') {
+      movilInfo = `<div class="hist-body-field"><div class="hf-label">Referencia</div><div class="hf-val">${escHtml(r.movilRef)}</div></div>
+        <div class="hist-body-field"><div class="hf-label">Banco</div><div class="hf-val">${escHtml(r.movilBank)}</div></div>
+        <div class="hist-body-field"><div class="hf-label">Teléfono cuenta</div><div class="hf-val">${escHtml(r.movilPhone)}</div></div>`;
+    }
+
+    return `<div class="hist-entry" id="he-${idx}">
+      <div class="hist-entry-header" onclick="toggleHistEntry(${idx})">
+        <span class="hist-op">Op. #${r.opNum}</span>
+        <span class="hist-client">${escHtml(r.clientName)} — ${escHtml(r.cedula)}</span>
+        <span class="hist-date">${r.datetime}</span>
+        <div class="hist-totals"><span>$${r.totalUSD.toFixed(2)}</span> / <span class="bs">Bs. ${r.totalBs.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})}</span></div>
+        <span class="hist-chevron">▼</span>
+      </div>
+      <div class="hist-entry-body">
+        <div class="hist-body-grid">
+          <div class="hist-body-field"><div class="hf-label">Cédula</div><div class="hf-val">${escHtml(r.cedula)}</div></div>
+          <div class="hist-body-field"><div class="hf-label">Nombre</div><div class="hf-val">${escHtml(r.clientName)}</div></div>
+          <div class="hist-body-field"><div class="hf-label">Celular</div><div class="hf-val">${escHtml(r.clientPhone)}</div></div>
+          <div class="hist-body-field"><div class="hf-label">Método de pago</div><div class="hf-val">${payLabel(r.paymentMethod)}</div></div>
+          ${movilInfo}
+          <div class="hist-body-field"><div class="hf-label">Tasa BCV</div><div class="hf-val">Bs. ${r.bcvRate.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})} ${r.manualRate ? '(manual)' : '(oficial)'}</div></div>
+          <div class="hist-body-field"><div class="hf-label">Archivo</div><div class="hf-val" style="font-size:0.78rem;color:var(--text-muted);">${escHtml(r.filename)}</div></div>
+        </div>
+        <div class="hist-prod-list">
+          <table>
+            <thead><tr><th>#</th><th>Producto</th><th>Cant.</th><th>Precio Unit.</th><th>Subtotal</th></tr></thead>
+            <tbody>${itemRows}</tbody>
+          </table>
+          <div style="text-align:right;margin-top:8px;font-weight:700;">
+            <span style="color:var(--orange);">Total: $${r.totalUSD.toFixed(4)}</span>
+            &nbsp;/&nbsp;
+            <span style="color:#6dd6ff;">Bs. ${r.totalBs.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleHistEntry(idx) {
+  document.getElementById(`he-${idx}`).classList.toggle('open');
+}
+
+function openConfirmModal() {
+  if (!salesHistory.length) { showToast('⚠ El historial ya está vacío'); return; }
+  document.getElementById('confirm-modal').classList.add('show');
+}
+function closeConfirmModal() {
+  document.getElementById('confirm-modal').classList.remove('show');
+}
+function liberarMemoria() {
+  salesHistory = [];
+  localStorage.removeItem('pos_sales_history');
+  closeConfirmModal();
+  renderHistory();
+  showToast('🗑 Historial eliminado', 2500);
 }
 
 // ===================== UTILS =====================
@@ -935,6 +1211,9 @@ document.getElementById('manual-rate-input').addEventListener('keydown', e => {
 });
 document.getElementById('rate-modal').addEventListener('click', function(e) {
   if (e.target === this) closeRateModal();
+});
+document.getElementById('confirm-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeConfirmModal();
 });
 
 // ===================== INIT =====================
