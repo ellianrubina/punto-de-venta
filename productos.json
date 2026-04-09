@@ -101,7 +101,7 @@
   },
   {
     "name": "BARZUCA - Azucar 900gr",
-    "price": 1.5
+    "price": 2.17
   },
   {
     "name": "BELMONT x10",
@@ -161,7 +161,7 @@
   },
   {
     "name": "BOHEM Sandia y mango",
-    "price": 2
+    "price": 2.48
   },
   {
     "name": "BOLI KRUNCH - pequeño 25g",
@@ -337,11 +337,11 @@
   },
   {
     "name": "CRUNCHIS GREGORY - 150g",
-    "price": 1.26
+    "price": 1.65
   },
   {
     "name": "CRUNCHIS GREGORY - 54G",
-    "price": 0.4
+    "price": 0.6
   },
   {
     "name": "CRUZCAFE - clasico 200g",
@@ -505,7 +505,7 @@
   },
   {
     "name": "FAMA DE AMERICA - premium 250g",
-    "price": 4.85
+    "price": 4.94
   },
   {
     "name": "FAMILIA - Servilletas Medianas 100und",
@@ -538,6 +538,10 @@
   {
     "name": "FLIPS - Dulce de leche 220gr",
     "price": 4.42
+  },
+  {
+    "name": "FLOR DE ARAUCA - gourmet 200gr",
+    "price": 3.77
   },
   {
     "name": "FOSFOROS EL SOL",
@@ -685,7 +689,7 @@
   },
   {
     "name": "KELLOGS - Choco Krispis",
-    "price": 3.08
+    "price": 3.89
   },
   {
     "name": "KELLOGS - Choco Zucaritas",
@@ -701,7 +705,7 @@
   },
   {
     "name": "KELLOGS - Zucaritas",
-    "price": 2.77
+    "price": 3.51
   },
   {
     "name": "KEPA - vinagre 1000cm",
