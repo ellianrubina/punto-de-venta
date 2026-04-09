@@ -388,12 +388,16 @@
     "price": 1.53
   },
   {
-    "name": "EL TUNAL - HUEVOS DETALLADOS",
-    "price": 0
+    "name": "Huevos detallados",
+    "price": 0.3016
   },
   {
-    "name": "EL TUNAL - HUEVOS MEDIO CARTON",
-    "price": 0
+    "name": "Huevos Docena ",
+    "price": 3.0
+  },
+  {
+    "name": "Huevos El tunal",
+    "price": 7.5
   },
   {
     "name": "EL TUNAL - JUGOS SURTIDOS 1L",
@@ -1393,6 +1397,6 @@
   },
   {
     "name": "lucky Eclipse Detallado",
-    "price": 0
+    "price": 0.2
   }
 ]
