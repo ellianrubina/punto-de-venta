@@ -63,6 +63,14 @@
     "name": "ARAUCA - gourcafe 200g",
     "price": 3.74
   },
+   {
+    "name": "ACE - detergente en polvo 800g",
+    "price": 4.81
+  },
+   {
+    "name": "ARIEL - detergente en polvo 800g",
+    "price": 2.43
+  },
   {
     "name": "ARIEL - detergente en polvo 400g",
     "price": 2.43
@@ -605,7 +613,7 @@
   },
   {
     "name": "GATORADE - Surtido 500ml",
-    "price": 1.98
+    "price": 2.31
   },
   {
     "name": "GILLETE - Prestobarba H/M",
@@ -745,7 +753,7 @@
   },
   {
     "name": "LAS LLAVES - Detergente Floral 400gr",
-    "price": 1.71
+    "price": 1.98
   },
   {
     "name": "LAS LLAVES - Fragancia Floral Doble accion 400g",
@@ -769,7 +777,7 @@
   },
   {
     "name": "LIPTON - Surtido 500ml",
-    "price": 1.71
+    "price": 1.98
   },
   {
     "name": "LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY",
@@ -813,7 +821,7 @@
   },
   {
     "name": "MALTIN - Malta de botella 250ml",
-    "price": 0.73
+    "price": 0.85
   },
   {
     "name": "MALTIN POLAR - malta 1.5l",
@@ -823,13 +831,21 @@
     "name": "MALTIN POLAR - malta desechable 250ml",
     "price": 0.9
   },
+    {
+    "name": "MALTIN POLAR - Retornable 0.222",
+    "price": 0.61
+  },
   {
     "name": "MARGARITA - sardinas en aceite vegetal",
-    "price": 1.25
+    "price": 1.67
   },
   {
     "name": "MARGARITA - sardinas en salsa de tomate",
     "price": 1.44
+  },
+  {
+    "name": "MARGARITA - Lomo de atun 170g",
+    "price": 4.47
   },
   {
     "name": "MARY - Crema de arroz 450gr",
@@ -968,8 +984,16 @@
     "price": 7.74
   },
   {
+    "name": "MINALBA - agua mineral 600ml",
+    "price": 1.09
+  },
+  {
     "name": "MINALBA - agua mineral 1.5l",
-    "price": 1.74
+    "price": 2.05
+  },
+   {
+    "name": "MINALBA - Agua mineral 5l",
+    "price": 5.97
   },
   {
     "name": "MIRASOL - Margarina 227gr",
@@ -999,9 +1023,13 @@
     "name": "MUNCHY - triple play 70g",
     "price": 2.54
   },
+   {
+    "name": "MIGURT - Variados 250g",
+    "price": 2.42
+  },
   {
     "name": "Migurt Fresa Vaso 125 ml",
-    "price": 1.56
+    "price": 1.81
   },
   {
     "name": "NATUROIL - aceite de soya 850ml",
@@ -1069,7 +1097,7 @@
   },
   {
     "name": "PAN - Harina de maiz 1k",
-    "price": 1.7
+    "price": 1.78
   },
   {
     "name": "PAN - Sandwich",
@@ -1143,6 +1171,10 @@
     "name": "PRIMOR - superior 900g",
     "price": 2.26
   },
+   {
+    "name": "PRIMOR - vermicelli 1kg",
+    "price": 2.55
+  },
   {
     "name": "PROTEX  - avena 330g",
     "price": 2.76
@@ -1160,8 +1192,12 @@
     "price": 0.51
   },
   {
+    "name": "PEPSI - cola 1.5l",
+    "price": 1.30
+  },
+  {
     "name": "QUAKER - Avena En hojuelas 400gr",
-    "price": 1.79
+    "price": 1.95
   },
   {
     "name": "QUAKER - Avena En hojuelas Original 800gr",
@@ -1169,7 +1205,7 @@
   },
   {
     "name": "QUAKER - Avena en Hojuelas 200gr",
-    "price": 0.91
+    "price": 0.99
   },
   {
     "name": "QUESO - Mozarella",
@@ -1177,7 +1213,7 @@
   },
   {
     "name": "QUESO - blanco 1k",
-    "price": 8.45
+    "price": 8.47
   },
   {
     "name": "RICOTA - PARAMO",
@@ -1405,7 +1441,7 @@
   },
   {
     "name": "YUKERY - nectar de pera 250ml",
-    "price": 1.09
+    "price": 1.26
   },
   {
     "name": "YUKY-PAK - nectar de manzana 250ml",
