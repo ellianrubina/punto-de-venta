@@ -773,7 +773,7 @@
   },
   {
     "name": "LENGUA DE SUEGRA",
-    "price": 1
+    "price": 1.16
   },
   {
     "name": "LIPTON - Surtido 500ml",
@@ -1008,6 +1008,10 @@
     "price": 0.05
   },
   {
+    "name": "MORITAS",
+    "price": 0.84
+  },
+  {
     "name": "MORITZ - Latte Leche",
     "price": 1.04
   },
@@ -1077,7 +1081,7 @@
   },
   {
     "name": "PALMERITAS",
-    "price": 0.4
+    "price": 0.46
   },
   {
     "name": "PALMOLIVE - natural 85g",
@@ -1101,15 +1105,19 @@
   },
   {
     "name": "PAN - Sandwich",
-    "price": 2.47
+    "price": 2.87
   },
   {
     "name": "PAN - Sandwich Integral",
-    "price": 2.47
+    "price": 2.87
+  },
+  {
+    "name": "PAN DE LECHE",
+    "price": 1.51
   },
   {
     "name": "PAN TOVAREÑO",
-    "price": 1.69
+    "price": 1.96
   },
   {
     "name": "PARMALAT -  leche condensada 395g",
