@@ -4,6 +4,10 @@
     "price": 1.02
   },
   {
+    "name": "7UP - 1 lt",
+    "price": 1.14
+  },
+  {
     "name": "AJAX - desinfectante 500ml",
     "price": 3.81
   },
@@ -183,6 +187,10 @@
     "name": "BOLSAS BASURA 200L Calibre 8",
     "price": 4.24
   },
+    {
+    "name": "BON O BON - Bombon relleno",
+    "price": 0.53
+  },
   {
     "name": "BONAROPA - xtra aroma 1l",
     "price": 3.74
@@ -244,6 +252,14 @@
     "price": 1.47
   },
   {
+    "name": "CEREAL Azucarados - Lonchera",
+    "price": 0.59
+  },
+  {
+    "name": "CEREAL CHOCO SAFARI - Lonchera",
+    "price": 0.59
+  },
+  {
     "name": "CHARMY - chocolate 32g c/u",
     "price": 2.07
   },
@@ -258,6 +274,10 @@
   {
     "name": "CHICCO - motas de algodon 100und",
     "price": 9.54
+  },
+    {
+    "name": "CHICLETS CREYONES",
+    "price": 0.49
   },
   {
     "name": "CHINOTTO - 1.5L",
@@ -344,6 +364,10 @@
     "price": 0.93
   },
   {
+    "name": "CRONCH FLAKES - 300gr",
+    "price": 4.38
+  },
+  {
     "name": "CRUNCHIS GREGORY - 150g",
     "price": 1.65
   },
@@ -362,6 +386,10 @@
   {
     "name": "DANBISK - PALITO EXTREME",
     "price": 2.86
+  },
+   {
+    "name": "DANBISK - Palitos peq",
+    "price": 0.72
   },
   {
     "name": "DEL MONTE -  guisantes y zanahorias 241g",
@@ -624,6 +652,10 @@
     "price": 1.02
   },
   {
+    "name": "GOLDEN Surtido - 1 lt",
+    "price": 1.14
+  },
+  {
     "name": "GUDS - Chicle de menta",
     "price": 0.26
   },
@@ -726,6 +758,10 @@
   {
     "name": "KESITOS - pequeño 25g",
     "price": 0.75
+  },
+   {
+    "name": "KIT KAT - 41gr",
+    "price": 2.30
   },
   {
     "name": "KOTEX - esencial toallas femeninas con alas 8und",
@@ -1198,6 +1234,10 @@
   {
     "name": "Pepsi - 350ml Botella retornable",
     "price": 0.51
+  },
+    {
+    "name": "PEPSI - 1 lt",
+    "price": 1.25
   },
   {
     "name": "PEPSI - cola 1.5l",
