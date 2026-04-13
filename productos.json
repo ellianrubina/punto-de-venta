@@ -39,6 +39,10 @@
     "name": "ALIMEX- Salchichas tipo Viena 450g",
     "price": 6.48
   },
+   {
+    "name": "ALISOFT - Papel Detallado",
+    "price": 0.31
+  },
   {
     "name": "ALIVE - Morado Polvo 500gr",
     "price": 2.05
@@ -50,6 +54,10 @@
   {
     "name": "ALIVE - Polvo Rosado 500gr",
     "price": 2.16
+  },
+  {
+    "name": "ALIVE - Shampoo",
+    "price": 4.12
   },
   {
     "name": "ALVE - algodon hidrofilo 25g",
@@ -78,6 +86,10 @@
   {
     "name": "ARIEL - detergente en polvo 400g",
     "price": 2.43
+  },
+  {
+    "name": "ASTRO GLUE - super pegamento",
+    "price": 0.60
   },
   {
     "name": "ATUN - solido en aceite vegetal 170gr",
@@ -427,6 +439,18 @@
     "name": "DOÑA ALICIA - Avena en Hojuelas 400gr",
     "price": 1.53
   },
+   {
+    "name": "FRIENDS - Toallas diarias sin fragancia",
+    "price": 2.62
+  },
+  {
+    "name": "FRIENDS - Toallas diarias con manzanilla",
+    "price": 2.62
+  },
+  {
+    "name": "FRIENDS - Toallas con manzanilla 40 tll",
+    "price": 4.43
+  },
   {
     "name": "Huevos detallados",
     "price": 0.3016
@@ -510,6 +534,18 @@
   {
     "name": "EVERY NIGHT - talco 24h 85g",
     "price": 4.88
+  },
+  {
+    "name": "EVERY NIGHT - Mandarina",
+    "price": 2.08
+  },
+  {
+    "name": "EVERY NIGHT - COCO",
+    "price": 2.08
+  },
+  {
+    "name": "EVERY NIGHT - Jabon AVENA",
+    "price": 2.23
   },
   {
     "name": "EVEVA - atun aleta amarilla en aceite 170gr",
@@ -1274,6 +1310,10 @@
   {
     "name": "RIKESA - Cheddar Original 200gr",
     "price": 4.27
+  },
+    {
+    "name": "ROSAL - Naranja",
+    "price": 3.36
   },
   {
     "name": "SAL MAR - refinada 1kg",
