@@ -713,7 +713,7 @@
   },
   {
     "name": "GILLETE - Prestobarba H/M",
-    "price": 1.3
+    "price": 1.51
   },
   {
     "name": "GOLDEN - manzana 1.5l",
@@ -725,27 +725,27 @@
   },
   {
     "name": "GUDS - Chicle de menta",
-    "price": 0.26
+    "price": 0.30
   },
   {
     "name": "HALLS - Caramelos",
-    "price": 0.88
+    "price": 1.02
   },
   {
     "name": "HEAD & SHOULDERS - 2 en 1 shampoo 375ml",
-    "price": 7.4
+    "price": 8.58
   },
   {
     "name": "HEINZ - Salsa de toamte 198g",
-    "price": 1.44
+    "price": 1.68
   },
   {
     "name": "HEINZ - Salsa de toamte 397g",
-    "price": 2.44
+    "price": 2.83
   },
   {
     "name": "HILO - pabilo 1und",
-    "price": 0.44
+    "price": 0.51
   },
   {
     "name": "HOLSUM - Pan Integral",
@@ -761,11 +761,7 @@
   },
   {
     "name": "IBERIA - pasta de tomate",
-    "price": 7.15
-  },
-  {
-    "name": "IBERIA - pasta de tomate 500g",
-    "price": 3.81
+    "price": 8.29
   },
   {
     "name": "INDOSA - Leche en polvo Completa 180gr",
@@ -781,19 +777,19 @@
   },
   {
     "name": "ITALIA - Bizcochos Premium 125g",
-    "price": 2.14
+    "price": 2.48
   },
   {
     "name": "ITALICO - visking 1k",
-    "price": 10.95
+    "price": 12.70
   },
   {
     "name": "JGB - almohadillas faciales de algodon 80und",
-    "price": 5.47
+    "price": 6.35
   },
   {
     "name": "JOHNSONS - jabon de baño rosas y sandalo 110g",
-    "price": 3.34
+    "price": 3.87
   },
   {
     "name": "JRON - Tronkolate",
@@ -805,15 +801,15 @@
   },
   {
     "name": "KELLOGS - Choco Zucaritas",
-    "price": 3.07
+    "price": 3.56
   },
   {
     "name": "KELLOGS - Corn Flakes",
-    "price": 2.63
+    "price": 3.05
   },
   {
     "name": "KELLOGS - Corp Pops",
-    "price": 2.77
+    "price": 3.21
   },
   {
     "name": "KELLOGS - Zucaritas",
@@ -829,7 +825,7 @@
   },
   {
     "name": "KESITOS - pequeño 25g",
-    "price": 0.75
+    "price": 0.87
   },
    {
     "name": "KIT KAT - 41gr",
@@ -837,11 +833,11 @@
   },
   {
     "name": "KOTEX - esencial toallas femeninas con alas 8und",
-    "price": 1.81
+    "price": 2.10
   },
   {
     "name": "Kraker Detalladas",
-    "price": 0.44
+    "price": 0.51
   },
   {
     "name": "LA CAMPIÑA - Leche en polvo Completa 200g",
@@ -853,11 +849,11 @@
   },
   {
     "name": "LA GRAN PASTORA - yogurt de botella durazno 400ml",
-    "price": 2.15
+    "price": 3.32
   },
   {
     "name": "LA GRAN PASTORA - yogurt de botella kefir 400ml",
-    "price": 2.86
+    "price": 3.32
   },
   {
     "name": "LAS LLAVES - Detergente Floral 400gr",
@@ -869,15 +865,15 @@
   },
   {
     "name": "LAS LLAVES - detergente en polvo bebe 400g",
-    "price": 1.71
+    "price": 1.98
   },
   {
     "name": "LAS LLAVES - jabon en panela para lavar la ropa 200g",
-    "price": 1.23
+    "price": 1.43
   },
   {
     "name": "LAS LLAVES - multiuso en crema 500g",
-    "price": 4.43
+    "price": 5.14
   },
   {
     "name": "LENGUA DE SUEGRA",
@@ -889,43 +885,43 @@
   },
   {
     "name": "LIPTON - Te de Bolsa RASPBERRY & ELDERBERRY",
-    "price": 4.12
+    "price": 4.78
   },
   {
     "name": "LIPTON - Te de bolsa  CITRUS",
-    "price": 4.12
+    "price": 4.78
   },
   {
     "name": "LIPTON - Te de bolsa EARL GREY",
-    "price": 4.12
+    "price": 4.78
   },
   {
     "name": "LIPTON - Te de bolsa YELLOW LABEL",
-    "price": 4.12
+    "price": 4.78
   },
   {
     "name": "LIPTON - limon 1.5l",
-    "price": 4.93
+    "price": 5.72
   },
   {
     "name": "LUCKY STRIKE Nova",
-    "price": 4.55
+    "price": 4.41
+  },
+    {
+    "name": "Lucky Nova Detallado",
+    "price": 0.22
   },
   {
     "name": "La Gran pastora - Leche - Bolsa 900 ml",
     "price": 1.81
   },
   {
-    "name": "Lucky Nova Detallado",
-    "price": 0.23
-  },
-  {
     "name": "MAGGI - Cubitos de pollo",
-    "price": 0.44
+    "price": 0.51
   },
   {
     "name": "MAGGI - Sopa Fideo",
-    "price": 1.98
+    "price": 2.30
   },
   {
     "name": "MALTIN - Malta de botella 250ml",
@@ -933,11 +929,11 @@
   },
   {
     "name": "MALTIN POLAR - malta 1.5l",
-    "price": 2.01
+    "price": 2.33
   },
   {
     "name": "MALTIN POLAR - malta desechable 250ml",
-    "price": 0.9
+    "price": 1.04
   },
     {
     "name": "MALTIN POLAR - Retornable 0.222",
@@ -949,7 +945,7 @@
   },
   {
     "name": "MARGARITA - sardinas en salsa de tomate",
-    "price": 1.44
+    "price": 1.67
   },
   {
     "name": "MARGARITA - Lomo de atun 170g",
@@ -965,11 +961,11 @@
   },
   {
     "name": "MARY - Harina de trigo leudante",
-    "price": 2.11
+    "price": 2.45
   },
   {
     "name": "MARY - aceite de oliva extra virgen 500ml",
-    "price": 12.92
+    "price": 14.99
   },
   {
     "name": "MARY - caraotas 400g",
@@ -989,7 +985,7 @@
   },
   {
     "name": "MARY - harina de maiz blanco 900g",
-    "price": 1.53
+    "price": 1.77
   },
   {
     "name": "MARY - lentejas 400g",
@@ -1005,7 +1001,7 @@
   },
   {
     "name": "MARY - tornillo 500g",
-    "price": 1.73
+    "price": 1.40
   },
   {
     "name": "MARY - vermicelli 1kg",
@@ -1025,7 +1021,7 @@
   },
   {
     "name": "MAVESA - Mayonesa 175g",
-    "price": 2.52
+    "price": 2.92
   },
   {
     "name": "MAVESA - vinagre 1l",
@@ -1033,27 +1029,27 @@
   },
   {
     "name": "MAVESA - vinagre 500ml",
-    "price": 1.4
+    "price": 1.40
   },
   {
     "name": "MAVESA- Mayonesa 445g",
-    "price": 5.03
+    "price": 5.83
   },
   {
     "name": "MAX HOGAR - esponja de acero inoxidable",
-    "price": 1
+    "price": 1.16
   },
   {
     "name": "MAX HOGAR - esponja doble uso",
-    "price": 0.89
+    "price": 1.03
   },
   {
     "name": "MAX HOGAR - esponja soft",
-    "price": 1.4
+    "price": 1.62
   },
   {
     "name": "MEGA AROS - Cereal lonchera",
-    "price": 0.53
+    "price": 0.61
   },
   {
     "name": "MENTOS - Menta",
@@ -1065,15 +1061,15 @@
   },
   {
     "name": "MI GURT - durazno 125g",
-    "price": 1.37
+    "price": 1.59
   },
   {
     "name": "MI GURT - fresa 125g",
-    "price": 1.37
+    "price": 1.59
   },
   {
     "name": "MILLENIUM - mortadela de pollo 600g",
-    "price": 2.64
+    "price": 3.06
   },
   {
     "name": "MILLENNIUM - bologna con  pimenton 1k",
@@ -1081,15 +1077,15 @@
   },
   {
     "name": "MILLENNIUM - economico de pierna 1k",
-    "price": 9.1
+    "price": 10.56
   },
   {
     "name": "MILLENNIUM - mini pechuga de pavo 1k",
-    "price": 12.35
+    "price": 14.33
   },
   {
     "name": "MILLENNIUM - mini pierna superior 1k",
-    "price": 11.38
+    "price": 13.20
   },
   {
     "name": "MILLENNIUM - mortadela extra 1k",
@@ -1097,7 +1093,7 @@
   },
   {
     "name": "MILLENNIUM - salchichas a granel 1k",
-    "price": 7.74
+    "price": 8.98
   },
   {
     "name": "MINALBA - agua mineral 600ml",
@@ -1121,7 +1117,7 @@
   },
   {
     "name": "MONEDAS DE CHOCOLATE",
-    "price": 0.05
+    "price": 0.06
   },
   {
     "name": "MORITAS",
@@ -1141,11 +1137,11 @@
   },
   {
     "name": "MUCCA - Galletas",
-    "price": 0.83
+    "price": 0.96
   },
   {
     "name": "MUNCHY - triple play 70g",
-    "price": 2.54
+    "price": 2.95
   },
    {
     "name": "MIGURT - Variados 250g",
@@ -1157,7 +1153,7 @@
   },
   {
     "name": "NATUROIL - aceite de soya 850ml",
-    "price": 4.94
+    "price": 4.78
   },
   {
     "name": "NELLY - Margarina 250gr",
@@ -1169,19 +1165,19 @@
   },
   {
     "name": "NESTEA - limon 520gr",
-    "price": 6.08
+    "price": 7.05
   },
   {
     "name": "NEVADA - Agua mineral 600ml",
-    "price": 0.87
+    "price": 1.01
   },
   {
     "name": "NOSOTRAS - toallas naturales invisibles 10und",
-    "price": 0.98
+    "price": 1.14
   },
   {
     "name": "NOSTRAS - proteccion v normal 15 und",
-    "price": 1.12
+    "price": 1.30
   },
   {
     "name": "NUTTELINI - 14g",
