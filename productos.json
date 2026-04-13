@@ -1,7 +1,7 @@
 [
   {
     "name": "7UP - 1.5l",
-    "price": 1.02
+    "price": 1.18
   },
   {
     "name": "7UP - 1 lt",
@@ -9,11 +9,11 @@
   },
   {
     "name": "AJAX - desinfectante 500ml",
-    "price": 3.81
+    "price": 4.42
   },
   {
     "name": "ALFONZO RIVAS - Maizina Americana 120gr",
-    "price": 1.55
+    "price": 1.80
   },
   {
     "name": "ALFONZO RIVAS - Maizina Americana 400gr",
@@ -21,23 +21,23 @@
   },
   {
     "name": "ALFONZO RIVAS - Maizina Americana 90gr",
-    "price": 1.01
+    "price": 1.17
   },
   {
     "name": "ALIMEX - Mortadela Especial 500g",
-    "price": 2.75
+    "price": 3.19
   },
   {
     "name": "ALIMEX - espalda cocida 1k",
-    "price": 10.4
+    "price": 12.06
   },
   {
     "name": "ALIMEX Salchichas tipo Viena 225g",
-    "price": 3.52
+    "price": 4.08
   },
   {
     "name": "ALIMEX- Salchichas tipo Viena 450g",
-    "price": 6.48
+    "price": 7.52
   },
    {
     "name": "ALISOFT - Papel Detallado",
@@ -49,11 +49,11 @@
   },
   {
     "name": "ALIVE - Polvo Azul 500gr",
-    "price": 2.05
+    "price": 2.38
   },
   {
     "name": "ALIVE - Polvo Rosado 500gr",
-    "price": 2.16
+    "price": 2.51
   },
   {
     "name": "ALIVE - Shampoo",
@@ -61,15 +61,15 @@
   },
   {
     "name": "ALVE - algodon hidrofilo 25g",
-    "price": 4.57
+    "price": 5.30
   },
   {
     "name": "ALWAYS - ULTRAFINA - suave de 10und",
-    "price": 4.06
+    "price": 4.71
   },
   {
     "name": "ANIPOP - Chupetas Anillo",
-    "price": 0.3
+    "price": 0.35
   },
   {
     "name": "ARAUCA - gourcafe 200g",
@@ -81,39 +81,35 @@
   },
    {
     "name": "ARIEL - detergente en polvo 800g",
-    "price": 2.43
+    "price": 5.82
   },
   {
     "name": "ARIEL - detergente en polvo 400g",
-    "price": 2.43
+    "price": 2.91
   },
   {
     "name": "ASTRO GLUE - super pegamento",
     "price": 0.60
   },
   {
-    "name": "ATUN - solido en aceite vegetal 170gr",
-    "price": 2.87
-  },
-  {
     "name": "AVELINA - Fortificada Avena en Hojuelas 250gr",
-    "price": 1.17
+    "price": 1.36
   },
   {
     "name": "AVELINA - Tradicional Avena en Hojuelas 250gr",
-    "price": 1.12
+    "price": 1.30
   },
   {
     "name": "AVELINA - entera 250g",
-    "price": 1.18
+    "price": 1.37
   },
   {
     "name": "AXION - lavaplatos en crema 235mg",
-    "price": 1.79
+    "price": 2.08
   },
   {
     "name": "AXION - lavaplatos en crema limon 235g",
-    "price": 3.26
+    "price": 3.78
   },
   {
     "name": "AZUCARADAS - 240g",
@@ -121,11 +117,11 @@
   },
   {
     "name": "BAMBOO - papel higienico",
-    "price": 0.2
+    "price": 0.23
   },
   {
     "name": "BAMBOO - servilletas pequeñas 160und",
-    "price": 0.89
+    "price": 1.03
   },
   {
     "name": "BARZUCA - Azucar 900gr",
@@ -133,19 +129,19 @@
   },
   {
     "name": "BELMONT x10",
-    "price": 1.61
+    "price": 1.87
   },
   {
     "name": "BELMONT x20",
-    "price": 3.23
+    "price": 3.75
   },
   {
     "name": "BELVITA - hony 252g",
-    "price": 4
+    "price": 4.64
   },
   {
     "name": "BELVITA - kraker 234g",
-    "price": 4.43
+    "price": 5.14
   },
   {
     "name": "BIMBO - BUENAZO",
@@ -161,11 +157,11 @@
   },
   {
     "name": "BIMBO - Rapiditas Diet",
-    "price": 2.96
+    "price": 3.43
   },
   {
     "name": "BIMBO - Rapiditas Mantequilla",
-    "price": 2.96
+    "price": 3.43
   },
   {
     "name": "BIMBO - Rapiditas Mediterraneas",
@@ -185,15 +181,15 @@
   },
   {
     "name": "BOHEM Blue",
-    "price": 1.1
+    "price": 1.28
   },
   {
     "name": "BOHEM Blue Detallado",
-    "price": 0.06
+    "price": 0.07
   },
   {
     "name": "BOHEM Sandia Detallado",
-    "price": 0.1
+    "price": 0.12
   },
   {
     "name": "BOHEM Sandia y mango",
@@ -201,15 +197,15 @@
   },
   {
     "name": "BOLI KRUNCH - pequeño 25g",
-    "price": 0.66
+    "price": 0.77
   },
   {
     "name": "BOLSAS BASURA 150L Calibre 8",
-    "price": 2.86
+    "price": 3.32
   },
   {
     "name": "BOLSAS BASURA 200L Calibre 8",
-    "price": 4.24
+    "price": 4.92
   },
     {
     "name": "BON O BON - Bombon relleno",
@@ -217,19 +213,19 @@
   },
   {
     "name": "BONAROPA - xtra aroma 1l",
-    "price": 3.74
+    "price": 4.34
   },
   {
     "name": "BUZZY - Chicle Tattoo Hello kitty",
-    "price": 0.07
+    "price": 0.08
   },
   {
     "name": "BUZZY - Chicle Tattoo Minions",
-    "price": 0.07
+    "price": 0.08
   },
   {
     "name": "Belmont Detallado",
-    "price": 0.16
+    "price": 0.19
   },
   {
     "name": "CAFE BRASIL - gourmet 100g",
@@ -245,15 +241,15 @@
   },
   {
     "name": "CALEDONIA - galletas maria 25g c/u",
-    "price": 1.43
+    "price": 1.66
   },
   {
     "name": "CANELITAS - galletas",
-    "price": 0.57
+    "price": 0.66
   },
   {
     "name": "CAPRI - vermicelli fino 1kg",
-    "price": 2.73
+    "price": 3.17
   },
   {
     "name": "CAPRI - Plumitas 500 gr",
@@ -268,16 +264,16 @@
     "price": 0.06
   },
   {
-    "name": "CARAMELOS DE JENJIBRE",
-    "price": 1.14
+    "name": "CARAMELOS DE JENGIBRE",
+    "price": 1.32
   },
   {
     "name": "CARAVELLE  - cepillo de lavar",
-    "price": 2.89
+    "price": 3.35
   },
   {
     "name": "CARICIAS - papel higienico 4und",
-    "price": 1.47
+    "price": 1.71
   },
   {
     "name": "CEREAL Azucarados - Lonchera",
@@ -289,19 +285,19 @@
   },
   {
     "name": "CHARMY - chocolate 32g c/u",
-    "price": 2.07
+    "price": 2.40
   },
   {
     "name": "CHARMY - fresa 32g c/u",
-    "price": 2.07
+    "price": 2.40
   },
   {
     "name": "CHARMY - vainilla 32g c/u",
-    "price": 2.07
+    "price": 2.40
   },
   {
     "name": "CHICCO - motas de algodon 100und",
-    "price": 9.54
+    "price": 11.07
   },
     {
     "name": "CHICLETS CREYONES",
@@ -309,27 +305,27 @@
   },
   {
     "name": "CHINOTTO - 1.5L",
-    "price": 1.52
+    "price": 1.76
   },
   {
     "name": "CHINOTTO - 355ml",
-    "price": 0.5
+    "price": 0.58
   },
   {
     "name": "CHIS KESITOS - 45G",
-    "price": 1.01
+    "price": 1.17
   },
   {
     "name": "CHIS KESITOS TOCINETA - 45g",
-    "price": 1.01
+    "price": 1.17
   },
   {
     "name": "CHIS TRIS 50g",
-    "price": 1.48
+    "price": 1.72
   },
   {
     "name": "CHOCO LISTO - Bolsa 400gr",
-    "price": 4.91
+    "price": 5.70
   },
   {
     "name": "CHOCO SAFARI - 240gr",
@@ -337,47 +333,47 @@
   },
   {
     "name": "CHUPA POP - Chupeta Detallada",
-    "price": 0.23
+    "price": 0.27
   },
   {
     "name": "CHUPETA EXPLOSIVA",
-    "price": 0.5
+    "price": 0.58
   },
   {
     "name": "CHUPETA LOKIÑO SURTIDA",
-    "price": 0.19
+    "price": 0.22
   },
   {
     "name": "CLUB SOCIAL - original 6uni",
-    "price": 2.99
+    "price": 3.47
   },
   {
     "name": "COCA COLA -  original 1.5l",
-    "price": 2.03
+    "price": 2.35
   },
   {
     "name": "COCA COLA - Bombita 355ml",
-    "price": 0.75
+    "price": 0.87
   },
   {
     "name": "COCOSETE",
-    "price": 1.54
+    "price": 1.79
   },
   {
     "name": "COLGATE - Cepillo Triple Accion 2Pac",
-    "price": 3.81
+    "price": 4.42
   },
   {
     "name": "COLGATE - maxima protexion 90g",
-    "price": 1.96
+    "price": 2.27
   },
   {
     "name": "COLGATE - normal  144g",
-    "price": 4.01
+    "price": 4.65
   },
   {
     "name": "COLGATE - triple accion 60ml",
-    "price": 2.26
+    "price": 2.62
   },
   {
     "name": "Compota heinz pera 186g",
@@ -385,15 +381,15 @@
   },
   {
     "name": "CONSUL Detallado",
-    "price": 0.11
+    "price": 0.13
   },
   {
     "name": "CONSUL cigarrillos",
-    "price": 2.12
+    "price": 2.46
   },
   {
     "name": "COPOSA - aceite vegetal 850ml",
-    "price": 4.75
+    "price": 5.51
   },
   {
     "name": "COTOPERI - colado de pera 110g",
