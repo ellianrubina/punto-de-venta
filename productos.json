@@ -116,6 +116,10 @@
     "price": 3.26
   },
   {
+    "name": "AZUCARADAS - 240g",
+    "price": 4.52
+  },
+  {
     "name": "BAMBOO - papel higienico",
     "price": 0.2
   },
@@ -144,12 +148,16 @@
     "price": 4.43
   },
   {
+    "name": "BIMBO - BUENAZO",
+    "price": 1.00
+  },
+  {
     "name": "BIMBO - Pan Artesano",
     "price": 3.25
   },
   {
     "name": "BIMBO - Pan Blanco",
-    "price": 1.85
+    "price": 2.15
   },
   {
     "name": "BIMBO - Rapiditas Diet",
@@ -161,11 +169,15 @@
   },
   {
     "name": "BIMBO - Rapiditas Mediterraneas",
-    "price": 2.96
+    "price": 3.43
   },
   {
     "name": "BIMBO - Rapiditas Originales",
-    "price": 2.69
+    "price": 3.12
+  },
+  {
+    "name": "BIMBO - Rapiditas Chia",
+    "price": 3.43
   },
   {
     "name": "BOHEM - detallado surtidos",
@@ -314,6 +326,10 @@
   {
     "name": "CHOCO LISTO - Bolsa 400gr",
     "price": 4.91
+  },
+  {
+    "name": "CHOCO SAFARI - 240gr",
+    "price": 4.62
   },
   {
     "name": "CHUPA POP - Chupeta Detallada",
@@ -466,6 +482,10 @@
   {
     "name": "Huevos El tunal",
     "price": 7.5
+  },
+  {
+    "name": "EL FAMOSO - Pan Arabe",
+    "price": 2.42
   },
   {
     "name": "EL TUNAL - JUGOS SURTIDOS 1L",
@@ -672,6 +692,10 @@
     "price": 1.86
   },
   {
+    "name": "FRUTI AROS - 240g",
+    "price": 4.62
+  },
+  {
     "name": "FRUTIÑO - Bebida Sobre 10g",
     "price": 0.79
   },
@@ -729,7 +753,7 @@
   },
   {
     "name": "HOLSUM - Pan blanco",
-    "price": 1.4
+    "price": 1.40
   },
   {
     "name": "HOLSUM - Pan de mantequilla",
@@ -1032,6 +1056,10 @@
     "price": 0.53
   },
   {
+    "name": "MENTOS - Menta",
+    "price": 1.04
+  },
+  {
     "name": "Miel la Encantada 500g",
     "price": 10.47
   },
@@ -1101,11 +1129,15 @@
   },
   {
     "name": "MORITZ - Latte Leche",
-    "price": 1.04
+    "price": 1.21
+  },
+  {
+    "name": "MORITZ - Taza 100grs",
+    "price": 3.57
   },
   {
     "name": "MR BROWN - Arequipe",
-    "price": 1.41
+    "price": 1.64
   },
   {
     "name": "MUCCA - Galletas",
@@ -1150,6 +1182,10 @@
   {
     "name": "NOSTRAS - proteccion v normal 15 und",
     "price": 1.12
+  },
+  {
+    "name": "NUTTELINI - 14g",
+    "price": 0.31
   },
   {
     "name": "OREO - Americanas 32gr",
@@ -1253,11 +1289,15 @@
   },
   {
     "name": "POLVORONES - Galletas",
-    "price": 0.65
+    "price": 0.75
   },
   {
     "name": "POPCRONCH - chocolate 30grs",
     "price": 0.39
+  },
+  {
+    "name": "POP CRONCH - 240g",
+    "price": 4.62
   },
   {
     "name": "POWERADE - 500ml",
@@ -1349,7 +1389,7 @@
   },
   {
     "name": "SAVOY - (cricri, rikiti)",
-    "price": 1.89
+    "price": 2.19
   },
   {
     "name": "SAVOY - Mini 32gr",
@@ -1357,7 +1397,11 @@
   },
   {
     "name": "SAVOY - SAMBA 32gr",
-    "price": 1.45
+    "price": 1.68
+  },
+  {
+    "name": "SAVOY - Samba Mini",
+    "price": 0.72
   },
   {
     "name": "SAVOY - Toronto Unidad",
@@ -1469,7 +1513,7 @@
   },
   {
     "name": "TOMA2 - Galletas",
-    "price": 0.52
+    "price": 0.60
   },
   {
     "name": "TOMODORE - Salsa de Ajo",
@@ -1485,7 +1529,7 @@
   },
   {
     "name": "TRIDENT - MORA AZUL 153gr",
-    "price": 0.71
+    "price": 0.82
   },
   {
     "name": "TRIGO DE ORO - Panque de vainilla",
@@ -1493,7 +1537,11 @@
   },
   {
     "name": "TWINKIE - Mora",
-    "price": 0.49
+    "price": 0.57
+  },
+  {
+    "name": "TWINKIE - Fresa",
+    "price": 0.51
   },
   {
     "name": "Testing producto temporal 2",
@@ -1517,7 +1565,7 @@
   },
   {
     "name": "UNDER WOOD -  diablitos 54g",
-    "price": 1.89
+    "price": 2.32
   },
   {
     "name": "UNIVERSAL Cigarrillos",
