@@ -1201,11 +1201,11 @@
   },
   {
     "name": "OSOLE - napolitana",
-    "price": 1.51
+    "price": 1.75
   },
   {
     "name": "OSOLE - pizza 200g",
-    "price": 1.51
+    "price": 1.75
   },
   {
     "name": "PALMERITAS",
@@ -1213,19 +1213,19 @@
   },
   {
     "name": "PALMOLIVE - natural 85g",
-    "price": 1.33
+    "price": 1.54
   },
   {
     "name": "PALMOLIVE - neutro balance 100g",
-    "price": 2.82
+    "price": 3.27
   },
   {
     "name": "PAMPERO - Ketchup 198g",
-    "price": 1.64
+    "price": 1.90
   },
   {
     "name": "PAMPERO - Ketchup 397g",
-    "price": 2.47
+    "price": 2.87
   },
   {
     "name": "PAN - Harina de maiz 1k",
@@ -1249,39 +1249,39 @@
   },
   {
     "name": "PARMALAT -  leche condensada 395g",
-    "price": 4.87
+    "price": 5.65
   },
   {
     "name": "PARMALAT - El Chichero Bolsa 200gr",
-    "price": 2.17
+    "price": 2.52
   },
   {
     "name": "PARMALAT - Leche en polvo 400gr",
-    "price": 6.37
+    "price": 7.39
   },
   {
     "name": "PEQUEÑIN - suavidad 80 und",
-    "price": 2.4
+    "price": 2.78
   },
   {
     "name": "PIGSY - familiar 60g",
-    "price": 1.19
+    "price": 1.38
   },
   {
     "name": "PINGUINITO - mini",
-    "price": 0.43
+    "price": 0.50
   },
   {
     "name": "PINGUINITOS - 80g",
-    "price": 2.16
+    "price": 2.51
   },
   {
     "name": "PINGÜINITOS COOKIES & CREAM - 80g",
-    "price": 2.16
+    "price": 2.51
   },
   {
     "name": "PLATANITOS DE BOLSA TRANSPARENTE",
-    "price": 1.1
+    "price": 1.28
   },
   {
     "name": "POLVORONES - Galletas",
@@ -1289,7 +1289,7 @@
   },
   {
     "name": "POPCRONCH - chocolate 30grs",
-    "price": 0.39
+    "price": 0.45
   },
   {
     "name": "POP CRONCH - 240g",
@@ -1297,7 +1297,7 @@
   },
   {
     "name": "POWERADE - 500ml",
-    "price": 1.92
+    "price": 2.23
   },
   {
     "name": "PRIMOR - dedales extra especial 1kg",
@@ -1317,7 +1317,7 @@
   },
   {
     "name": "PROTEX  - avena 330g",
-    "price": 2.76
+    "price": 3.20
   },
   {
     "name": "PURISIMA - Leche Completa",
@@ -1329,7 +1329,7 @@
   },
   {
     "name": "Pepsi - 350ml Botella retornable",
-    "price": 0.51
+    "price": 0.59
   },
     {
     "name": "PEPSI - 1 lt",
@@ -1353,7 +1353,7 @@
   },
   {
     "name": "QUESO - Mozarella",
-    "price": 14.3
+    "price": 16.59
   },
   {
     "name": "QUESO - blanco 1k",
@@ -1361,15 +1361,15 @@
   },
   {
     "name": "RICOTA - PARAMO",
-    "price": 1.95
+    "price": 2.26
   },
   {
     "name": "RIKESA - Cheddar",
-    "price": 5.3
+    "price": 6.15
   },
   {
     "name": "RIKESA - Cheddar Original 200gr",
-    "price": 4.27
+    "price": 4.95
   },
     {
     "name": "ROSAL - Naranja",
@@ -1389,7 +1389,7 @@
   },
   {
     "name": "SAVOY - Mini 32gr",
-    "price": 1
+    "price": 1.16
   },
   {
     "name": "SAVOY - SAMBA 32gr",
@@ -1401,103 +1401,103 @@
   },
   {
     "name": "SAVOY - Toronto Unidad",
-    "price": 0.86
+    "price": 1.00
   },
   {
     "name": "SCHWEPPES - Soda 355ml Bombita",
-    "price": 1.09
+    "price": 1.26
   },
   {
     "name": "SCOTT - mega absorb 45und",
-    "price": 2.11
+    "price": 2.45
   },
   {
     "name": "SELVA - papel de aluminio 7mt",
-    "price": 2.19
+    "price": 2.45
   },
   {
     "name": "SHAMPOO - Sobre 18g",
-    "price": 0.64
+    "price": 0.74
   },
   {
     "name": "SONRISSA - flan sin caramelo 46g",
-    "price": 1.4
+    "price": 1.62
   },
   {
     "name": "SONRISSA - gelatina con sabor a cereza 66g",
-    "price": 1.7
+    "price": 1.97
   },
   {
     "name": "SONRISSA - gelatina con sabor a frambuesa 66g",
-    "price": 1.7
+    "price": 1.97
   },
   {
     "name": "SONRISSA - gelatina de limon 66g",
-    "price": 1.7
+    "price": 1.97
   },
   {
     "name": "SONRISSA - gelatina sabor a uva 66g",
-    "price": 1.7
+    "price": 1.97
   },
   {
     "name": "SONRISSA - pudin de chocolate 72g",
-    "price": 1.56
+    "price": 1.81
   },
   {
     "name": "SPEEDSTICK - 30gr",
-    "price": 2.03
+    "price": 2.35
   },
   {
     "name": "SUAVITEL - Surtidos 180ml",
-    "price": 1.45
+    "price": 1.68
   },
   {
     "name": "SULTANA - toallitas humedas 72 und",
-    "price": 5
+    "price": 5.80
   },
   {
     "name": "SUSY - Mini",
-    "price": 0.94
+    "price": 1.09
   },
   {
     "name": "Super Rombo - Jabon pasta 200gr",
-    "price": 1.19
+    "price": 1.38
   },
   {
     "name": "TASTY - vainilla 212ml",
-    "price": 1.11
+    "price": 1.29
   },
   {
     "name": "TIA LULU - Mantecada 150gr",
-    "price": 2.69
+    "price": 3.12
   },
   {
     "name": "TIA LULU - Ponque Vainilla",
-    "price": 1.7
+    "price": 1.97
   },
   {
     "name": "TIGO - Panelon",
-    "price": 0.98
+    "price": 1.14
   },
   {
     "name": "TIGO - crema a base de leche 200g",
-    "price": 1.93
+    "price": 2.24
   },
   {
     "name": "TIP TOP - Galletas",
-    "price": 1.18
+    "price": 1.37
   },
   {
     "name": "TNT - Chicle Super Acido Meteoro",
-    "price": 0.06
+    "price": 0.07
   },
   {
     "name": "TNT - Super Acido Chicle",
-    "price": 0.04
+    "price": 0.0
   },
   {
     "name": "TOCINETIKAS - original 16g",
-    "price": 0.64
+    "price": 0.74
   },
   {
     "name": "TODDY - Pote 200gr",
@@ -1513,15 +1513,15 @@
   },
   {
     "name": "TOMODORE - Salsa de Ajo",
-    "price": 0.91
+    "price": 1.06
   },
   {
     "name": "TOMODORE - salsa Queso Cheddar",
-    "price": 2.99
+    "price": 3.47
   },
   {
     "name": "TOMODORE - vainilla 150ml",
-    "price": 1.07
+    "price": 1.24
   },
   {
     "name": "TRIDENT - MORA AZUL 153gr",
@@ -1541,23 +1541,23 @@
   },
   {
     "name": "Testing producto temporal 2",
-    "price": 1
+    "price": 1.16
   },
   {
     "name": "ULTREX - detergente en polvo 250g",
-    "price": 0.73
+    "price": 0.85
   },
   {
     "name": "ULTREX - detergente en polvo 2Kg",
-    "price": 5.46
+    "price": 6.33
   },
   {
     "name": "ULTREX - detergente en polvo 500g",
-    "price": 1.37
+    "price": 1.59
   },
   {
     "name": "ULTREX - detergente en polvo Manzana 1Kg",
-    "price": 2.72
+    "price": 3.16
   },
   {
     "name": "UNDER WOOD -  diablitos 54g",
@@ -1565,19 +1565,19 @@
   },
   {
     "name": "UNIVERSAL Cigarrillos",
-    "price": 2.03
+    "price": 2.35
   },
   {
     "name": "UNIVERSAL Detallado",
-    "price": 0.1
+    "price": 0.12
   },
   {
     "name": "VELAS - Liviana luminaria de clores y blancas",
-    "price": 0.26
+    "price": 0.30
   },
   {
     "name": "VELON",
-    "price": 4.84
+    "price": 5.61
   },
   {
     "name": "VELON No1",
@@ -1589,11 +1589,11 @@
   },
   {
     "name": "WYNCO - Marshmallows Rellenos de mermelada",
-    "price": 0.13
+    "price": 0.15
   },
   {
     "name": "YESQUERO GLOBAL",
-    "price": 0.33
+    "price": 0.38
   },
   {
     "name": "YUKERY - nectar de pera 250ml",
@@ -1601,14 +1601,14 @@
   },
   {
     "name": "YUKY-PAK - nectar de manzana 250ml",
-    "price": 1.01
+    "price": 1.17
   },
   {
     "name": "alfajores cubierta de chocolate",
-    "price": 2.3
+    "price": 2.67
   },
   {
     "name": "lucky Eclipse Detallado",
-    "price": 0.2
+    "price": 0.22
   }
 ]
