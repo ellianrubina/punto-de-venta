@@ -249,7 +249,7 @@
   },
   {
     "name": "CARAMELOS CHAO",
-    "price": 0.05
+    "price": 0.06
   },
   {
     "name": "CARAMELOS DE JENJIBRE",
@@ -358,6 +358,10 @@
   {
     "name": "COLGATE - triple accion 60ml",
     "price": 2.26
+  },
+  {
+    "name": "Compota heinz pera 186g",
+    "price": 0.77
   },
   {
     "name": "CONSUL Detallado",
@@ -675,6 +679,10 @@
     "name": "FRUTIÑO - gelatina 14g",
     "price": 1.19
   },
+   {
+    "name": "GALLETAS PUIG .- soda el sol 240g",
+    "price": 2.53
+  },
   {
     "name": "GATORADE - Surtido 500ml",
     "price": 2.31
@@ -741,11 +749,11 @@
   },
   {
     "name": "ISABELA - Tortinhas",
-    "price": 1.19
+    "price": 1.38
   },
   {
     "name": "ISABELA - Waffers",
-    "price": 1.03
+    "price": 1.19
   },
   {
     "name": "ITALIA - Bizcochos Premium 125g",
@@ -762,6 +770,10 @@
   {
     "name": "JOHNSONS - jabon de baño rosas y sandalo 110g",
     "price": 3.34
+  },
+  {
+    "name": "JRON - Tronkolate",
+    "price": 1.15
   },
   {
     "name": "KELLOGS - Choco Krispis",
@@ -1020,6 +1032,10 @@
     "price": 0.53
   },
   {
+    "name": "Miel la Encantada 500g",
+    "price": 10.47
+  },
+  {
     "name": "MI GURT - durazno 125g",
     "price": 1.37
   },
@@ -1136,12 +1152,20 @@
     "price": 1.12
   },
   {
+    "name": "OREO - Americanas 32gr",
+    "price": 0.61
+  },
+  {
     "name": "OREO - Fresa 96gr",
-    "price": 2.4
+    "price": 2.78
+  },
+  {
+    "name": "OREO - Vainilla 32gr",
+    "price": 0.61
   },
   {
     "name": "OREO - Vainilla 96gr",
-    "price": 2.4
+    "price": 2.78
   },
   {
     "name": "OSOLE - napolitana",
