@@ -228,6 +228,10 @@
     "price": 0.19
   },
   {
+    "name": "CAFE BRASIL - gourmet 400g",
+    "price": 7.28
+  },
+  {
     "name": "CAFE BRASIL - gourmet 100g",
     "price": 2.02
   },
@@ -408,8 +412,12 @@
     "price": 0.60
   },
   {
+    "name": "CRUZCAFE - clasico 100g",
+    "price": 1.76
+  },
+  {
     "name": "CRUZCAFE - clasico 200g",
-    "price": 3.38
+    "price": 3.51
   },
   {
     "name": "Crema Choco Delicious 230gr",
@@ -716,6 +724,10 @@
     "price": 1.51
   },
   {
+    "name": "Gillete - Roll-on",
+    "price": 4.47
+  },
+  {
     "name": "GOLDEN - manzana 1.5l",
     "price": 1.02
   },
@@ -905,11 +917,11 @@
   },
   {
     "name": "LUCKY STRIKE Nova",
-    "price": 4.41
+    "price": 4.83
   },
     {
     "name": "Lucky Nova Detallado",
-    "price": 0.22
+    "price": 0.24
   },
   {
     "name": "La Gran pastora - Leche - Bolsa 900 ml",
