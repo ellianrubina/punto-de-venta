@@ -316,6 +316,10 @@
     "price": 0.58
   },
   {
+    "name": "CHINOTTO - de lata 355ml",
+    "price": 1.09
+  },
+  {
     "name": "CHIS KESITOS - 45G",
     "price": 1.17
   },
@@ -352,8 +356,16 @@
     "price": 3.47
   },
   {
+    "name": "COCA COLA - original 2l",
+    "price": 1.95
+  },
+  {
     "name": "COCA COLA -  original 1.5l",
     "price": 2.35
+  },
+  {
+    "name": "COCA COLA - 1lt",
+    "price": 1.09
   },
   {
     "name": "COCA COLA - Bombita 355ml",
