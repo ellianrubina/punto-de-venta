@@ -37,7 +37,7 @@
   },
   {
     "name": "ALIMEX- Salchichas tipo Viena 450g",
-    "price": 7.52
+    "price": 6.88
   },
    {
     "name": "ALISOFT - Papel Detallado",
@@ -424,6 +424,14 @@
     "price": 0.60
   },
   {
+    "name": "TOM - platanitos con ajo 80g",
+    "price": 2.05
+  },
+  {
+    "name": "DORITO - mega queso 45g",
+    "price": 1.67
+  },
+  {
     "name": "CRUZCAFE - clasico 100g",
     "price": 1.76
   },
@@ -493,15 +501,15 @@
   },
   {
     "name": "Huevos detallados",
-    "price": 0.34
+    "price": 0.35
   },
   {
     "name": "Huevos Medio Carton ",
-    "price": 5.03
+    "price": 5.35
   },
   {
     "name": "Huevos El tunal",
-    "price": 10.06
+    "price": 9.21
   },
   {
     "name": "EL FAMOSO - Pan Arabe",
@@ -805,7 +813,7 @@
   },
   {
     "name": "ITALICO - visking 1k",
-    "price": 12.70
+    "price": 12.86
   },
   {
     "name": "JGB - almohadillas faciales de algodon 80und",
@@ -870,6 +878,10 @@
   {
     "name": "LA CAMPIÑA - Leche en polvo Completa 400g",
     "price": 8.61
+  },
+  {
+    "name": "LA GRAN PASTORA - queso amarillo 1k",
+    "price": 18.25
   },
   {
     "name": "LA GRAN PASTORA - yogurt de botella durazno 400ml",
@@ -1345,7 +1357,15 @@
   },
   {
     "name": "PURISIMA - Leche Completa",
-    "price": 3.5
+    "price": 3.55
+  },
+  {
+    "name": "PURISIMA - Leche Descremada",
+    "price": 3.48
+  },
+  {
+    "name": "PURISIMA - Leche Deslactosada",
+    "price": 4.27
   },
   {
     "name": "PURISIMA - Leche el polvo",
@@ -1381,7 +1401,7 @@
   },
   {
     "name": "QUESO - blanco 1k",
-    "price": 8.47
+    "price": 8.50
   },
   {
     "name": "RICOTA - PARAMO",
