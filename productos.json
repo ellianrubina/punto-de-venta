@@ -313,7 +313,7 @@
   },
   {
     "name": "CHINOTTO - 355ml",
-    "price": 0.58
+    "price": 0.75
   },
   {
     "name": "CHINOTTO - de lata 355ml",
@@ -373,7 +373,7 @@
   },
   {
     "name": "COCOSETE",
-    "price": 1.79
+    "price": 0.90
   },
   {
     "name": "COLGATE - Cepillo Triple Accion 2Pac",
@@ -426,6 +426,14 @@
   {
     "name": "TOM - platanitos con ajo 80g",
     "price": 2.05
+  },
+  {
+    "name": "SALSERITOS - tostones maduritos 80g",
+    "price": 1.42
+  },
+  {
+    "name": "ISELITAS - PLATANO CHIPS CON SAL 85G",
+    "price": 2.67
   },
   {
     "name": "DORITO - mega queso 45g",
@@ -971,9 +979,13 @@
     "name": "MALTIN POLAR - malta desechable 250ml",
     "price": 1.04
   },
-    {
+   {
     "name": "MALTIN POLAR - Retornable 0.222",
     "price": 0.61
+  },
+  {
+    "name": "Mantecada Casera",
+    "price": 1.21
   },
   {
     "name": "MARGARITA - sardinas en aceite vegetal",
@@ -1202,6 +1214,10 @@
   {
     "name": "NESTEA - limon 520gr",
     "price": 7.05
+  },
+  {
+    "name": "NESTEA - Sobre 90gr",
+    "price": 1.77
   },
   {
     "name": "NEVADA - Agua mineral 600ml",
@@ -1449,7 +1465,7 @@
   },
   {
     "name": "SCHWEPPES - Soda 355ml Bombita",
-    "price": 1.26
+    "price": 1.46
   },
   {
     "name": "SCOTT - mega absorb 45und",
@@ -1514,6 +1530,10 @@
   {
     "name": "TIA LULU - Mantecada 150gr",
     "price": 3.12
+  },
+  
+    "name": "TIA LULU - Mantecada 350gr",
+    "price": 5.09
   },
   {
     "name": "TIA LULU - Ponque Vainilla",
