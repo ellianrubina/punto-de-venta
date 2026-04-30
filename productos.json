@@ -405,7 +405,7 @@
   },
   {
     "name": "COPOSA - aceite vegetal 850ml",
-    "price": 5.51
+    "price": 4.92
   },
   {
     "name": "COTOPERI - colado de pera 110g",
@@ -592,6 +592,10 @@
     "price": 1.53
   },
   {
+    "name": "EVEBA - pepitona picante 140g",
+    "price": 2.25
+  },
+  {
     "name": "EVERY NIGHT - talco 24h 85g",
     "price": 5.66
   },
@@ -614,6 +618,10 @@
   {
     "name": "EVEVA - atun en trozos con vegetales 170gr",
     "price": 3.58
+  },
+  {
+    "name": "EVEVA - Atun solido 119g 170gr",
+    "price": 3.27
   },
   {
     "name": "EVEVA - atun solido en salsa picante 140gr",
@@ -784,6 +792,26 @@
     "price": 2.83
   },
   {
+    "name": "HEINZ - pasta de tomate 511g",
+    "price": 6.74
+  },
+  {
+    "name": "HEINZ - pasta de ajo 195g",
+    "price": 2.71
+  },
+  {
+    "name": "HEINZ - mostaza botella de 195gr",
+    "price": 2.61
+  },
+  {
+    "name": "HEINZ - salsa de soya 300ml",
+    "price": 4.01
+  },
+  {
+    "name": "HEINZ - salsa 57 378gr",
+    "price": 2.91
+  },
+  {
     "name": "HILO - pabilo 1und",
     "price": 0.51
   },
@@ -881,11 +909,15 @@
   },
   {
     "name": "LA CAMPIÑA - Leche en polvo Completa 200g",
-    "price": 4.17
+    "price": 3.89
   },
   {
     "name": "LA CAMPIÑA - Leche en polvo Completa 400g",
     "price": 8.61
+  },
+  {
+    "name": "LA CAMPIÑA - Leche en polvo Completa 800g",
+    "price": 18.90
   },
   {
     "name": "LA GRAN PASTORA - queso amarillo 1k",
@@ -1005,7 +1037,7 @@
   },
   {
     "name": "MARY - Harina de trigo Todo uso",
-    "price": 1.7
+    "price": 1.70
   },
   {
     "name": "MARY - Harina de trigo leudante",
@@ -1022,6 +1054,10 @@
   {
     "name": "MARY - caraotas rojas 500g",
     "price": 3.85
+  },
+  {
+    "name": "MARY - Premiun 900g",
+    "price": 2.66
   },
   {
     "name": "MARY - esmeralda 900g",
