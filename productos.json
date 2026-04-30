@@ -112,6 +112,14 @@
     "price": 3.78
   },
   {
+    "name": "AXION - lavaplatos limon 850g",
+    "price": 9.35
+  },
+  {
+    "name": "AXION - lavaplatos 7 en 1 450g",
+    "price": 5.97
+  },
+  {
     "name": "AZUCARADAS - 240g",
     "price": 4.52
   },
@@ -1546,6 +1554,10 @@
   {
     "name": "SUAVITEL - Surtidos 180ml",
     "price": 1.68
+  },
+  {
+    "name": "SUAVITEL - frescura primavera 1lt",
+    "price": 7.70
   },
   {
     "name": "SULTANA - toallitas humedas 72 und",
